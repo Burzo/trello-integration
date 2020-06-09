@@ -7,12 +7,12 @@ import {
 import { Dispatch } from 'react'
 import { AppThunk } from '..'
 
-export const fetchBoards = (store_id: string): AppThunk => (
+export const fetchBoards = (token: string): AppThunk => (
   dispatch: Dispatch<AllBoardsTypes>,
 ) => {
   dispatch({ type: FETCH_BOARDS_START })
   fetch(
-    `/api/${process.env.REACT_APP_ROOT_API_URL}/live_occupancy/v1/live_occupancy_data/get_current_occupancy?zone_id=${store_id}&format=json`,
+    `https://api.trello.com/1/members/me/boards/?key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
   )
     .then((res: Response) => res.json())
     .then((data) => dispatch({ type: FETCH_BOARDS_SUCCESS, payload: data }))

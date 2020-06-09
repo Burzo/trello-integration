@@ -1,36 +1,84 @@
-export const FETCH_OCCUPANCY_START = 'FETCH_OCCUPANCY_START'
-export const FETCH_OCCUPANCY_SUCCESS = 'FETCH_OCCUPANCY_SUCCESS'
-export const FETCH_OCCUPANCY_ERROR = 'FETCH_OCCUPANCY_ERROR'
+export const FETCH_CARDS_START = 'FETCH_CARDS_START'
+export const FETCH_CARDS_SUCCESS = 'FETCH_CARDS_SUCCESS'
+export const FETCH_CARDS_ERROR = 'FETCH_CARDS_ERROR'
 
-export interface Occupancy {
-  zone_name: string
-  unit_disconnected: boolean
-  report_on: boolean
-  target_occupancy: number
-  current_occupancy: number
+export interface Badge {
+  attachmentsByType: object
+  location: boolean
+  votes: number
+  viewingMemberVoted: boolean
+  subscribed: boolean
+  fogbugz: string
+  checkItems: number
+  checkItemsChecked: number
+  checkItemsEarliestDue: string | null
+  comments: number
+  attachments: number
+  description: boolean
+  due: string | null
+  dueComplete: true
 }
 
-export interface Occupancies {
-  occupancies: Occupancy[]
+export interface Cover {
+  idAttachment: string | null
+  color: string | null
+  idUploadedBackground: string | null
+  size: string
+  brightness: string
+}
+
+export interface Card {
+  id: string
+  checkItemStates: string | null
+  closed: boolean
+  dateLastActivity: string | null
+  desc: string
+  descData: any
+  dueReminder: string | null
+  idBoard: string
+  idList: string
+  idMembersVoted: any[]
+  idShort: number
+  idAttachmentCover: string | null
+  idLabels: any[]
+  manualCoverAttachment: boolean
+  name: string
+  pos: number
+  shortLink: string
+  isTemplate: false
+  badges: Badge
+  dueComplete: boolean
+  due: string | null
+  idChecklists: any[]
+  idMembers: any[]
+  labels: any[]
+  shortUrl: string
+  subscribed: boolean
+  url: string
+  cover: Cover
+}
+
+export interface Cards {
+  cards: Card[]
   loading: boolean
   error: Error | null
 }
 
-export interface fetchOccupancyStart {
-  type: typeof FETCH_OCCUPANCY_START
+export interface fetchCardsStart {
+  type: typeof FETCH_CARDS_START
 }
 
-export interface fetchOccupancySuccess {
-  type: typeof FETCH_OCCUPANCY_SUCCESS
-  payload: Occupancy[]
+export interface fetchCardsSuccess {
+  type: typeof FETCH_CARDS_SUCCESS
+  payload: Card[]
 }
 
-export interface fetchOccupancyError {
-  type: typeof FETCH_OCCUPANCY_ERROR
+export interface fetchCardsError {
+  type: typeof FETCH_CARDS_ERROR
   payload: Error
 }
 
-export type AllOccupancyTypes =
-  | fetchOccupancyError
-  | fetchOccupancyStart
-  | fetchOccupancySuccess
+export type AllCardsTypes =
+  | fetchCardsError
+  | fetchCardsStart
+  | fetchCardsSuccess

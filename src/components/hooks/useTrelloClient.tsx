@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 declare global {
   interface Window {
@@ -46,15 +46,24 @@ const useTrelloClient: (
 
   // Once Jquery and Trello Client are loaded, authorize the user and get the token
   const GetToken = () => {
+    const expiration = 3600000
+    const d = new Date()
+
+    const tokenCreated = localStorage.getItem('token-created')
+    if (tokenCreated && parseInt(tokenCreated) + expiration < d.getTime()) {
+      window.Trello.deauthorize()
+    }
     window.Trello.authorize({
       name: 'Trello API integration',
       persist: true,
       scope: { read: true, write: true, account: true },
       expiration: '1hour',
       success: () => {
+        localStorage.setItem('token-created', d.getTime().toString())
         setToken(window.Trello.token())
       },
       error: () => {
+        console.log('IM HEREEEE')
         setError(
           'Something went wrong when retrieving the Trello API token. Make sure the API KEY is correct and added.',
         )

@@ -1,5 +1,4 @@
 import {
-  IBoard,
   AllBoardsTypes,
   FETCH_BOARDS_START,
   FETCH_BOARDS_SUCCESS,

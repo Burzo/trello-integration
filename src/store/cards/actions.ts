@@ -1,22 +1,20 @@
 import {
-  AllOccupancyTypes,
-  FETCH_OCCUPANCY_START,
-  FETCH_OCCUPANCY_SUCCESS,
-  FETCH_OCCUPANCY_ERROR,
+  AllCardsTypes,
+  FETCH_CARDS_START,
+  FETCH_CARDS_SUCCESS,
+  FETCH_CARDS_ERROR,
 } from './types'
 import { Dispatch } from 'react'
 import { AppThunk } from '..'
 
-export const fetchOccupancy = (store_id: string): AppThunk => (
-  dispatch: Dispatch<AllOccupancyTypes>,
+export const fetchCardsForOneBoard = (token: string): AppThunk => (
+  dispatch: Dispatch<AllCardsTypes>,
 ) => {
-  dispatch({ type: FETCH_OCCUPANCY_START })
+  dispatch({ type: FETCH_CARDS_START })
   fetch(
-    `/api/${process.env.REACT_APP_ROOT_API_URL}/live_occupancy/v1/live_occupancy_data/get_current_occupancy?zone_id=${store_id}&format=json`,
+    `https://api.trello.com/1/boards/5a85cc4b335e97cd5104a64b/cards?key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
   )
     .then((res: Response) => res.json())
-    .then((data) =>
-      dispatch({ type: FETCH_OCCUPANCY_SUCCESS, payload: data.occupancies }),
-    )
-    .catch((e: Error) => dispatch({ type: FETCH_OCCUPANCY_ERROR, payload: e }))
+    .then((data) => dispatch({ type: FETCH_CARDS_SUCCESS, payload: data }))
+    .catch((e: Error) => dispatch({ type: FETCH_CARDS_ERROR, payload: e }))
 }

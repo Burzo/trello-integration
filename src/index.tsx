@@ -7,19 +7,19 @@ import configureStore from './store/index'
 import 'typeface-roboto'
 import { BrowserRouter } from 'react-router-dom'
 
-// const store = configureStore()
+const store = configureStore()
 
-// store.subscribe(() => {
-//   console.log(store.getState())
-// })
+store.subscribe(() => {
+  console.log(store.getState())
+})
 
 ReactDOM.render(
   <BrowserRouter>
-    {/* <Provider store={store}> */}
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-    {/* </Provider> */}
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
   </BrowserRouter>,
   document.getElementById('root'),
 )

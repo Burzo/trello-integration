@@ -1,23 +1,5 @@
-import React, { useEffect, FC } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import {
-  Container,
-  Grid,
-  Card,
-  CardActionArea,
-  CardContent,
-  Typography,
-  Box,
-  Link,
-  Divider,
-  Paper,
-  TextField,
-  RadioGroup,
-  FormControl,
-  FormControlLabel,
-  Radio,
-  FormLabel,
-} from '@material-ui/core'
 import useTrelloClient from './hooks/useTrelloClient'
 import HomeView from './views/HomeView'
 
