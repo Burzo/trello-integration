@@ -1,36 +1,38 @@
-export const FETCH_OCCUPANCY_START = 'FETCH_OCCUPANCY_START'
-export const FETCH_OCCUPANCY_SUCCESS = 'FETCH_OCCUPANCY_SUCCESS'
-export const FETCH_OCCUPANCY_ERROR = 'FETCH_OCCUPANCY_ERROR'
+export const FETCH_LISTS_START = 'FETCH_LISTS_START'
+export const FETCH_LISTS_SUCCESS = 'FETCH_LISTS_SUCCESS'
+export const FETCH_LISTS_ERROR = 'FETCH_LISTS_ERROR'
 
-export interface Occupancy {
-  zone_name: string
-  unit_disconnected: boolean
-  report_on: boolean
-  target_occupancy: number
-  current_occupancy: number
+export interface List {
+  id: string
+  name: string
+  closed: boolean
+  pos: number
+  softLimit: null | string
+  idBoard: string
+  subscribed: boolean
 }
 
-export interface Occupancies {
-  occupancies: Occupancy[]
+export interface Lists {
+  lists: List[]
   loading: boolean
   error: Error | null
 }
 
-export interface fetchOccupancyStart {
-  type: typeof FETCH_OCCUPANCY_START
+export interface fetchListsStart {
+  type: typeof FETCH_LISTS_START
 }
 
-export interface fetchOccupancySuccess {
-  type: typeof FETCH_OCCUPANCY_SUCCESS
-  payload: Occupancy[]
+export interface fetchListsSuccess {
+  type: typeof FETCH_LISTS_SUCCESS
+  payload: List[]
 }
 
-export interface fetchOccupancyError {
-  type: typeof FETCH_OCCUPANCY_ERROR
+export interface fetchListsError {
+  type: typeof FETCH_LISTS_ERROR
   payload: Error
 }
 
-export type AllOccupancyTypes =
-  | fetchOccupancyError
-  | fetchOccupancyStart
-  | fetchOccupancySuccess
+export type AllListsTypes =
+  | fetchListsError
+  | fetchListsStart
+  | fetchListsSuccess

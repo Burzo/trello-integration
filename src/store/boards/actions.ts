@@ -6,6 +6,7 @@ import {
 } from './types'
 import { Dispatch } from 'react'
 import { AppThunk } from '..'
+import { handleTrelloTokenExpiry } from '../../helpers'
 
 export const fetchBoards = (token: string): AppThunk => (
   dispatch: Dispatch<AllBoardsTypes>,
@@ -14,7 +15,7 @@ export const fetchBoards = (token: string): AppThunk => (
   fetch(
     `https://api.trello.com/1/members/me/boards/?key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
   )
-    .then((res: Response) => res.json())
+    .then((res: Response) => handleTrelloTokenExpiry(res))
     .then((data) => dispatch({ type: FETCH_BOARDS_SUCCESS, payload: data }))
     .catch((e: Error) => dispatch({ type: FETCH_BOARDS_ERROR, payload: e }))
 }

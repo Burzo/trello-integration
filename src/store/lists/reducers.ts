@@ -1,35 +1,35 @@
 import {
-  Occupancies,
-  AllOccupancyTypes,
-  FETCH_OCCUPANCY_START,
-  FETCH_OCCUPANCY_SUCCESS,
-  FETCH_OCCUPANCY_ERROR,
+  AllListsTypes,
+  FETCH_LISTS_START,
+  FETCH_LISTS_SUCCESS,
+  FETCH_LISTS_ERROR,
+  Lists,
 } from './types'
 
-export const initialState: Occupancies = {
-  occupancies: [],
+export const initialState: Lists = {
+  lists: [],
   loading: true,
   error: null,
 }
 
-export const occupancyReducer = (
-  state: Occupancies = initialState,
-  action: AllOccupancyTypes,
-): Occupancies => {
+export const listsReducer = (
+  state: Lists = initialState,
+  action: AllListsTypes,
+): Lists => {
   switch (action.type) {
-    case FETCH_OCCUPANCY_START:
+    case FETCH_LISTS_START:
       return {
         ...state,
         error: null,
         loading: true,
       }
-    case FETCH_OCCUPANCY_SUCCESS:
+    case FETCH_LISTS_SUCCESS:
       return {
         ...state,
         loading: false,
-        occupancies: [...action.payload],
+        lists: [...state.lists, ...action.payload],
       }
-    case FETCH_OCCUPANCY_ERROR:
+    case FETCH_LISTS_ERROR:
       return {
         ...state,
         loading: false,

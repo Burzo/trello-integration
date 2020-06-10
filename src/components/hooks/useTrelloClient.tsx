@@ -8,7 +8,7 @@ declare global {
 
 const useTrelloClient: (
   apiKey: string | undefined,
-) => [string | null, string | null] = (apiKey) => {
+) => [string | null, string | null, () => void] = (apiKey) => {
   const [jqueryLoaded, setJqueryLoaded] = useState(false)
   const [token, setToken] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -46,24 +46,14 @@ const useTrelloClient: (
 
   // Once Jquery and Trello Client are loaded, authorize the user and get the token
   const GetToken = () => {
-    const expiration = 3600000
-    const d = new Date()
-
-    const tokenCreated = localStorage.getItem('token-created')
-    if (tokenCreated && parseInt(tokenCreated) + expiration < d.getTime()) {
-      window.Trello.deauthorize()
-    }
     window.Trello.authorize({
       name: 'Trello API integration',
-      persist: true,
       scope: { read: true, write: true, account: true },
       expiration: '1hour',
       success: () => {
-        localStorage.setItem('token-created', d.getTime().toString())
         setToken(window.Trello.token())
       },
       error: () => {
-        console.log('IM HEREEEE')
         setError(
           'Something went wrong when retrieving the Trello API token. Make sure the API KEY is correct and added.',
         )
@@ -71,7 +61,11 @@ const useTrelloClient: (
     })
   }
 
-  return [token, error]
+  const logout = () => {
+    window.Trello.deauthorize()
+  }
+
+  return [token, error, logout]
 }
 
 export default useTrelloClient

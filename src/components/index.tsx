@@ -5,10 +5,12 @@ import HomeView from './views/HomeView'
 
 // Main entry point for the whole application. Everything is loaded up here.
 const TrelloIntegration = () => {
-  const [token, error] = useTrelloClient(process.env.REACT_APP_TRELLO_API_KEY)
+  const [token, error, logout] = useTrelloClient(
+    process.env.REACT_APP_TRELLO_API_KEY,
+  )
 
   if (error) {
-    return <h1>Error when loading up the app...</h1>
+    return <h1>{error}</h1>
   }
 
   if (token) {

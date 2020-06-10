@@ -2,6 +2,7 @@ import { createStore, combineReducers, Action, applyMiddleware } from 'redux'
 import thunkMiddleware, { ThunkAction } from 'redux-thunk'
 import { boardsReducer } from './boards/reducers'
 import { cardsReducer } from './cards/reducers'
+import { listsReducer } from './lists/reducers'
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -13,6 +14,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 const rootReducer = combineReducers({
   boards: boardsReducer,
   cards: cardsReducer,
+  lists: listsReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>
