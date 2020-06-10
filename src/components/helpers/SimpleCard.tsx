@@ -33,7 +33,7 @@ export default function SimpleCard({ updateCard, card }: IProps) {
   const classes = useStyles()
 
   const buttonPress = () => {
-    updateCard('desc=REMZOOOOOOOOOOOO')
+    updateCard('dueComplete=true')
   }
 
   let date = card.due
@@ -65,6 +65,9 @@ export default function SimpleCard({ updateCard, card }: IProps) {
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           NAME: {card.name}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+          COMPLETED: {card.dueComplete}
         </Typography>
         <Typography variant="body2" component="p">
           {date}
