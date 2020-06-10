@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import { Container, Typography } from '@material-ui/core'
-import './App.scss'
 import TrelloIntegration from './components/'
 
 /**

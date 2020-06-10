@@ -55,8 +55,6 @@ const HomeView: FC<IProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boards.boards])
 
-  // Helper function that fills up token and card for the update function so that we don't need to pass it
-
   return (
     <div className="home">
       <Grid container spacing={3}>

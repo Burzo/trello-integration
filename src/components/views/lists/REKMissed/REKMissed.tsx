@@ -3,7 +3,11 @@ import { connect } from 'react-redux'
 import { Card, Cards } from '../../../../store/cards/types'
 import { RootState } from '../../../../store'
 import { Typography } from '@material-ui/core'
-import { remapListIdCards, remapBoardIdCards } from '../../../../helpers'
+import {
+  remapListIdCards,
+  remapBoardIdCards,
+  getOutREK,
+} from '../../../../helpers'
 import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
 import './style.scss'
@@ -15,22 +19,26 @@ interface IProps {
 const REKMissed: FC<IProps> = ({ cards }) => {
   if (cards.loading) {
     return (
-      <div className="ddv">
-        <Typography className="ddv__heading">Loading cards...</Typography>
+      <div className="rek-missed">
+        <Typography className="rek-missed__heading">
+          Loading cards...
+        </Typography>
       </div>
     )
   }
 
   if (cards.error) {
     return (
-      <div className="ddv">
-        <Typography className="ddv__heading">Error: {cards.error}</Typography>
+      <div className="rek-missed">
+        <Typography className="rek-missed__heading">
+          Error: {cards.error}
+        </Typography>
       </div>
     )
   }
 
   return (
-    <div className="ddv-missed">
+    <div className="rek-missed">
       <div>
         <h1 className="text-center">REK Missed</h1>
       </div>
@@ -62,9 +70,11 @@ const mapStateToProps = (store: RootState) => {
   return {
     cards: {
       ...store.cards,
-      cards: remapListIdCards(
-        store.lists.lists,
-        remapBoardIdCards(store.boards.boards, filteredOutdatedCards),
+      cards: getOutREK(
+        remapListIdCards(
+          store.lists.lists,
+          remapBoardIdCards(store.boards.boards, filteredOutdatedCards),
+        ),
       ),
     },
   }

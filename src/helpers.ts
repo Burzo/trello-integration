@@ -60,4 +60,22 @@ export const handleTrelloTokenExpiry = (res: Response) => {
   return res.json()
 }
 
+export const getOutDDV = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase() === 'ddv') {
+      return true
+    }
+    return false
+  })
+}
+
+export const getOutREK = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase() === 'rek') {
+      return true
+    }
+    return false
+  })
+}
+
 export const getTrelloToken = () => window.Trello.token()
