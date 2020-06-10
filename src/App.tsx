@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import { Container, Typography } from '@material-ui/core'
 import TrelloIntegration from './components/'
+import { Loading } from './components/helpers/Loading/Loading'
 
 /**
  * App takes care of the google login only
@@ -32,10 +33,8 @@ function App() {
 
   if (loading) {
     return (
-      <div className="container-fluid">
-        <Typography align="center" variant="h2">
-          Loading ...
-        </Typography>
+      <div className="container-fluid fixed-middle">
+        <Loading />
       </div>
     )
   }
@@ -43,28 +42,39 @@ function App() {
   if (!loggedIn) {
     return (
       <div className="container-fluid">
-        <GoogleLogin
-          clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          onRequest={startLoadingGoogle}
-          isSignedIn={true}
-          cookiePolicy={'single_host_origin'}
-        />
-        <Typography align="center" variant="body2">
-          {error}
-        </Typography>
+        <span className="fixed-middle d-flex flex-column justify-content-center text-center">
+          <h2 className="mb-3">Trello API integration</h2>
+          <div className="mb-3">
+            <GoogleLogin
+              clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              onRequest={startLoadingGoogle}
+              isSignedIn={true}
+              cookiePolicy={'single_host_origin'}
+            />
+          </div>
+          <div>
+            <Typography align="center" variant="body2">
+              {error}
+            </Typography>
+          </div>
+        </span>
       </div>
     )
   }
 
   return (
     <div className="container-fluid">
+      <span className="fixed-right">
+        <GoogleLogout
+          clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
+          onLogoutSuccess={logoutGoogle}
+        >
+          Logout
+        </GoogleLogout>
+      </span>
       <TrelloIntegration />
-      <GoogleLogout
-        clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
-        onLogoutSuccess={logoutGoogle}
-      ></GoogleLogout>
     </div>
   )
 }

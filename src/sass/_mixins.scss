@@ -49,3 +49,15 @@
 .danger {
   background: $background-danger-gradient;
 }
+
+.fixed-middle {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fixed-right {
+  position: fixed;
+  right: 0;
+}

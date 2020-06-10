@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import useTrelloClient from './hooks/useTrelloClient'
 import HomeView from './views/HomeView'
+import { Loading } from './helpers/Loading/Loading'
 
 // Main entry point for the whole application. Everything is loaded up here.
 const TrelloIntegration = () => {
@@ -21,7 +22,11 @@ const TrelloIntegration = () => {
     )
   }
 
-  return <h1>Loading Trello API Client...</h1>
+  return (
+    <div className="container-fluid fixed-middle">
+      <Loading />
+    </div>
+  )
 }
 
 export default TrelloIntegration
