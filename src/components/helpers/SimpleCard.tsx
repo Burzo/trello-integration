@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -24,8 +24,17 @@ const useStyles = makeStyles({
   },
 })
 
-export default function SimpleCard(card: MyCard) {
+interface IProps {
+  card: MyCard
+  updateCard: (query: string) => void
+}
+
+export default function SimpleCard({ updateCard, card }: IProps) {
   const classes = useStyles()
+
+  const buttonPress = () => {
+    updateCard('desc=REMZOOOOOOOOOOOO')
+  }
 
   let date = card.due
     ? new Date(card.due).toLocaleDateString()
@@ -34,6 +43,13 @@ export default function SimpleCard(card: MyCard) {
   return (
     <Card className={classes.root}>
       <CardContent>
+        <Typography
+          className={classes.title}
+          color="textSecondary"
+          gutterBottom
+        >
+          BOARD: {card.id}
+        </Typography>
         <Typography
           className={classes.title}
           color="textSecondary"
@@ -55,7 +71,9 @@ export default function SimpleCard(card: MyCard) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Trello link</Button>
+        <Button onClick={buttonPress} size="small">
+          Change desc to REMZO
+        </Button>
       </CardActions>
     </Card>
   )

@@ -7,6 +7,7 @@ import { fetchBoards } from '../../store/boards/actions'
 import {
   fetchCardsForOneBoard,
   fetchCardsForMultipleBoards,
+  updateCard,
 } from '../../store/cards/actions'
 import { Card, Cards } from '../../store/cards/types'
 import SimpleCard from './../helpers/SimpleCard'
@@ -25,6 +26,7 @@ interface IProps {
   fetchBoards: (token: string) => void
   fetchCardsForMultipleBoards: (token: string, boards: IBoard[]) => void
   fetchListsForMultipleBoards: (token: string, boards: IBoard[]) => void
+  updateCard: (token: string, card: Card, query: string) => void
 }
 
 const HomeView: FC<IProps> = ({
@@ -34,6 +36,7 @@ const HomeView: FC<IProps> = ({
   fetchBoards,
   fetchCardsForMultipleBoards,
   fetchListsForMultipleBoards,
+  updateCard,
 }) => {
   useEffect(() => {
     fetchBoards(token)
@@ -51,7 +54,10 @@ const HomeView: FC<IProps> = ({
   return (
     <div>
       {cards.cards.map((card: Card) => (
-        <SimpleCard {...card} />
+        <SimpleCard
+          updateCard={(query: string) => updateCard(token, card, query)}
+          card={card}
+        />
       ))}
     </div>
   )
@@ -87,6 +93,8 @@ const mapDispatchToProps = (
     fetchListsForMultipleBoards: (token: string, boards: IBoard[]) => {
       dispatch(fetchListsForMultipleBoards(token, boards))
     },
+    updateCard: (token: string, card: Card, query: string) =>
+      dispatch(updateCard(token, card, query)),
   }
 }
 

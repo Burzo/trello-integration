@@ -31,6 +31,6 @@ export const fetchListsForMultipleBoards = (
         })
     }),
   )
-    .then((res) => console.log('Lists loaded successfully.'))
+    .then(() => console.log('Lists loaded successfully.'))
     .catch((error) => console.log(error))
 }

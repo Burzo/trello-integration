@@ -2,6 +2,10 @@ export const FETCH_CARDS_START = 'FETCH_CARDS_START'
 export const FETCH_CARDS_SUCCESS = 'FETCH_CARDS_SUCCESS'
 export const FETCH_CARDS_ERROR = 'FETCH_CARDS_ERROR'
 
+export const UPDATE_CARD_START = 'UPDATE_CARD_START'
+export const UPDATE_CARD_SUCCESS = 'UPDATE_CARD_SUCCESS'
+export const UPDATE_CARD_ERROR = 'UPDATE_CARD_ERROR'
+
 export interface Badge {
   attachmentsByType: object
   location: boolean
@@ -56,6 +60,38 @@ export interface Card {
   subscribed: boolean
   url: string
   cover: Cover
+  loading: boolean
+  error: Error | null
+}
+
+export interface UpdateCard {
+  checkItemStates?: string | null
+  closed?: boolean
+  dateLastActivity?: string | null
+  desc?: string
+  descData?: any
+  dueReminder?: string | null
+  idBoard?: string
+  idList?: string
+  idMembersVoted?: any[]
+  idShort?: number
+  idAttachmentCover?: string | null
+  idLabels?: any[]
+  manualCoverAttachment?: boolean
+  name?: string
+  pos?: number
+  shortLink?: string
+  isTemplate?: false
+  badges?: Badge
+  dueComplete?: boolean
+  due?: string | null
+  idChecklists?: any[]
+  idMembers?: any[]
+  labels?: any[]
+  shortUrl?: string
+  subscribed?: boolean
+  url?: string
+  cover?: Cover
 }
 
 export interface Cards {
@@ -78,7 +114,28 @@ export interface fetchCardsError {
   payload: Error
 }
 
+export interface updateCardStart {
+  type: typeof UPDATE_CARD_START
+  payload: Card
+}
+
+export interface updateCardSuccess {
+  type: typeof UPDATE_CARD_SUCCESS
+  payload: Card
+}
+
+export interface updateCardError {
+  type: typeof UPDATE_CARD_ERROR
+  payload: Error
+  card: Card
+}
+
 export type AllCardsTypes =
   | fetchCardsError
   | fetchCardsStart
   | fetchCardsSuccess
+
+export type UpdateCardTypes =
+  | updateCardStart
+  | updateCardSuccess
+  | updateCardError
