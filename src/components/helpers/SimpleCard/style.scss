@@ -1,0 +1,47 @@
+@import './../../../sass/variables';
+@import './../../../sass/mixins';
+
+.simplecard {
+  cursor: pointer;
+  position: relative;
+
+  &__icon {
+    visibility: hidden;
+    opacity: 0;
+    color: $icon-color;
+
+    width: 100%;
+    height: 100%;
+
+    @include absCenter;
+  }
+
+  & > * {
+    transition: transform 0.2s;
+  }
+
+  &:hover {
+    & > *:not(:last-child) {
+      filter: blur(1px);
+      transform: scale(0.95);
+    }
+
+    & > .simplecard__icon {
+      visibility: visible;
+      opacity: 1;
+      display: inline-block;
+
+      &:hover,
+      &:active {
+        transform: translate(-50%, -50%) scale(0.95);
+        border-radius: 10px;
+        background-color: $transparent-background-white;
+        color: $icon-color;
+      }
+
+      &:active > i {
+        font-size: 5rem;
+      }
+    }
+  }
+}

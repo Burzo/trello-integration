@@ -59,3 +59,5 @@ export const handleTrelloTokenExpiry = (res: Response) => {
   }
   return res.json()
 }
+
+export const getTrelloToken = () => window.Trello.token()

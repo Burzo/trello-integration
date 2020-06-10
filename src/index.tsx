@@ -4,8 +4,10 @@ import './index.css'
 import App from './App'
 import { Provider } from 'react-redux'
 import configureStore from './store/index'
-import 'typeface-roboto'
+import 'fontsource-roboto'
 import { BrowserRouter } from 'react-router-dom'
+import { StylesProvider } from '@material-ui/core/styles'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const store = configureStore()
 
@@ -16,9 +18,11 @@ store.subscribe(() => {
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <StylesProvider injectFirst>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </StylesProvider>
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'),

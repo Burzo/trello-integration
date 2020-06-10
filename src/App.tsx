@@ -33,17 +33,17 @@ function App() {
 
   if (loading) {
     return (
-      <Container>
+      <div className="container-fluid">
         <Typography align="center" variant="h2">
           Loading ...
         </Typography>
-      </Container>
+      </div>
     )
   }
 
   if (!loggedIn) {
     return (
-      <Container>
+      <div className="container-fluid">
         <GoogleLogin
           clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
           onSuccess={responseGoogle}
@@ -55,18 +55,18 @@ function App() {
         <Typography align="center" variant="body2">
           {error}
         </Typography>
-      </Container>
+      </div>
     )
   }
 
   return (
-    <Container>
+    <div className="container-fluid">
       <TrelloIntegration />
       <GoogleLogout
         clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
         onLogoutSuccess={logoutGoogle}
       ></GoogleLogout>
-    </Container>
+    </div>
   )
 }
 
