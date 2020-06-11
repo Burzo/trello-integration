@@ -109,10 +109,6 @@ export const filterOutExistingCards = (
       result.push(newCard)
     }
   })
-  // console.log('CARDS - ', result)
-
-  // console.log('OLD CARDS - ', cards)
-  // console.log('NEW CARDS - ', newCards)
   result.sort((a, b) => a.idShort - b.idShort)
   return [...result]
 }
@@ -147,11 +143,6 @@ export const filterOutExistingLists = (
       result.push(newList)
     }
   })
-  // console.log('LISTS - ', result)
-
-  // console.log('OLD LISTS - ', lists)
-  // console.log('NEW LISTS - ', newLists)
-
   return [...result]
 }
 
