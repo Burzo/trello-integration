@@ -27,7 +27,9 @@ const DDV: FC<IProps> = ({ cards }) => {
   if (cards.error) {
     return (
       <div className="ddv">
-        <Typography className="ddv__heading">Error: {cards.error}</Typography>
+        <Typography className="ddv__heading">
+          Error: {cards.error.message}
+        </Typography>
       </div>
     )
   }

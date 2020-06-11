@@ -17,21 +17,11 @@ interface IProps {
 }
 
 const REKMissed: FC<IProps> = ({ cards }) => {
-  if (cards.loading) {
-    return (
-      <div className="rek-missed">
-        <Typography className="rek-missed__heading">
-          Loading cards...
-        </Typography>
-      </div>
-    )
-  }
-
   if (cards.error) {
     return (
       <div className="rek-missed">
         <Typography className="rek-missed__heading">
-          Error: {cards.error}
+          Error: {cards.error.message}
         </Typography>
       </div>
     )

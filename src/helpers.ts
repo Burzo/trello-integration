@@ -1,6 +1,7 @@
 import { IBoard } from './store/boards/types'
 import { Card } from './store/cards/types'
 import { List } from './store/lists/types'
+import _ from 'lodash'
 
 declare global {
   interface Window {
@@ -82,30 +83,37 @@ export const filterOutExistingCards = (
   cards: Card[],
   newCards: Card[],
 ): Card[] => {
-  let result: Card[] = cards
-  // console.log(cards)
   if (newCards.length === 0) {
     return cards
   }
   if (cards.length === 0) {
     return newCards
   }
+
+  let result: Card[] = cards
+
   let exists = false
   newCards.map((newCard: Card) => {
     exists = true
     cards.map((card: Card) => {
       if (card.id === newCard.id) {
-        exists = false
+        if (_.isEqual(card, newCard)) {
+          exists = false
+        } else {
+          exists = true
+          result = result.filter((e: Card) => e.id !== card.id)
+        }
       }
     })
     if (exists) {
       result.push(newCard)
     }
   })
-  console.log('CARDS - ', result)
+  // console.log('CARDS - ', result)
 
   // console.log('OLD CARDS - ', cards)
   // console.log('NEW CARDS - ', newCards)
+  result.sort((a, b) => a.idShort - b.idShort)
   return [...result]
 }
 
@@ -113,7 +121,6 @@ export const filterOutExistingLists = (
   lists: List[],
   newLists: List[],
 ): List[] => {
-  let result: List[] = lists
   if (newLists.length === 0) {
     return lists
   }
@@ -121,23 +128,30 @@ export const filterOutExistingLists = (
     return newLists
   }
 
+  let result: List[] = lists
+
   let exists = false
   newLists.map((newList: List) => {
-    exists = false
+    exists = true
     lists.map((list: List) => {
-      // console.log(card, newCard)
       if (list.id === newList.id) {
-        exists = true
+        if (_.isEqual(list, newList)) {
+          exists = false
+        } else {
+          exists = true
+          result = result.filter((e: List) => e.id !== list.id)
+        }
       }
     })
     if (exists) {
       result.push(newList)
     }
   })
-  console.log('LISTS - ', result)
+  // console.log('LISTS - ', result)
 
   // console.log('OLD LISTS - ', lists)
   // console.log('NEW LISTS - ', newLists)
+
   return [...result]
 }
 

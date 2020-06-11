@@ -56,7 +56,7 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
 
   return (
     // <CSSTransition in={animate} timeout={300} classNames="alert" unmountOnExit>
-    <div className="simplecard">
+    <div className="simplecard" key={card.id}>
       <div className={'card text-dark bg-light mb-3 ' + className}>
         <div className="card-header">{card.idBoard}</div>
         <div className="card-body">
