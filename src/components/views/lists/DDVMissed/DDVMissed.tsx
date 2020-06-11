@@ -17,15 +17,15 @@ interface IProps {
 }
 
 const DDVMissed: FC<IProps> = ({ cards }) => {
-  if (cards.loading) {
-    return (
-      <div className="ddv-missed">
-        <Typography className="ddv-missed__heading">
-          Loading cards...
-        </Typography>
-      </div>
-    )
-  }
+  // if (cards.loading) {
+  //   return (
+  //     <div className="ddv-missed">
+  //       <Typography className="ddv-missed__heading">
+  //         Loading cards...
+  //       </Typography>
+  //     </div>
+  //   )
+  // }
 
   if (cards.error) {
     return (

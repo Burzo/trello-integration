@@ -55,19 +55,19 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
     : 'No date available'
 
   return (
-    <CSSTransition in={animate} timeout={300} classNames="alert" unmountOnExit>
-      <div className="simplecard">
-        <div className={'card text-dark bg-light mb-3 ' + className}>
-          <div className="card-header">{card.idBoard}</div>
-          <div className="card-body">
-            <h5 className="card-title">{card.name}</h5>
-            <p className="card-text">{card.desc}</p>
-            <p className="card-text">Expires: {date}</p>
-          </div>
+    // <CSSTransition in={animate} timeout={300} classNames="alert" unmountOnExit>
+    <div className="simplecard">
+      <div className={'card text-dark bg-light mb-3 ' + className}>
+        <div className="card-header">{card.idBoard}</div>
+        <div className="card-body">
+          <h5 className="card-title">{card.name}</h5>
+          <p className="card-text">{card.desc}</p>
+          <p className="card-text">Expires: {date}</p>
         </div>
-        <DoneIcon onClick={buttonPress} className="simplecard__icon" />
       </div>
-    </CSSTransition>
+      <DoneIcon onClick={buttonPress} className="simplecard__icon" />
+    </div>
+    // </CSSTransition>
   )
 }
 

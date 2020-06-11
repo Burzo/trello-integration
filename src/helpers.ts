@@ -78,4 +78,67 @@ export const getOutREK = (cards: Card[]): Card[] => {
   })
 }
 
+export const filterOutExistingCards = (
+  cards: Card[],
+  newCards: Card[],
+): Card[] => {
+  let result: Card[] = cards
+  // console.log(cards)
+  if (newCards.length === 0) {
+    return cards
+  }
+  if (cards.length === 0) {
+    return newCards
+  }
+  let exists = false
+  newCards.map((newCard: Card) => {
+    exists = true
+    cards.map((card: Card) => {
+      if (card.id === newCard.id) {
+        exists = false
+      }
+    })
+    if (exists) {
+      result.push(newCard)
+    }
+  })
+  console.log('CARDS - ', result)
+
+  // console.log('OLD CARDS - ', cards)
+  // console.log('NEW CARDS - ', newCards)
+  return [...result]
+}
+
+export const filterOutExistingLists = (
+  lists: List[],
+  newLists: List[],
+): List[] => {
+  let result: List[] = lists
+  if (newLists.length === 0) {
+    return lists
+  }
+  if (lists.length === 0) {
+    return newLists
+  }
+
+  let exists = false
+  newLists.map((newList: List) => {
+    exists = false
+    lists.map((list: List) => {
+      // console.log(card, newCard)
+      if (list.id === newList.id) {
+        exists = true
+      }
+    })
+    if (exists) {
+      result.push(newList)
+    }
+  })
+  console.log('LISTS - ', result)
+
+  // console.log('OLD LISTS - ', lists)
+  // console.log('NEW LISTS - ', newLists)
+  return [...result]
+}
+
 export const getTrelloToken = () => window.Trello.token()

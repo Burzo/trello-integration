@@ -16,13 +16,13 @@ interface IProps {
 }
 
 const DDV: FC<IProps> = ({ cards }) => {
-  if (cards.loading) {
-    return (
-      <div className="ddv">
-        <Typography className="ddv__heading">Loading cards...</Typography>
-      </div>
-    )
-  }
+  // if (cards.loading) {
+  //   return (
+  //     <div className="ddv">
+  //       <Typography className="ddv__heading">Loading cards...</Typography>
+  //     </div>
+  //   )
+  // }
 
   if (cards.error) {
     return (

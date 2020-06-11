@@ -12,9 +12,9 @@ import './App.scss'
 
 const store = configureStore()
 
-store.subscribe(() => {
-  console.log(store.getState())
-})
+// store.subscribe(() => {
+//   console.log(store.getState())
+// })
 
 ReactDOM.render(
   <BrowserRouter>

@@ -1,4 +1,4 @@
-import React, { useEffect, FC, useRef } from 'react'
+import React, { useEffect, FC, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../store'
@@ -45,10 +45,16 @@ const HomeView: FC<IProps> = ({
   fetchListsForMultipleBoards,
   updateCard,
 }) => {
+  const [loaded, setLoaded] = useState(false)
+
   let refreshInterval: any = useRef()
   let boardFetchingInterval: any = useRef()
 
   useEffect(() => {
+    fetchBoards(token)
+    if (boardFetchingInterval.current) {
+      clearInterval(boardFetchingInterval.current)
+    }
     boardFetchingInterval.current = setInterval(() => {
       fetchBoards(token)
     }, BOARD_FETCH_INTERVAL)
@@ -60,9 +66,14 @@ const HomeView: FC<IProps> = ({
   }, [])
 
   useEffect(() => {
-    if (boards.boards.length > 0) {
-      clearInterval(refreshInterval.current)
+    if (boards.boards.length > 0 && !loaded) {
+      refreshEverything()
+      setLoaded(true)
+      if (refreshInterval.current) {
+        clearInterval(refreshInterval.current)
+      }
       refreshInterval.current = setInterval(() => {
+        console.log('REFRESHING')
         refreshEverything()
       }, FETCH_INTERVAL)
     }
@@ -71,7 +82,7 @@ const HomeView: FC<IProps> = ({
       clearInterval(refreshInterval.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [boards.boards])
+  }, [boards.boards.length])
 
   const refreshEverything = () => {
     fetchCardsForMultipleBoards(token, boards.boards)

@@ -5,6 +5,7 @@ import {
   FETCH_LISTS_ERROR,
   Lists,
 } from './types'
+import { filterOutExistingLists } from '../../helpers'
 
 export const initialState: Lists = {
   lists: [],
@@ -27,7 +28,7 @@ export const listsReducer = (
       return {
         ...state,
         loading: false,
-        lists: [...state.lists, ...action.payload],
+        lists: filterOutExistingLists(state.lists, action.payload),
       }
     case FETCH_LISTS_ERROR:
       return {

@@ -10,6 +10,7 @@ import {
   UPDATE_CARD_ERROR,
   UpdateCardTypes,
 } from './types'
+import { filterOutExistingCards } from '../../helpers'
 
 export const initialState: Cards = {
   cards: [],
@@ -32,7 +33,7 @@ export const cardsReducer = (
       return {
         ...state,
         loading: false,
-        cards: [...state.cards, ...action.payload],
+        cards: filterOutExistingCards(state.cards, action.payload),
       }
     case FETCH_CARDS_ERROR:
       return {
