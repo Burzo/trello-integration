@@ -10,7 +10,7 @@ import { Loading } from './components/helpers/Loading/Loading'
 function App() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const responseGoogle = (response: any) => {
     if (response.error) {
