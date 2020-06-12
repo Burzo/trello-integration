@@ -2,6 +2,7 @@ import { IBoard } from './store/boards/types'
 import { Card } from './store/cards/types'
 import { List } from './store/lists/types'
 import _ from 'lodash'
+import { stringify } from 'querystring'
 
 declare global {
   interface Window {
@@ -110,8 +111,7 @@ export const filterOutExistingCards = (
     }
   })
   result.sort((a, b) => {
-    // This sort is shit, have to generate a unique ID
-    return a.idShort - b.idShort
+    return a.id.localeCompare(b.id)
   })
   return [...result]
 }
