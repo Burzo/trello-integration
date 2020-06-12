@@ -17,7 +17,8 @@ const TrelloIntegration = () => {
   if (token) {
     return (
       <Switch>
-        <Route path="/" component={() => <HomeView token={token} />} />
+        <Route exact path="/" component={() => <HomeView token={token} />} />
+        <Route component={() => <HomeView token={token} />} />
       </Switch>
     )
   }
