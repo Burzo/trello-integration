@@ -9,3 +9,9 @@
     font-size: 0.8rem;
   }
 }
+
+.container {
+  @include respond(phone-lg) {
+    max-width: 100%;
+  }
+}

@@ -91,17 +91,17 @@ const HomeView: FC<IProps> = ({
 
   return (
     <div className="home">
-      <Grid container spacing={3}>
-        <Grid item xs={3}>
+      <Grid className="layout" container spacing={3}>
+        <Grid className="layout-columns" item xs={3}>
           <DDV />
         </Grid>
-        <Grid item xs={3}>
+        <Grid className="layout-columns" item xs={3}>
           <REK />
         </Grid>
-        <Grid item xs={3}>
+        <Grid className="layout-columns" item xs={3}>
           <DDVMissed />
         </Grid>
-        <Grid item xs={3}>
+        <Grid className="layout-columns" item xs={3}>
           <REKMissed />
         </Grid>
       </Grid>

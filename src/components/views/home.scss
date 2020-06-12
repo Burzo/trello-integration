@@ -1,3 +1,17 @@
+@import './../../sass/variables';
+@import './../../sass/mixins';
+
 .home {
   min-height: 100vh;
+}
+
+.layout {
+  @include respond(phone-lg) {
+    flex-wrap: wrap;
+
+    &-columns {
+      max-width: 50% !important;
+      flex-basis: 50% !important;
+    }
+  }
 }
