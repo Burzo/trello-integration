@@ -3,9 +3,19 @@ import { ReactComponent as LoadingSvg } from './loading.svg'
 import React from 'react'
 import './style.scss'
 
-export const Loading = () => {
+interface IProps {
+  size?: string | null
+}
+
+export const Loading = ({ size }: IProps) => {
+  let className = 'loading'
+
+  if (size) {
+    className += `-${size}`
+  }
+
   return (
-    <div className="loading">
+    <div className={className}>
       <LoadingSvg />
     </div>
   )

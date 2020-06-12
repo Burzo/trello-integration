@@ -10,6 +10,7 @@ import {
 } from '../../../../helpers'
 import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 
 interface IProps {
   cards: Cards
@@ -29,13 +30,17 @@ const DDV: FC<IProps> = ({ cards }) => {
   return (
     <div className="ddv">
       <div>
-        <h1 className="text-center">DDV</h1>
+        <h2 className="text-center mb-4">DDV</h2>
       </div>
       <div>
         {cards.cards.length > 0 ? (
-          cards.cards.map((card: Card) => <SimpleCard card={card} />)
+          cards.cards.map((card: Card) => (
+            <SimpleCard key={card.id} card={card} />
+          ))
         ) : (
-          <p className="text-center">No cards found.</p>
+          <p className="text-center">
+            <AssignmentTurnedInIcon className="done-icon" />
+          </p>
         )}
       </div>
     </div>

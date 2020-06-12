@@ -43,7 +43,7 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
         <div className={'card text-dark bg-light mb-3 ' + className}>
           <div className="card-header">{card.idBoard}</div>
           <div className="card-body">
-            <h5 className="card-title">{card.name}</h5>
+            <p className="card-title">{card.name}</p>
             <p className="card-text">{card.desc}</p>
             <p className="card-text">Expires: {date}</p>
           </div>

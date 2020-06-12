@@ -65,7 +65,7 @@ function App() {
   }
 
   return (
-    <div className="container-fluid">
+    <div className="container">
       <span className="fixed-right">
         <GoogleLogout
           clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Card, Cards } from '../../../../store/cards/types'
 import { RootState } from '../../../../store'
@@ -10,12 +10,23 @@ import {
 } from '../../../../helpers'
 import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
+import { Loading } from '../../../helpers/Loading/Loading'
 
 interface IProps {
   cards: Cards
 }
 
 const REK: FC<IProps> = ({ cards }) => {
+  const [initialLoad, setInitialLoad] = useState(true)
+
+  useEffect(() => {
+    if (initialLoad) {
+      setInitialLoad(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards])
+
   if (cards.error) {
     return (
       <div className="rek">
@@ -29,13 +40,17 @@ const REK: FC<IProps> = ({ cards }) => {
   return (
     <div className="rek">
       <div>
-        <h1 className="text-center">REK</h1>
+        <h2 className="text-center mb-4">REK Missed</h2>
       </div>
       <div>
         {cards.cards.length > 0 ? (
-          cards.cards.map((card: Card) => <SimpleCard card={card} />)
+          cards.cards.map((card: Card) => (
+            <SimpleCard key={card.id} card={card} />
+          ))
         ) : (
-          <p className="text-center">No cards found.</p>
+          <p className="text-center">
+            <AssignmentTurnedInIcon className="done-icon" />
+          </p>
         )}
       </div>
     </div>
