@@ -16,14 +16,6 @@ interface IProps {
 }
 
 const REK: FC<IProps> = ({ cards }) => {
-  // if (cards.loading) {
-  //   return (
-  //     <div className="rek">
-  //       <Typography className="rek__heading">Loading cards...</Typography>
-  //     </div>
-  //   )
-  // }
-
   if (cards.error) {
     return (
       <div className="rek">

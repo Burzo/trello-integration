@@ -15,23 +15,6 @@ import './style.scss'
 import DoneIcon from '@material-ui/icons/Done'
 import { CSSTransition } from 'react-transition-group'
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-})
-
 interface IProps {
   card: MyCard
   className?: string
@@ -55,19 +38,19 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
     : 'No date available'
 
   return (
-    // <CSSTransition in={animate} timeout={300} classNames="alert" unmountOnExit>
-    <div className="simplecard" key={card.id}>
-      <div className={'card text-dark bg-light mb-3 ' + className}>
-        <div className="card-header">{card.idBoard}</div>
-        <div className="card-body">
-          <h5 className="card-title">{card.name}</h5>
-          <p className="card-text">{card.desc}</p>
-          <p className="card-text">Expires: {date}</p>
+    <CSSTransition in={animate} timeout={300} classNames="alert" unmountOnExit>
+      <div className="simplecard" key={card.id}>
+        <div className={'card text-dark bg-light mb-3 ' + className}>
+          <div className="card-header">{card.idBoard}</div>
+          <div className="card-body">
+            <h5 className="card-title">{card.name}</h5>
+            <p className="card-text">{card.desc}</p>
+            <p className="card-text">Expires: {date}</p>
+          </div>
         </div>
+        <DoneIcon onClick={buttonPress} className="simplecard__icon" />
       </div>
-      <DoneIcon onClick={buttonPress} className="simplecard__icon" />
-    </div>
-    // </CSSTransition>
+    </CSSTransition>
   )
 }
 
