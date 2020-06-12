@@ -109,7 +109,10 @@ export const filterOutExistingCards = (
       result.push(newCard)
     }
   })
-  result.sort((a, b) => a.idShort - b.idShort)
+  result.sort((a, b) => {
+    // This sort is shit, have to generate a unique ID
+    return a.idShort - b.idShort
+  })
   return [...result]
 }
 
