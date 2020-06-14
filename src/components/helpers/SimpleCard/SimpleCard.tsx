@@ -81,15 +81,15 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
               </div>
               <div className="center">
                 <ButtonGroup className="simplecard-modal-form-btns">
-                  <Button variant="contained" onClick={() => setOpen(true)}>
-                    Edit
-                  </Button>
                   <Button
                     color="primary"
                     variant="contained"
                     onClick={buttonPress}
                   >
-                    Done
+                    Shrani
+                  </Button>
+                  <Button variant="contained" onClick={() => setOpen(true)}>
+                    Spremeni
                   </Button>
                 </ButtonGroup>
               </div>
