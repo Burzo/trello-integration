@@ -47,7 +47,7 @@ function App() {
       </div>
     )
   }
-  console.log(!PRODUCTION)
+
   if (PRODUCTION && !loggedIn) {
     return (
       <div className="container-fluid">
