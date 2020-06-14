@@ -12,6 +12,7 @@ import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import AllDone from '../../../helpers/AllDone/AllDone'
+import { Divider } from '@material-ui/core'
 
 interface IProps {
   cards: Cards
@@ -31,10 +32,11 @@ const DDV: FC<IProps> = ({ cards }) => {
   return (
     <div className="ddv">
       <div>
-        <Typography variant="h4" className="text-center mb-4">
+        <Typography variant="h4" className="text-center mb-3">
           DDV za {moment().format('MMMM')}
         </Typography>
       </div>
+      <Divider style={{ marginBottom: '1rem' }} />
       <div>
         {cards.cards.length > 0 ? (
           cards.cards.map((card: Card) => (

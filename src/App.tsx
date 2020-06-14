@@ -32,10 +32,6 @@ function App() {
     setLoading(false)
   }
 
-  const logoutGoogle = () => {
-    window.location.reload()
-  }
-
   const startLoadingGoogle = () => {
     setLoading(true)
   }
@@ -74,15 +70,7 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <span className="fixed-right">
-        <GoogleLogout
-          clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
-          onLogoutSuccess={logoutGoogle}
-        >
-          Logout
-        </GoogleLogout>
-      </span>
+    <div>
       <TrelloIntegration />
     </div>
   )

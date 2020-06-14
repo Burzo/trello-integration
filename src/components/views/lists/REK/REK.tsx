@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Card, Cards } from '../../../../store/cards/types'
 import { RootState } from '../../../../store'
-import { Typography } from '@material-ui/core'
+import { Typography, Divider } from '@material-ui/core'
 import {
   remapListIdCards,
   remapBoardIdCards,
@@ -41,10 +41,11 @@ const REK: FC<IProps> = ({ cards }) => {
   return (
     <div className="rek">
       <div>
-        <Typography variant="h4" className="text-center mb-4">
+        <Typography variant="h4" className="text-center mb-3">
           REK za {moment().format('MMMM')}
         </Typography>
       </div>
+      <Divider style={{ marginBottom: '1rem' }} />
       <div>
         {cards.cards.length > 0 ? (
           cards.cards.map((card: Card) => (
