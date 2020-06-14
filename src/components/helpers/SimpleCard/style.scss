@@ -26,10 +26,14 @@
     min-width: 40rem;
 
     background-color: white;
-    padding: 1rem 2rem;
+    padding: 1rem;
+
+    border-radius: 15px;
 
     & > * {
-      margin-bottom: 1rem;
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
     }
   }
 }

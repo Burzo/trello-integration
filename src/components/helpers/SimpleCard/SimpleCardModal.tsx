@@ -1,6 +1,6 @@
 import React, { FC, useState, SetStateAction, Dispatch } from 'react'
 import { Card, UpdateCardTypes } from '../../../store/cards/types'
-import { Fade, TextField, Button, ButtonGroup } from '@material-ui/core'
+import { Fade, TextField, Button, ButtonGroup, Paper } from '@material-ui/core'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../../store'
 import { updateCard } from '../../../store/cards/actions'
@@ -40,8 +40,8 @@ export const SimpleCardModal: FC<IProps> = ({
 
   return (
     <Fade in={open}>
-      <div className="simplecard-modal" key={card.id + card.idBoard}>
-        <form className="simplecard-modal-form" noValidate autoComplete="off">
+      <Paper>
+        <div className="simplecard-modal-form">
           <TextField
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -66,8 +66,8 @@ export const SimpleCardModal: FC<IProps> = ({
               Save
             </Button>
           </ButtonGroup>
-        </form>
-      </div>
+        </div>
+      </Paper>
     </Fade>
   )
 }
