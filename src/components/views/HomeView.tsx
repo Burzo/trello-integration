@@ -73,7 +73,6 @@ const HomeView: FC<IProps> = ({
         clearInterval(refreshInterval.current)
       }
       refreshInterval.current = setInterval(() => {
-        console.log('REFRESHING')
         refreshEverything()
       }, FETCH_INTERVAL)
     }

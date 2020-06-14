@@ -45,3 +45,29 @@
     }
   }
 }
+
+.simplecard-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & .card {
+    width: 100%;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 40rem;
+
+    background-color: white;
+    padding: 1rem 2rem;
+
+    & > * {
+      margin-bottom: 1rem;
+    }
+  }
+}

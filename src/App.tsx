@@ -4,6 +4,8 @@ import { Container, Typography } from '@material-ui/core'
 import TrelloIntegration from './components/'
 import { Loading } from './components/helpers/Loading/Loading'
 
+const PRODUCTION = process.env.NODE_ENV === 'production'
+
 /**
  * App takes care of the google login only
  */
@@ -38,8 +40,8 @@ function App() {
       </div>
     )
   }
-
-  if (!loggedIn) {
+  console.log(!PRODUCTION)
+  if (PRODUCTION && !loggedIn) {
     return (
       <div className="container-fluid">
         <span className="fixed-middle d-flex flex-column justify-content-center text-center">
