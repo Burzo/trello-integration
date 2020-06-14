@@ -11,6 +11,7 @@ import {
 import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
+import AllDone from '../../../helpers/AllDone/AllDone'
 
 interface IProps {
   cards: Cards
@@ -40,9 +41,7 @@ const DDV: FC<IProps> = ({ cards }) => {
             <SimpleCard key={card.id} card={card} />
           ))
         ) : (
-          <p className="text-center">
-            <AssignmentTurnedInIcon className="done-icon" />
-          </p>
+          <AllDone />
         )}
       </div>
     </div>

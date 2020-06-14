@@ -34,7 +34,7 @@ body {
   background-attachment: fixed;
   background-position: center;
 
-  padding: 3rem;
+  padding: 1rem;
 
   @include respond(tab-port) {
     padding: 0;

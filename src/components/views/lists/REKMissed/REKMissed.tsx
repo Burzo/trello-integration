@@ -13,6 +13,7 @@ import moment from 'moment'
 import './style.scss'
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import { Loading } from '../../../helpers/Loading/Loading'
+import AllDone from '../../../helpers/AllDone/AllDone'
 
 interface IProps {
   cards: Cards
@@ -51,9 +52,7 @@ const REKMissed: FC<IProps> = ({ cards }) => {
             <SimpleCard className="danger" key={card.id} card={card} />
           ))
         ) : (
-          <p className="text-center">
-            <AssignmentTurnedInIcon className="done-icon" />
-          </p>
+          <AllDone />
         )}
       </div>
     </div>
