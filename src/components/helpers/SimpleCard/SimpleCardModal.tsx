@@ -60,7 +60,7 @@ export const SimpleCardModal: FC<IProps> = ({
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
           />
-          <ButtonGroup className="simplecard-modal-form-btns" color="primary">
+          <ButtonGroup className="simplecard-modal-form-btns">
             <Button onClick={buttonPress} variant="contained">
               Save
             </Button>

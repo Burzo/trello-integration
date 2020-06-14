@@ -8,8 +8,23 @@ import { getTrelloToken } from '../../../helpers'
 import './style.scss'
 import DoneIcon from '@material-ui/icons/Done'
 import { CSSTransition } from 'react-transition-group'
-import { Modal, Fade, Backdrop, Button, Paper } from '@material-ui/core'
+import {
+  Modal,
+  Fade,
+  Backdrop,
+  Button,
+  Paper,
+  Snackbar,
+  Card,
+  ButtonGroup,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Typography,
+  Divider,
+} from '@material-ui/core'
 import { SimpleCardModal } from './SimpleCardModal'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 interface IProps {
   card: MyCard
@@ -43,25 +58,45 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
         classNames="alert"
         unmountOnExit
       >
-        <Paper elevation={3}>
-          <div className="simplecard" key={card.id}>
-            <div className={'card text-dark bg-light mb-3 ' + className}>
-              <div className="card-header">{card.idBoard}</div>
-              <div className="card-body">
-                <p className="card-title">{card.name}</p>
-                <p className="card-text">{card.desc}</p>
-                <p className="card-text">Expires: {date}</p>
+        <Card
+          key={card.id}
+          elevation={3}
+          className={'simplecard card text-dark ' + className}
+        >
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <div className="container">
+                <Typography variant="h6">{card.idBoard}</Typography>
+                <Typography className="subtitle">{card.name}</Typography>
               </div>
-            </div>
-            <DoneIcon onClick={buttonPress} className="simplecard__icon" />
-          </div>
-        </Paper>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
+              <Divider style={{ marginBottom: '1rem' }} />
+              <div style={card.desc !== '' ? { marginBottom: '1rem' } : {}}>
+                {card.desc}
+              </div>
+              <div className="center">
+                <ButtonGroup className="simplecard-modal-form-btns">
+                  <Button variant="contained" onClick={() => setOpen(true)}>
+                    Edit
+                  </Button>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={buttonPress}
+                  >
+                    Done
+                  </Button>
+                </ButtonGroup>
+              </div>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        </Card>
       </CSSTransition>
-      <div>
-        <Button variant="contained" onClick={() => setOpen(true)}>
-          Edit
-        </Button>
-      </div>
       <Modal
         aria-labelledby="simplecard-modal-title"
         aria-describedby="simplecard-modal-description"

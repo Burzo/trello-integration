@@ -11,6 +11,7 @@
 }
 
 .container {
+  max-width: 1700px;
   @include respond(phone-lg) {
     max-width: 100%;
   }

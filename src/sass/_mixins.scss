@@ -51,10 +51,6 @@
   transition: opacity 300ms, transform 300ms;
 }
 
-.danger {
-  background: $background-danger-gradient;
-}
-
 .fixed-middle {
   position: fixed;
   top: 40%;
@@ -65,4 +61,10 @@
 .fixed-right {
   position: fixed;
   right: 0;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
