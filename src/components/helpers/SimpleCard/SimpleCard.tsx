@@ -72,6 +72,10 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
               <Divider style={{ marginBottom: '1rem' }} />
+              <div>
+                <Typography>Do: {date}</Typography>
+              </div>
+              <Divider style={{ marginBottom: '1rem', marginTop: '1rem' }} />
               <div style={card.desc !== '' ? { marginBottom: '1rem' } : {}}>
                 {card.desc}
               </div>
