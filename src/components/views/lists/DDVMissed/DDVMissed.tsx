@@ -41,7 +41,9 @@ const DDVMissed: FC<IProps> = ({ cards }) => {
   return (
     <div className="ddv-missed">
       <div>
-        <h2 className="text-center mb-4">DDV Missed</h2>
+        <Typography variant="h4" className="text-center mb-4">
+          Zamujen DDV
+        </Typography>
       </div>
       <div>
         {cards.cards.length > 0 ? (

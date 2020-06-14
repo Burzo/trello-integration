@@ -3,8 +3,15 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login'
 import { Container, Typography } from '@material-ui/core'
 import TrelloIntegration from './components/'
 import { Loading } from './components/helpers/Loading/Loading'
+import { getBrowserLocales } from './helpers'
+import moment from 'moment-timezone'
+import 'moment/locale/sl'
 
 const PRODUCTION = process.env.NODE_ENV === 'production'
+
+// Set language locale
+let locale = getBrowserLocales({ languageCodeOnly: true })
+locale && moment.locale(locale[0])
 
 /**
  * App takes care of the google login only

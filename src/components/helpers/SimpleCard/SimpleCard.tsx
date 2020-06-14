@@ -58,11 +58,7 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
         classNames="alert"
         unmountOnExit
       >
-        <Card
-          key={card.id}
-          elevation={3}
-          className={'simplecard card text-dark ' + className}
-        >
+        <Card key={card.id} elevation={3} className={'simplecard ' + className}>
           <ExpansionPanel>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}

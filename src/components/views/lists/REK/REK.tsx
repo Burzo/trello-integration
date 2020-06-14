@@ -40,7 +40,9 @@ const REK: FC<IProps> = ({ cards }) => {
   return (
     <div className="rek">
       <div>
-        <h2 className="text-center mb-4">REK Missed</h2>
+        <Typography variant="h4" className="text-center mb-4">
+          REK za {moment().format('MMMM')}
+        </Typography>
       </div>
       <div>
         {cards.cards.length > 0 ? (
