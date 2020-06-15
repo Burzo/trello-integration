@@ -55,7 +55,7 @@ function App({ putGoogleUser }: IProps) {
     )
   }
 
-  if (!loggedIn) {
+  if (PRODUCTION && !loggedIn) {
     return (
       <div className="container-fluid">
         <span className="fixed-middle d-flex flex-column justify-content-center text-center">
