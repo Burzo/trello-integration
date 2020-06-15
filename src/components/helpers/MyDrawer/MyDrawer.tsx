@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, FunctionComponent } from 'react'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import InboxIcon from '@material-ui/icons/MoveToInbox'
@@ -12,6 +12,7 @@ import {
   List,
   Divider,
   ListItem,
+  ListItemTypeMap,
 } from '@material-ui/core'
 
 interface IProps {
@@ -21,12 +22,13 @@ interface IProps {
   width: number
 }
 
-export default function MyDrawer({
+export const MyDrawer: FunctionComponent<IProps> = ({
   onClick,
   side = 'left',
   width,
+  children,
   open,
-}: IProps) {
+}) => {
   return (
     <Drawer
       style={{ width }}
@@ -40,28 +42,8 @@ export default function MyDrawer({
           {side === 'left' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
         </IconButton>
       </div>
-      <Divider />
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={'Plače'} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      <Divider style={{ marginBottom: '1rem' }} />
+      {children}
     </Drawer>
   )
 }

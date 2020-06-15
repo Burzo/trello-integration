@@ -4,16 +4,17 @@ import { Card, Cards } from '../../../../store/cards/types'
 import { RootState } from '../../../../store'
 import { Typography } from '@material-ui/core'
 import { remapListIdCards, remapBoardIdCards } from '../../../../helpers'
-import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
+import TodoCard from '../../../helpers/SimpleCard/TodoCard'
 import moment from 'moment'
 import AllDone from '../../../helpers/AllDone/AllDone'
 import { Divider } from '@material-ui/core'
 
 interface IProps {
   cards: Cards
+  googleMail: string
 }
 
-const PersonalTasks: FC<IProps> = ({ cards }) => {
+const PersonalTasks: FC<IProps> = ({ cards, googleMail }) => {
   if (cards.error) {
     return (
       <div className="ddv">
@@ -27,15 +28,18 @@ const PersonalTasks: FC<IProps> = ({ cards }) => {
   return (
     <div className="ddv">
       <div>
-        <Typography variant="h4" className="text-center mb-3">
-          DDV za {moment().format('MMMM')}
+        <Typography variant="h5" className="text-center mb-3 uppercase">
+          Moje zadolžitve
+        </Typography>
+        <Typography variant="body2" className="text-center mb-3 uppercase">
+          {googleMail}
         </Typography>
       </div>
       <Divider style={{ marginBottom: '1rem' }} />
       <div>
         {cards.cards.length > 0 ? (
           cards.cards.map((card: Card) => (
-            <SimpleCard key={card.id} card={card} />
+            <TodoCard key={card.id} card={card} />
           ))
         ) : (
           <AllDone />
@@ -46,17 +50,23 @@ const PersonalTasks: FC<IProps> = ({ cards }) => {
 }
 
 const mapStateToProps = (store: RootState) => {
-  console.log(store.googleUser)
-  // Filter by completed and also check if it's this month
-  const mappedCards = remapListIdCards(
+  let mappedCards = remapListIdCards(
     store.lists.lists,
     remapBoardIdCards(store.boards.boards, store.cards.cards),
   )
+
+  // Get out current user
+  mappedCards = mappedCards.filter(
+    (card: Card) =>
+      card.idBoard === store.googleUser.email && !card.dueComplete,
+  )
+
   return {
     cards: {
       ...store.cards,
       cards: mappedCards,
     },
+    googleMail: store.googleUser.email,
   }
 }
 

@@ -14,7 +14,8 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import { GoogleLogout } from 'react-google-login'
 import Router from './helpers/Router/Router'
-import MyDrawer from './helpers/MyDrawer/MyDrawer'
+import { MyDrawer } from './helpers/MyDrawer/MyDrawer'
+import PersonalTasks from './views/lists/PersonalTasks/PersonalTasks'
 
 const DRAWER_WIDTH = 260
 
@@ -96,7 +97,7 @@ const TrelloIntegration = () => {
           onClick={setOpenDrawer}
           side="left"
           width={DRAWER_WIDTH}
-        />
+        ></MyDrawer>
         <div className={getClassName()}>
           <Router />
         </div>
@@ -105,7 +106,9 @@ const TrelloIntegration = () => {
           onClick={setOpenSecondDrawer}
           side="right"
           width={DRAWER_WIDTH}
-        />
+        >
+          <PersonalTasks />
+        </MyDrawer>
       </React.Fragment>
     )
   }
