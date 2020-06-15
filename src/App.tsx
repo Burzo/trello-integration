@@ -6,6 +6,11 @@ import { Loading } from './components/helpers/Loading/Loading'
 import { getBrowserLocales } from './helpers'
 import moment from 'moment-timezone'
 import 'moment/locale/sl'
+import { connect } from 'react-redux'
+import { ThunkDispatch } from 'redux-thunk'
+import { RootState } from './store'
+import { setGoogleUser, GoogleUser } from './store/google/types'
+import { putGoogleUser } from './store/google/actions'
 
 const PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -16,7 +21,12 @@ locale && moment.locale(locale[0])
 /**
  * App takes care of the google login only
  */
-function App() {
+
+interface IProps {
+  putGoogleUser: (user: GoogleUser) => void
+}
+
+function App({ putGoogleUser }: IProps) {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
@@ -27,6 +37,7 @@ function App() {
         `Something went wrong, the response was: ${response.error}. Please, try again.`,
       )
     } else {
+      putGoogleUser(response.profileObj)
       setLoggedIn(true)
     }
     setLoading(false)
@@ -44,7 +55,7 @@ function App() {
     )
   }
 
-  if (PRODUCTION && !loggedIn) {
+  if (!loggedIn) {
     return (
       <div className="container-fluid">
         <span className="fixed-middle d-flex flex-column justify-content-center text-center">
@@ -76,4 +87,12 @@ function App() {
   )
 }
 
-export default App
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<RootState, any, setGoogleUser>,
+) => {
+  return {
+    putGoogleUser: (user: GoogleUser) => dispatch(putGoogleUser(user)),
+  }
+}
+
+export default connect(() => {}, mapDispatchToProps)(App)

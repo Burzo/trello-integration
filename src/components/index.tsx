@@ -23,14 +23,16 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import { GoogleLogout } from 'react-google-login'
 import Router from './helpers/Router/Router'
+import MyDrawer from './helpers/MyDrawer/MyDrawer'
 
-const DRAWER_WIDTH = 220
+const DRAWER_WIDTH = 260
 
 // Main entry point for the whole application. Everything is loaded up here.
 const TrelloIntegration = () => {
   let history = useHistory()
 
   const [openDrawer, setOpenDrawer] = useState(false)
+  const [openSecondDrawer, setOpenSecondDrawer] = useState(false)
   const [token, error, logout] = useTrelloClient(
     process.env.REACT_APP_TRELLO_API_KEY,
   )
@@ -39,11 +41,23 @@ const TrelloIntegration = () => {
     return <h1>{error}</h1>
   }
 
+  const getClassName = () => {
+    if (openDrawer && openSecondDrawer) {
+      return 'animate animate-left animate-right'
+    }
+    if (openDrawer) {
+      return 'animate animate-left'
+    }
+    if (openSecondDrawer) {
+      return 'animate animate-right'
+    }
+    return 'animate'
+  }
   if (token) {
     return (
       <React.Fragment>
         <AppBar
-          className={openDrawer ? 'animate animate-left' : 'animate'}
+          className={getClassName()}
           position="static"
           style={{ width: 'auto' }}
         >
@@ -74,47 +88,35 @@ const TrelloIntegration = () => {
               >
                 Logout
               </GoogleLogout>
+              {!openSecondDrawer && (
+                <IconButton
+                  onClick={(e) => setOpenSecondDrawer(true)}
+                  edge="end"
+                  color="inherit"
+                  aria-label="menu"
+                >
+                  <ChevronLeftIcon />
+                  <Typography variant="body1">My Tasks</Typography>
+                </IconButton>
+              )}
             </span>
           </Toolbar>
         </AppBar>
-        <Drawer
-          style={{ width: DRAWER_WIDTH }}
-          PaperProps={{ style: { width: DRAWER_WIDTH } }}
-          variant="persistent"
-          anchor="left"
+        <MyDrawer
           open={openDrawer}
-        >
-          <div>
-            <IconButton onClick={() => setOpenDrawer(false)}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={'Plače'} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <div className={openDrawer ? 'animate animate-left' : 'animate'}>
+          onClick={setOpenDrawer}
+          side="left"
+          width={DRAWER_WIDTH}
+        />
+        <div className={getClassName()}>
           <Router />
         </div>
+        <MyDrawer
+          open={openSecondDrawer}
+          onClick={setOpenSecondDrawer}
+          side="right"
+          width={DRAWER_WIDTH}
+        />
       </React.Fragment>
     )
   }
