@@ -33,8 +33,8 @@ interface IProps {
   updateCard: (token: string, card: Card, query: string) => void
 }
 
-const FETCH_INTERVAL = 3000
-const BOARD_FETCH_INTERVAL = 6000
+const FETCH_INTERVAL = 5000
+const BOARD_FETCH_INTERVAL = 10000
 
 const HomeView: FC<IProps> = ({
   boards,

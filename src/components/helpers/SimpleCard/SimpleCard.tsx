@@ -86,7 +86,7 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
                     variant="contained"
                     onClick={buttonPress}
                   >
-                    Shrani
+                    Narejeno
                   </Button>
                   <Button variant="contained" onClick={() => setOpen(true)}>
                     Spremeni

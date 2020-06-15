@@ -70,9 +70,9 @@ function App() {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <TrelloIntegration />
-    </div>
+    </React.Fragment>
   )
 }
 

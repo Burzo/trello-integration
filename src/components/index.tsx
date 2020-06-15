@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Switch, Link, useHistory } from 'react-router-dom'
 import useTrelloClient from './hooks/useTrelloClient'
 import HomeView from './views/HomeView'
 import { Loading } from './helpers/Loading/Loading'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import InboxIcon from '@material-ui/icons/MoveToInbox'
+import MailIcon from '@material-ui/icons/Mail'
 
 import {
   IconButton,
@@ -10,13 +14,23 @@ import {
   Toolbar,
   Typography,
   Button,
+  Drawer,
+  ListItemText,
+  List,
+  Divider,
+  ListItem,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { GoogleLogout } from 'react-google-login'
+import Router from './helpers/Router/Router'
+
+const DRAWER_WIDTH = 220
 
 // Main entry point for the whole application. Everything is loaded up here.
 const TrelloIntegration = () => {
   let history = useHistory()
+
+  const [openDrawer, setOpenDrawer] = useState(false)
   const [token, error, logout] = useTrelloClient(
     process.env.REACT_APP_TRELLO_API_KEY,
   )
@@ -28,11 +42,16 @@ const TrelloIntegration = () => {
   if (token) {
     return (
       <React.Fragment>
-        <AppBar position="static">
+        <AppBar
+          className={openDrawer ? 'animate animate-left' : 'animate'}
+          position="static"
+        >
           <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
+            {!openDrawer && (
+              <IconButton edge="start" color="inherit" aria-label="menu">
+                <MenuIcon onClick={(e) => setOpenDrawer(true)} />
+              </IconButton>
+            )}
             <Typography style={{ marginRight: '2rem' }} variant="h5">
               DEL d.o.o.&nbsp;
             </Typography>
@@ -52,15 +71,44 @@ const TrelloIntegration = () => {
             </span>
           </Toolbar>
         </AppBar>
-        <Switch>
-          <Route exact path="/" component={() => <HomeView token={token} />} />
-          <Route
-            exact
-            path="/place"
-            component={() => <h1>In the making...</h1>}
-          />
-          <Route component={() => <HomeView token={token} />} />
-        </Switch>
+        <Drawer
+          style={{ width: DRAWER_WIDTH }}
+          PaperProps={{ style: { width: DRAWER_WIDTH } }}
+          variant="persistent"
+          anchor="left"
+          open={openDrawer}
+        >
+          <div>
+            <IconButton onClick={() => setOpenDrawer(false)}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={'Plače'} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <div className={openDrawer ? 'animate animate-left' : 'animate'}>
+          <Router />
+        </div>
       </React.Fragment>
     )
   }
