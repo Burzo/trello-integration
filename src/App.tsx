@@ -70,9 +70,9 @@ function App() {
   }
 
   return (
-    <React.Fragment>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <TrelloIntegration />
-    </React.Fragment>
+    </div>
   )
 }
 

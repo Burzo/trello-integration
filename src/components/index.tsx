@@ -45,11 +45,17 @@ const TrelloIntegration = () => {
         <AppBar
           className={openDrawer ? 'animate animate-left' : 'animate'}
           position="static"
+          style={{ width: 'auto' }}
         >
           <Toolbar>
             {!openDrawer && (
-              <IconButton edge="start" color="inherit" aria-label="menu">
-                <MenuIcon onClick={(e) => setOpenDrawer(true)} />
+              <IconButton
+                onClick={(e) => setOpenDrawer(true)}
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
               </IconButton>
             )}
             <Typography style={{ marginRight: '2rem' }} variant="h5">
