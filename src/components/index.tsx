@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
-import { Route, Switch, Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import useTrelloClient from './hooks/useTrelloClient'
-import HomeView from './views/HomeView'
 import { Loading } from './helpers/Loading/Loading'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
 
 import {
   IconButton,
@@ -14,11 +10,6 @@ import {
   Toolbar,
   Typography,
   Button,
-  Drawer,
-  ListItemText,
-  List,
-  Divider,
-  ListItem,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { GoogleLogout } from 'react-google-login'
@@ -33,9 +24,7 @@ const TrelloIntegration = () => {
 
   const [openDrawer, setOpenDrawer] = useState(false)
   const [openSecondDrawer, setOpenSecondDrawer] = useState(false)
-  const [token, error, logout] = useTrelloClient(
-    process.env.REACT_APP_TRELLO_API_KEY,
-  )
+  const [token, error] = useTrelloClient(process.env.REACT_APP_TRELLO_API_KEY)
 
   if (error) {
     return <h1>{error}</h1>

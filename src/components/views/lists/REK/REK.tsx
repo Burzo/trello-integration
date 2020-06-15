@@ -10,8 +10,6 @@ import {
 } from '../../../../helpers'
 import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
-import { Loading } from '../../../helpers/Loading/Loading'
 import AllDone from '../../../helpers/AllDone/AllDone'
 
 interface IProps {
@@ -70,6 +68,7 @@ const mapStateToProps = (store: RootState) => {
         return true
       }
     }
+    return false
   })
   return {
     cards: {

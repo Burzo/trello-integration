@@ -10,7 +10,6 @@ import {
 } from '../../../../helpers'
 import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import AllDone from '../../../helpers/AllDone/AllDone'
 import { Divider } from '@material-ui/core'
 
@@ -61,6 +60,7 @@ const mapStateToProps = (store: RootState) => {
         return true
       }
     }
+    return false
   })
   return {
     cards: {

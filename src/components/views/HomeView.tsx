@@ -9,14 +9,13 @@ import {
   updateCard,
 } from '../../store/cards/actions'
 import { Card, Cards, UpdateCardTypes } from '../../store/cards/types'
-import SimpleCard from '../helpers/SimpleCard/SimpleCard'
 import {
   remapBoardIdCards,
   remapBoardIdLists,
   remapListIdCards,
 } from '../../helpers'
 import { fetchListsForMultipleBoards } from '../../store/lists/actions'
-import { Grid, Paper } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import DDV from './lists/DDV/DDV'
 import './home.scss'
 import REK from './lists/REK/REK'

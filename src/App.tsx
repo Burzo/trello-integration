@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { GoogleLogin, GoogleLogout } from 'react-google-login'
-import { Container, Typography } from '@material-ui/core'
+import { GoogleLogin } from 'react-google-login'
+import { Typography } from '@material-ui/core'
 import TrelloIntegration from './components/'
 import { Loading } from './components/helpers/Loading/Loading'
 import { getBrowserLocales } from './helpers'

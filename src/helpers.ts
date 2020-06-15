@@ -1,8 +1,8 @@
+/* eslint-disable array-callback-return */
 import { IBoard } from './store/boards/types'
 import { Card } from './store/cards/types'
 import { List } from './store/lists/types'
 import _ from 'lodash'
-import { stringify } from 'querystring'
 
 declare global {
   interface Window {

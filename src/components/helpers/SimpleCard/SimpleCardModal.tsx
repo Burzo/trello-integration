@@ -1,10 +1,6 @@
 import React, { FC, useState, SetStateAction, Dispatch } from 'react'
-import { Card, UpdateCardTypes } from '../../../store/cards/types'
+import { Card } from '../../../store/cards/types'
 import { Fade, TextField, Button, ButtonGroup, Paper } from '@material-ui/core'
-import { ThunkDispatch } from 'redux-thunk'
-import { RootState } from '../../../store'
-import { updateCard } from '../../../store/cards/actions'
-import { connect } from 'react-redux'
 import { getTrelloToken } from '../../../helpers'
 
 interface IProps {
@@ -23,10 +19,6 @@ export const SimpleCardModal: FC<IProps> = ({
 }) => {
   const [name, setName] = useState(card.name)
   const [desc, setDesc] = useState(card.desc)
-
-  let date = card.due
-    ? new Date(card.due).toLocaleDateString()
-    : 'No date available'
 
   const buttonPress = () => {
     const query = { name, desc }

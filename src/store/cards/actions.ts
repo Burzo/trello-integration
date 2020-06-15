@@ -8,7 +8,6 @@ import {
   UPDATE_CARD_ERROR,
   UPDATE_CARD_SUCCESS,
   UpdateCardTypes,
-  UpdateCard,
 } from './types'
 import { Dispatch } from 'react'
 import { AppThunk } from '..'

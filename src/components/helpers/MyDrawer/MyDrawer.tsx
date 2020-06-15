@@ -7,10 +7,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
 import {
   IconButton,
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
   Drawer,
   ListItemText,
   List,

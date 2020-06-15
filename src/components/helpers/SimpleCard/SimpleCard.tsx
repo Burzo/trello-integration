@@ -6,15 +6,11 @@ import { updateCard } from '../../../store/cards/actions'
 import { connect } from 'react-redux'
 import { getTrelloToken } from '../../../helpers'
 import './style.scss'
-import DoneIcon from '@material-ui/icons/Done'
 import { CSSTransition } from 'react-transition-group'
 import {
   Modal,
-  Fade,
   Backdrop,
   Button,
-  Paper,
-  Snackbar,
   Card,
   ButtonGroup,
   ExpansionPanel,

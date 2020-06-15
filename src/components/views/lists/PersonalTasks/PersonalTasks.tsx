@@ -3,14 +3,9 @@ import { connect } from 'react-redux'
 import { Card, Cards } from '../../../../store/cards/types'
 import { RootState } from '../../../../store'
 import { Typography } from '@material-ui/core'
-import {
-  remapListIdCards,
-  remapBoardIdCards,
-  getOutDDV,
-} from '../../../../helpers'
+import { remapListIdCards, remapBoardIdCards } from '../../../../helpers'
 import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import AllDone from '../../../helpers/AllDone/AllDone'
 import { Divider } from '@material-ui/core'
 
@@ -51,8 +46,6 @@ const PersonalTasks: FC<IProps> = ({ cards }) => {
 }
 
 const mapStateToProps = (store: RootState) => {
-  const thisMonth = moment().month()
-  const thisYear = moment().year()
   console.log(store.googleUser)
   // Filter by completed and also check if it's this month
   const mappedCards = remapListIdCards(
