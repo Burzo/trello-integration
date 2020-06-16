@@ -3,17 +3,20 @@ import {
   FETCH_LISTS_START,
   FETCH_LISTS_SUCCESS,
   FETCH_LISTS_ERROR,
+  List,
 } from './types'
 import { Dispatch } from 'react'
 import { AppThunk } from '..'
 import { IBoard } from '../boards/types'
-import { handleTrelloTokenExpiry } from '../../helpers'
+import { handleTrelloTokenExpiry, manageLists } from '../../helpers'
 
 export const fetchListsForMultipleBoards = (
   token: string,
   boards: IBoard[],
-): AppThunk => (dispatch: Dispatch<AllListsTypes>) => {
+): AppThunk => (dispatch: Dispatch<AllListsTypes>, state) => {
   dispatch({ type: FETCH_LISTS_START })
+
+  let allLists: List[] = []
 
   Promise.all(
     boards.map((board: IBoard) => {
@@ -22,7 +25,7 @@ export const fetchListsForMultipleBoards = (
       )
         .then((res: Response) => handleTrelloTokenExpiry(res))
         .then((data) => {
-          dispatch({ type: FETCH_LISTS_SUCCESS, payload: data })
+          allLists = [...allLists, ...data]
           return null
         })
         .catch((e: Error) => {
@@ -31,6 +34,10 @@ export const fetchListsForMultipleBoards = (
         })
     }),
   )
-    .then(() => console.log('Lists loaded successfully.'))
+    .then(() => {
+      console.log('Lists loaded successfully.')
+      allLists = manageLists(state().lists.lists, allLists)
+      dispatch({ type: FETCH_LISTS_SUCCESS, payload: allLists })
+    })
     .catch((error) => console.log(error))
 }

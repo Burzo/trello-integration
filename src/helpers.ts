@@ -80,74 +80,80 @@ export const getOutREK = (cards: Card[]): Card[] => {
   })
 }
 
-export const filterOutExistingCards = (
-  cards: Card[],
-  newCards: Card[],
-): Card[] => {
-  if (newCards.length === 0) {
-    return cards
-  }
-  if (cards.length === 0) {
-    return newCards
-  }
+// export const filterOutExistingCards = (
+//   cards: Card[],
+//   newCards: Card[],
+// ): Card[] => {
+//   if (newCards.length === 0) {
+//     return cards
+//   }
+//   if (cards.length === 0) {
+//     return newCards
+//   }
 
-  let result: Card[] = cards
+//   let result: Card[] = cards
 
-  let exists = false
-  newCards.map((newCard: Card) => {
-    exists = true
-    cards.map((card: Card) => {
-      if (card.id === newCard.id) {
-        if (_.isEqual(card, newCard)) {
-          exists = false
-        } else {
-          exists = true
-          result = result.filter((e: Card) => e.id !== card.id)
-        }
-      }
-    })
-    if (exists) {
-      result.push(newCard)
-    }
-  })
-  result.sort((a, b) => {
-    return a.id.localeCompare(b.id)
-  })
-  return [...result]
-}
+//   let exists = false
+//   newCards.map((newCard: Card) => {
+//     exists = true
+//     cards.map((card: Card) => {
+//       if (card.id === newCard.id) {
+//         if (newCard.closed) {
+//           console.warn(newCard.closed)
+//         }
+//         if (card.closed) {
+//           console.warn(card.closed)
+//         }
+//         if (_.isEqual(card, newCard)) {
+//           exists = false
+//         } else {
+//           exists = true
+//           result = result.filter((e: Card) => e.id !== card.id)
+//         }
+//       }
+//     })
+//     if (exists) {
+//       result.push(newCard)
+//     }
+//   })
+//   result.sort((a, b) => {
+//     return a.id.localeCompare(b.id)
+//   })
+//   return [...result]
+// }
 
-export const filterOutExistingLists = (
-  lists: List[],
-  newLists: List[],
-): List[] => {
-  if (newLists.length === 0) {
-    return lists
-  }
-  if (lists.length === 0) {
-    return newLists
-  }
+// export const filterOutExistingLists = (
+//   lists: List[],
+//   newLists: List[],
+// ): List[] => {
+//   if (newLists.length === 0) {
+//     return lists
+//   }
+//   if (lists.length === 0) {
+//     return newLists
+//   }
 
-  let result: List[] = lists
+//   let result: List[] = lists
 
-  let exists = false
-  newLists.map((newList: List) => {
-    exists = true
-    lists.map((list: List) => {
-      if (list.id === newList.id) {
-        if (_.isEqual(list, newList)) {
-          exists = false
-        } else {
-          exists = true
-          result = result.filter((e: List) => e.id !== list.id)
-        }
-      }
-    })
-    if (exists) {
-      result.push(newList)
-    }
-  })
-  return [...result]
-}
+//   let exists = false
+//   newLists.map((newList: List) => {
+//     exists = true
+//     lists.map((list: List) => {
+//       if (list.id === newList.id) {
+//         if (_.isEqual(list, newList)) {
+//           exists = false
+//         } else {
+//           exists = true
+//           result = result.filter((e: List) => e.id !== list.id)
+//         }
+//       }
+//     })
+//     if (exists) {
+//       result.push(newList)
+//     }
+//   })
+//   return [...result]
+// }
 
 export const getTrelloToken = () => window.Trello.token()
 
@@ -171,4 +177,24 @@ export function getBrowserLocales(options = {}) {
     const trimmedLocale = locale.trim()
     return opt.languageCodeOnly ? trimmedLocale.split(/-|_/)[0] : trimmedLocale
   })
+}
+
+const sort = (data: Card[] | List[]): Card[] | List[] => {
+  return data.sort((a: Card | List, b: Card | List) => {
+    return a.id.localeCompare(b.id)
+  })
+}
+
+export const manageCards = (cards: Card[], newCards: Card[]): Card[] => {
+  if (newCards.length === 0) {
+    return []
+  }
+  return sort(newCards) as Card[]
+}
+
+export const manageLists = (lists: List[], newLists: List[]): List[] => {
+  if (newLists.length === 0) {
+    return []
+  }
+  return sort(newLists) as List[]
 }
