@@ -9,6 +9,10 @@ import {
   UPDATE_CARD_SUCCESS,
   UPDATE_CARD_ERROR,
   UpdateCardTypes,
+  CREATE_CARD_START,
+  CREATE_CARD_SUCCESS,
+  CREATE_CARD_ERROR,
+  CreateCardTypes,
 } from './types'
 
 export const initialState: Cards = {
@@ -19,7 +23,7 @@ export const initialState: Cards = {
 
 export const cardsReducer = (
   state: Cards = initialState,
-  action: AllCardsTypes | UpdateCardTypes,
+  action: AllCardsTypes | UpdateCardTypes | CreateCardTypes,
 ): Cards => {
   switch (action.type) {
     case FETCH_CARDS_START:
@@ -70,6 +74,24 @@ export const cardsReducer = (
           }
           return card
         }),
+      }
+    case CREATE_CARD_START:
+      return {
+        ...state,
+        error: null,
+        loading: true,
+      }
+    case CREATE_CARD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cards: [...state.cards, action.payload],
+      }
+    case CREATE_CARD_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       }
     default:
       return state

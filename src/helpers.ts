@@ -2,7 +2,6 @@
 import { IBoard } from './store/boards/types'
 import { Card } from './store/cards/types'
 import { List } from './store/lists/types'
-import _ from 'lodash'
 
 declare global {
   interface Window {

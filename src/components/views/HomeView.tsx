@@ -8,7 +8,12 @@ import {
   fetchCardsForMultipleBoards,
   updateCard,
 } from '../../store/cards/actions'
-import { Card, Cards, UpdateCardTypes } from '../../store/cards/types'
+import {
+  Card,
+  Cards,
+  UpdateCardTypes,
+  CardPayloadObject,
+} from '../../store/cards/types'
 import {
   remapBoardIdCards,
   remapBoardIdLists,
@@ -29,7 +34,7 @@ interface IProps {
   fetchBoards: (token: string) => void
   fetchCardsForMultipleBoards: (token: string, boards: IBoard[]) => void
   fetchListsForMultipleBoards: (token: string, boards: IBoard[]) => void
-  updateCard: (token: string, card: Card, query: string) => void
+  updateCard: (token: string, card: Card, query: CardPayloadObject) => void
 }
 
 const FETCH_INTERVAL = 5000
@@ -137,7 +142,7 @@ const mapDispatchToProps = (
     fetchListsForMultipleBoards: (token: string, boards: IBoard[]) => {
       dispatch(fetchListsForMultipleBoards(token, boards))
     },
-    updateCard: (token: string, card: Card, query: string) =>
+    updateCard: (token: string, card: Card, query: CardPayloadObject) =>
       dispatch(updateCard(token, card, query)),
   }
 }

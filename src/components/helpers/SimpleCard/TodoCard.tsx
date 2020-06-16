@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Card as MyCard, UpdateCardTypes } from '../../../store/cards/types'
+import {
+  Card as MyCard,
+  UpdateCardTypes,
+  CardPayloadObject,
+} from '../../../store/cards/types'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../../store'
 import { updateCard } from '../../../store/cards/actions'
@@ -21,11 +25,12 @@ import {
 } from '@material-ui/core'
 import { SimpleCardModal } from './SimpleCardModal'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import moment from 'moment-timezone'
 
 interface IProps {
   card: MyCard
   className?: string
-  updateCard?: (token: string, card: MyCard, query: string) => void
+  updateCard?: (token: string, card: MyCard, query: CardPayloadObject) => void
 }
 
 const TodoCard = ({ updateCard, card, className = '' }: IProps) => {
@@ -33,7 +38,11 @@ const TodoCard = ({ updateCard, card, className = '' }: IProps) => {
   const [open, setOpen] = useState(false)
 
   const buttonPress = () => {
-    updateCard && updateCard(getTrelloToken(), card, 'dueComplete=true')
+    updateCard &&
+      updateCard(getTrelloToken(), card, {
+        dueComplete: true,
+        due: moment.utc().toString(),
+      })
     setAnimate(false)
   }
 
@@ -119,7 +128,7 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootState, any, UpdateCardTypes>,
 ) => {
   return {
-    updateCard: (token: string, card: MyCard, query: string) =>
+    updateCard: (token: string, card: MyCard, query: CardPayloadObject) =>
       dispatch(updateCard(token, card, query)),
   }
 }

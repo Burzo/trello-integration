@@ -1,5 +1,5 @@
 import React, { FC, useState, SetStateAction, Dispatch } from 'react'
-import { Card } from '../../../store/cards/types'
+import { Card, CardPayloadObject } from '../../../store/cards/types'
 import { Fade, TextField, Button, ButtonGroup, Paper } from '@material-ui/core'
 import { getTrelloToken } from '../../../helpers'
 
@@ -7,7 +7,7 @@ interface IProps {
   card: Card
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  updateCard?: (token: string, card: Card, query: string) => void
+  updateCard?: (token: string, card: Card, query: CardPayloadObject) => void
 }
 
 // Modal needs everything passed down since it closes up and can't finish fetching
@@ -21,18 +21,13 @@ export const SimpleCardModal: FC<IProps> = ({
   const [desc, setDesc] = useState(card.desc)
 
   const buttonPress = () => {
-    const query = { name, desc }
-    const queryString = Object.keys(query)
-      .map((key: string) => key + '=' + encodeURIComponent((query as any)[key]))
-      .join('&')
-    console.log(queryString)
-    updateCard && updateCard(getTrelloToken(), card, queryString)
+    updateCard && updateCard(getTrelloToken(), card, { name, desc })
     setOpen(false)
   }
 
   return (
     <Fade in={open}>
-      <Paper>
+      <Paper style={{ padding: '0.5rem' }}>
         <div className="simplecard-modal-form">
           <TextField
             value={name}

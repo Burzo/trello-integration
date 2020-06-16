@@ -8,6 +8,11 @@ import {
   UPDATE_CARD_ERROR,
   UPDATE_CARD_SUCCESS,
   UpdateCardTypes,
+  CardPayloadObject,
+  CREATE_CARD_START,
+  CREATE_CARD_SUCCESS,
+  CREATE_CARD_ERROR,
+  CreateCardTypes,
 } from './types'
 import { Dispatch } from 'react'
 import { AppThunk } from '..'
@@ -61,13 +66,19 @@ export const fetchCardsForMultipleBoards = (
 export const updateCard = (
   token: string,
   card: Card,
-  query: string,
+  query: CardPayloadObject,
 ): AppThunk => (dispatch: Dispatch<UpdateCardTypes>) => {
   dispatch({ type: UPDATE_CARD_START, payload: card })
 
   fetch(
-    `https://api.trello.com/1/cards/${card.id}?${query}&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
-    { method: 'put' },
+    `https://api.trello.com/1/cards/${card.id}/?key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
+    {
+      method: 'put',
+      body: JSON.stringify(query),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
   )
     .then((res: Response) => handleTrelloTokenExpiry(res))
     .then((data) => {
@@ -80,14 +91,23 @@ export const updateCard = (
     })
 }
 
-// export const fetchCardsForOneBoard = (token: string): AppThunk => (
-//   dispatch: Dispatch<AllCardsTypes>,
-// ) => {
-//   dispatch({ type: FETCH_CARDS_START })
-//   fetch(
-//     `https://api.trello.com/1/boards/5a85cc4b335e97cd5104a64b/cards?key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
-//   )
-//     .then((res: Response) => handleTrelloTokenExpiry(res))
-//     .then((data) => dispatch({ type: FETCH_CARDS_SUCCESS, payload: data }))
-//     .catch((e: Error) => dispatch({ type: FETCH_CARDS_ERROR, payload: e }))
-// }
+export const addACard = (
+  token: string,
+  listId: string,
+  card: CardPayloadObject,
+): AppThunk => (dispatch: Dispatch<CreateCardTypes>) => {
+  dispatch({ type: CREATE_CARD_START })
+  fetch(
+    `https://api.trello.com/1/cards?idList=${listId}&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
+    {
+      method: 'post',
+      body: JSON.stringify(card),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+    .then((res: Response) => handleTrelloTokenExpiry(res))
+    .then((data) => dispatch({ type: CREATE_CARD_SUCCESS, payload: data }))
+    .catch((e: Error) => dispatch({ type: CREATE_CARD_ERROR, payload: e }))
+}
