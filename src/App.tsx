@@ -12,7 +12,7 @@ import { RootState } from './store'
 import { setGoogleUser, GoogleUser } from './store/google/types'
 import { putGoogleUser } from './store/google/actions'
 
-const PRODUCTION = true
+const PRODUCTION = process.env.NODE_ENV === 'production'
 
 // Set language locale
 let locale = getBrowserLocales({ languageCodeOnly: true })
