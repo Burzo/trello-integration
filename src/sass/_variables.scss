@@ -24,11 +24,13 @@ $color-black: #000;
 
 $background-color: #fef9e7;
 $background-gradient: linear-gradient(315deg, #fffdd0 0%, #fff7cb 74%);
-$background-danger-gradient: linear-gradient(to bottom, #ff4b1f, #ff9068);
+$background-danger-gradient: linear-gradient(to right, #f00000, #dc281e);
 $card-background-gradient: linear-gradient(to top, #ff5f6d, #ffc371);
 
 $transparent-background-white: rgba(255, 255, 255, 0.24);
 $icon-color: #55c57a;
+
+$color-error: red;
 
 // FONT
 $default-font-size: 1.6rem;

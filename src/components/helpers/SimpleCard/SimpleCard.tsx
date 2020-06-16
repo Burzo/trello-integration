@@ -26,6 +26,7 @@ import {
 import { SimpleCardModal } from './SimpleCardModal'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import moment from 'moment-timezone'
+import ErrorIcon from '@material-ui/icons/Error'
 
 interface IProps {
   card: MyCard
@@ -63,13 +64,18 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
         classNames="alert"
         unmountOnExit
       >
-        <Card key={card.id} elevation={3} className={'simplecard ' + className}>
+        <Card key={card.id} elevation={3} className="simplecard">
           <ExpansionPanel>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
+              {className === 'danger' && (
+                <div className={'center ' + className}>
+                  <ErrorIcon fontSize="large" />
+                </div>
+              )}
               <div className="container">
                 <Typography variant="h6">{card.idBoard}</Typography>
                 <Typography className="subtitle">{card.name}</Typography>

@@ -38,9 +38,12 @@ const REK: FC<IProps> = ({ cards }) => {
 
   return (
     <div className="rek">
-      <div>
-        <Typography variant="h4" className="text-center mb-3">
-          REK za {moment().format('MMMM')}
+      <div className="text-center mb-3">
+        <Typography display="inline" variant="h6">
+          REK za&nbsp;
+        </Typography>
+        <Typography display="inline" variant="h5">
+          {moment().format('MMMM').toUpperCase()}
         </Typography>
       </div>
       <Divider style={{ marginBottom: '1rem' }} />

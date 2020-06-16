@@ -30,9 +30,12 @@ const DDV: FC<IProps> = ({ cards }) => {
 
   return (
     <div className="ddv">
-      <div>
-        <Typography variant="h4" className="text-center mb-3">
-          DDV za {moment().format('MMMM')}
+      <div className="text-center mb-3">
+        <Typography display="inline" variant="h6">
+          DDV za&nbsp;
+        </Typography>
+        <Typography display="inline" variant="h5">
+          {moment().format('MMMM').toUpperCase()}
         </Typography>
       </div>
       <Divider style={{ marginBottom: '1rem' }} />
