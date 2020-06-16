@@ -5,7 +5,6 @@ import { RootState } from '../../../../store'
 import { Typography } from '@material-ui/core'
 import { remapListIdCards, remapBoardIdCards } from '../../../../helpers'
 import TodoCard from '../../../helpers/SimpleCard/TodoCard'
-import moment from 'moment'
 import AllDone from '../../../helpers/AllDone/AllDone'
 import { Divider } from '@material-ui/core'
 

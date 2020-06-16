@@ -1,19 +1,7 @@
-import React, { FC, FunctionComponent } from 'react'
+import React, { FunctionComponent } from 'react'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-
-import {
-  IconButton,
-  Drawer,
-  ListItemText,
-  List,
-  Divider,
-  ListItem,
-  ListItemTypeMap,
-} from '@material-ui/core'
+import { IconButton, Drawer, Divider } from '@material-ui/core'
 
 interface IProps {
   onClick: React.Dispatch<React.SetStateAction<boolean>>
