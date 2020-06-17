@@ -85,7 +85,7 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
                 <Typography
                   variant="body1"
                   className={
-                    className === 'danger' ? '' : 'simplecard-small-text-1'
+                    className === 'danger' ? '' : 'simplecard-title-text'
                   }
                 >
                   {card.idBoard}
