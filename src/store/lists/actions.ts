@@ -8,7 +8,11 @@ import {
 import { Dispatch } from 'react'
 import { AppThunk } from '..'
 import { IBoard } from '../boards/types'
-import { handleTrelloTokenExpiry, manageLists } from '../../helpers'
+import {
+  handleTrelloTokenExpiry,
+  manageLists,
+  gatherUpData,
+} from '../../helpers'
 
 export const fetchListsForMultipleBoards = (
   token: string,
@@ -18,13 +22,28 @@ export const fetchListsForMultipleBoards = (
 
   let allLists: List[] = []
 
+  let url = ''
+  const batchedUrls: string[] = []
+
+  boards.map((board: IBoard, index) => {
+    if (index % 10 === 0) {
+      url += `/boards/${board.id}/lists`
+      batchedUrls.push(url)
+      url = ''
+    } else {
+      url += `/boards/${board.id}/lists,`
+    }
+    return null
+  })
+
   Promise.all(
-    boards.map((board: IBoard) => {
+    batchedUrls.map((str: string) => {
       return fetch(
-        `https://api.trello.com/1/boards/${board.id}/lists?key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
+        `https://api.trello.com/1/batch?urls=${str}&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
       )
         .then((res: Response) => handleTrelloTokenExpiry(res))
         .then((data) => {
+          data = gatherUpData(data)
           allLists = [...allLists, ...data]
           return null
         })
@@ -37,6 +56,7 @@ export const fetchListsForMultipleBoards = (
     .then(() => {
       console.log('Lists loaded successfully.')
       allLists = manageLists(state().lists.lists, allLists)
+      console.log(allLists)
       dispatch({ type: FETCH_LISTS_SUCCESS, payload: allLists })
     })
     .catch((error) => console.log(error))

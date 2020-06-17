@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Card, Cards } from '../../../../store/cards/types'
 import { RootState } from '../../../../store'
 import { Typography } from '@material-ui/core'
+import Pagination from '@material-ui/lab/Pagination'
 import {
   remapListIdCards,
   remapBoardIdCards,
@@ -13,11 +14,19 @@ import moment from 'moment'
 import AllDone from '../../../helpers/AllDone/AllDone'
 import { Divider } from '@material-ui/core'
 
+const ITEMS_PER_PAGE: number = 15
+
 interface IProps {
   cards: Cards
 }
 
 const DDV: FC<IProps> = ({ cards }) => {
+  const [page, setPage] = React.useState(1)
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value)
+  }
+
   if (cards.error) {
     return (
       <div className="ddv">
@@ -37,13 +46,30 @@ const DDV: FC<IProps> = ({ cards }) => {
         <Typography display="inline" variant="h5">
           {moment().format('MMMM').toUpperCase()}
         </Typography>
+        <Typography display="inline" variant="body2">
+          &nbsp;(skupno {cards.cards.length})
+        </Typography>
       </div>
-      <Divider style={{ marginBottom: '1rem' }} />
-      <div>
+      {cards.cards.length > ITEMS_PER_PAGE && (
+        <Pagination
+          count={Math.floor(cards.cards.length / ITEMS_PER_PAGE)}
+          page={page}
+          onChange={handleChange}
+          color="primary"
+          classes={{ ul: 'center' }}
+        />
+      )}
+      <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
+      <div className="cards-container">
         {cards.cards.length > 0 ? (
-          cards.cards.map((card: Card) => (
-            <SimpleCard key={card.id} card={card} />
-          ))
+          cards.cards.map((card: Card, index) => {
+            let lowerLimit = page * ITEMS_PER_PAGE - ITEMS_PER_PAGE
+            let higherLimit = page * ITEMS_PER_PAGE
+            if (index >= lowerLimit && index < higherLimit) {
+              return <SimpleCard key={card.id} card={card} />
+            }
+            return null
+          })
         ) : (
           <AllDone />
         )}

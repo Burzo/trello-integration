@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Card, Cards } from '../../../../store/cards/types'
 import { RootState } from '../../../../store'
 import { Typography, Divider } from '@material-ui/core'
+import Pagination from '@material-ui/lab/Pagination'
 import {
   remapListIdCards,
   remapBoardIdCards,
@@ -12,12 +13,19 @@ import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
 import AllDone from '../../../helpers/AllDone/AllDone'
 
+const ITEMS_PER_PAGE: number = 15
+
 interface IProps {
   cards: Cards
 }
 
 const REK: FC<IProps> = ({ cards }) => {
   const [initialLoad, setInitialLoad] = useState(true)
+  const [page, setPage] = React.useState(1)
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value)
+  }
 
   useEffect(() => {
     if (initialLoad) {
@@ -45,13 +53,30 @@ const REK: FC<IProps> = ({ cards }) => {
         <Typography display="inline" variant="h5">
           {moment().format('MMMM').toUpperCase()}
         </Typography>
+        <Typography display="inline" variant="body2">
+          &nbsp;(skupno {cards.cards.length})
+        </Typography>
       </div>
-      <Divider style={{ marginBottom: '1rem' }} />
+      {cards.cards.length > ITEMS_PER_PAGE && (
+        <Pagination
+          count={Math.floor(cards.cards.length / ITEMS_PER_PAGE)}
+          page={page}
+          onChange={handleChange}
+          color="primary"
+          classes={{ ul: 'center' }}
+        />
+      )}
+      <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div>
         {cards.cards.length > 0 ? (
-          cards.cards.map((card: Card) => (
-            <SimpleCard key={card.id} card={card} />
-          ))
+          cards.cards.map((card: Card, index) => {
+            let lowerLimit = page * ITEMS_PER_PAGE - ITEMS_PER_PAGE
+            let higherLimit = page * ITEMS_PER_PAGE
+            if (index >= lowerLimit && index < higherLimit) {
+              return <SimpleCard key={card.id} card={card} />
+            }
+            return null
+          })
         ) : (
           <AllDone />
         )}

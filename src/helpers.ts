@@ -197,3 +197,17 @@ export const manageLists = (lists: List[], newLists: List[]): List[] => {
   }
   return sort(newLists) as List[]
 }
+
+export const gatherUpData = (data: any[]): any[] => {
+  let result: any[] = []
+
+  data.map((e: any) => {
+    if (Array.isArray(e['200'])) {
+      result = [...result, ...e['200']]
+    } else {
+      result.push(e['200'])
+    }
+  })
+
+  return result
+}

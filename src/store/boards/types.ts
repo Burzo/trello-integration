@@ -50,6 +50,7 @@ export interface IMember {
 }
 
 export interface IBoard {
+  urls?: string
   name: string
   desc: string
   descData: string | null
