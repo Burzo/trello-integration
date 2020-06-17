@@ -52,7 +52,7 @@ const DDV: FC<IProps> = ({ cards }) => {
       </div>
       {cards.cards.length > ITEMS_PER_PAGE && (
         <Pagination
-          count={Math.floor(cards.cards.length / ITEMS_PER_PAGE)}
+          count={Math.floor(cards.cards.length / ITEMS_PER_PAGE) + 1}
           page={page}
           onChange={handleChange}
           color="primary"

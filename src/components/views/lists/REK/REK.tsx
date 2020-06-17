@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Card, Cards } from '../../../../store/cards/types'
 import { RootState } from '../../../../store'
 import { Typography, Divider } from '@material-ui/core'
-import Pagination from '@material-ui/lab/Pagination'
 import {
   remapListIdCards,
   remapBoardIdCards,
@@ -11,6 +10,7 @@ import {
 } from '../../../../helpers'
 import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
+import Pagination from '@material-ui/lab/Pagination'
 import AllDone from '../../../helpers/AllDone/AllDone'
 
 const ITEMS_PER_PAGE: number = 15
@@ -59,7 +59,7 @@ const REK: FC<IProps> = ({ cards }) => {
       </div>
       {cards.cards.length > ITEMS_PER_PAGE && (
         <Pagination
-          count={Math.floor(cards.cards.length / ITEMS_PER_PAGE)}
+          count={Math.floor(cards.cards.length / ITEMS_PER_PAGE) + 1}
           page={page}
           onChange={handleChange}
           color="primary"

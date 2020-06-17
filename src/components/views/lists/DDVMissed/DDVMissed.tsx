@@ -12,6 +12,9 @@ import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
 import './style.scss'
 import AllDone from '../../../helpers/AllDone/AllDone'
+import Pagination from '@material-ui/lab/Pagination'
+
+const ITEMS_PER_PAGE: number = 15
 
 interface IProps {
   cards: Cards
@@ -19,6 +22,11 @@ interface IProps {
 
 const DDVMissed: FC<IProps> = ({ cards }) => {
   const [initialLoad, setInitialLoad] = useState(true)
+  const [page, setPage] = React.useState(1)
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value)
+  }
 
   useEffect(() => {
     if (initialLoad) {
@@ -44,12 +52,26 @@ const DDVMissed: FC<IProps> = ({ cards }) => {
           Zamujen DDV
         </Typography>
       </div>
-      <Divider style={{ marginBottom: '1rem' }} />
+      {cards.cards.length > ITEMS_PER_PAGE && (
+        <Pagination
+          count={Math.floor(cards.cards.length / ITEMS_PER_PAGE) + 1}
+          page={page}
+          onChange={handleChange}
+          color="primary"
+          classes={{ ul: 'center' }}
+        />
+      )}
+      <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div>
         {cards.cards.length > 0 ? (
-          cards.cards.map((card: Card) => (
-            <SimpleCard key={card.id} className="danger" card={card} />
-          ))
+          cards.cards.map((card: Card, index) => {
+            let lowerLimit = page * ITEMS_PER_PAGE - ITEMS_PER_PAGE
+            let higherLimit = page * ITEMS_PER_PAGE
+            if (index >= lowerLimit && index < higherLimit) {
+              return <SimpleCard key={card.id} card={card} />
+            }
+            return null
+          })
         ) : (
           <AllDone />
         )}
