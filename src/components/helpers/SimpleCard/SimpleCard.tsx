@@ -103,15 +103,32 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
             <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
               <Divider style={{ marginBottom: '0.7rem' }} />
               <div>
-                <Typography>Do: {date}</Typography>
+                <Typography
+                  className={
+                    className === 'danger' ? '' : 'simplecard-small-text-1'
+                  }
+                >
+                  Do: {date}
+                </Typography>
               </div>
               <Link href={card.url} target="_blank" rel="noreferrer">
-                <Typography>Odpri v Trellu</Typography>
+                <Typography
+                  className={
+                    className === 'danger' ? '' : 'simplecard-small-text-1'
+                  }
+                >
+                  Odpri v Trellu
+                </Typography>
               </Link>
               <Divider
                 style={{ marginBottom: '0.7rem', marginTop: '0.7rem' }}
               />
-              <div style={card.desc !== '' ? { marginBottom: '0.7rem' } : {}}>
+              <div
+                className={
+                  className === 'danger' ? '' : 'simplecard-small-text-1'
+                }
+                style={card.desc !== '' ? { marginBottom: '0.7rem' } : {}}
+              >
                 {card.desc}
               </div>
               <div className="center">
