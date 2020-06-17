@@ -13,7 +13,7 @@ import moment from 'moment'
 import Pagination from '@material-ui/lab/Pagination'
 import AllDone from '../../../helpers/AllDone/AllDone'
 
-const ITEMS_PER_PAGE: number = 15
+const ITEMS_PER_PAGE: number = 16
 
 interface IProps {
   cards: Cards
@@ -53,7 +53,7 @@ const REK: FC<IProps> = ({ cards }) => {
         <Typography display="inline" variant="h5">
           {moment().format('MMMM').toUpperCase()}
         </Typography>
-        <Typography display="inline" variant="body2">
+        <Typography display="inline" variant="body1">
           &nbsp;(skupno {cards.cards.length})
         </Typography>
       </div>
@@ -67,7 +67,7 @@ const REK: FC<IProps> = ({ cards }) => {
         />
       )}
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
-      <div>
+      <div className="cards-container">
         {cards.cards.length > 0 ? (
           cards.cards.map((card: Card, index) => {
             let lowerLimit = page * ITEMS_PER_PAGE - ITEMS_PER_PAGE

@@ -22,6 +22,7 @@ import {
   ExpansionPanelDetails,
   Typography,
   Divider,
+  Link,
 } from '@material-ui/core'
 import { SimpleCardModal } from './SimpleCardModal'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -65,11 +66,15 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
         unmountOnExit
       >
         <Card key={card.id} elevation={3} className="simplecard">
-          <ExpansionPanel>
+          <ExpansionPanel classes={{ root: 'simplecard-height' }}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
+              classes={{
+                root: 'h-100',
+                expandIcon: 'simplecard-expansion-panel-icon',
+              }}
             >
               {className === 'danger' && (
                 <div className={'center ' + className}>
@@ -77,29 +82,39 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
                 </div>
               )}
               <div className="container">
-                <Typography variant="h6">{card.idBoard}</Typography>
-                <Typography className="subtitle">{card.name}</Typography>
+                <Typography variant="body1">{card.idBoard}</Typography>
+                <Typography variant="body2">{card.name}</Typography>
               </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
-              <Divider style={{ marginBottom: '1rem' }} />
+              <Divider style={{ marginBottom: '0.7rem' }} />
               <div>
                 <Typography>Do: {date}</Typography>
               </div>
-              <Divider style={{ marginBottom: '1rem', marginTop: '1rem' }} />
-              <div style={card.desc !== '' ? { marginBottom: '1rem' } : {}}>
+              <Link href={card.url} target="_blank" rel="noreferrer">
+                <Typography>Odpri v Trellu</Typography>
+              </Link>
+              <Divider
+                style={{ marginBottom: '0.7rem', marginTop: '0.7rem' }}
+              />
+              <div style={card.desc !== '' ? { marginBottom: '0.7rem' } : {}}>
                 {card.desc}
               </div>
               <div className="center">
                 <ButtonGroup className="simplecard-modal-form-btns">
                   <Button
+                    size="small"
                     color="primary"
                     variant="contained"
                     onClick={buttonPress}
                   >
                     Narejeno
                   </Button>
-                  <Button variant="contained" onClick={() => setOpen(true)}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    onClick={() => setOpen(true)}
+                  >
                     Spremeni
                   </Button>
                 </ButtonGroup>

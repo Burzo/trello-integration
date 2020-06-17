@@ -14,7 +14,7 @@ import moment from 'moment'
 import AllDone from '../../../helpers/AllDone/AllDone'
 import { Divider } from '@material-ui/core'
 
-const ITEMS_PER_PAGE: number = 15
+const ITEMS_PER_PAGE: number = 16
 
 interface IProps {
   cards: Cards
@@ -46,7 +46,7 @@ const DDV: FC<IProps> = ({ cards }) => {
         <Typography display="inline" variant="h5">
           {moment().format('MMMM').toUpperCase()}
         </Typography>
-        <Typography display="inline" variant="body2">
+        <Typography display="inline" variant="body1">
           &nbsp;(skupno {cards.cards.length})
         </Typography>
       </div>
