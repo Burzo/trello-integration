@@ -68,7 +68,7 @@ const REKMissed: FC<IProps> = ({ cards }) => {
             let lowerLimit = page * ITEMS_PER_PAGE - ITEMS_PER_PAGE
             let higherLimit = page * ITEMS_PER_PAGE
             if (index >= lowerLimit && index < higherLimit) {
-              return <SimpleCard key={card.id} card={card} />
+              return <SimpleCard className="danger" key={card.id} card={card} />
             }
             return null
           })

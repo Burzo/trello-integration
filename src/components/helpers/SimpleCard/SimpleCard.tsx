@@ -82,8 +82,22 @@ const SimpleCard = ({ updateCard, card, className = '' }: IProps) => {
                 </div>
               )}
               <div className="container">
-                <Typography variant="body1">{card.idBoard}</Typography>
-                <Typography variant="body2">{card.name}</Typography>
+                <Typography
+                  variant="body1"
+                  className={
+                    className === 'danger' ? '' : 'simplecard-small-text-1'
+                  }
+                >
+                  {card.idBoard}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  className={
+                    className === 'danger' ? '' : 'simplecard-small-text-2'
+                  }
+                >
+                  {card.name}
+                </Typography>
               </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
