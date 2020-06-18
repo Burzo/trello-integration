@@ -186,4 +186,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(null, mapDispatchToProps)(SimpleCard)
+export default connect(() => ({}), mapDispatchToProps)(SimpleCard)

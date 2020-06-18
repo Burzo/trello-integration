@@ -41,8 +41,7 @@ export const CardFilter: FunctionComponent<IProps> = ({
 
   return (
     <React.Fragment>
-      {children && children(filteredCards)}
-      <div className="center">
+      <div className="center" style={{ marginBottom: '0.5rem' }}>
         <FormControl style={{ width: '70%' }}>
           <TextField
             className="mb-2"
@@ -53,6 +52,7 @@ export const CardFilter: FunctionComponent<IProps> = ({
           />
         </FormControl>
       </div>
+      {children && children(filteredCards)}
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="cards-container">
         {render(sort(filteredCards) as Card[])}

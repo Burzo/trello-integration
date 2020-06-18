@@ -21,13 +21,14 @@ import {
   handleTrelloTokenExpiry,
   manageCards,
   gatherUpData,
+  fetchRetry,
 } from '../../helpers'
 
 export const fetchCardsForOneBoard = (token: string): AppThunk => (
   dispatch: Dispatch<AllCardsTypes>,
 ) => {
   dispatch({ type: FETCH_CARDS_START })
-  fetch(
+  fetchRetry(
     `https://api.trello.com/1/boards/5a85cc4b335e97cd5104a64b/cards?key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
   )
     .then((res: Response) => handleTrelloTokenExpiry(res))
@@ -59,7 +60,7 @@ export const fetchCardsForMultipleBoards = (
 
   Promise.all(
     batchedUrls.map((str: string) => {
-      return fetch(
+      return fetchRetry(
         `https://api.trello.com/1/batch?urls=${str}&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
       )
         .then((res: Response) => handleTrelloTokenExpiry(res))
@@ -89,7 +90,7 @@ export const updateCard = (
 ): AppThunk => (dispatch: Dispatch<UpdateCardTypes>) => {
   dispatch({ type: UPDATE_CARD_START, payload: card })
 
-  fetch(
+  fetchRetry(
     `https://api.trello.com/1/cards/${card.id}/?key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
     {
       method: 'put',
@@ -116,7 +117,7 @@ export const addACard = (
   card: CardPayloadObject,
 ): AppThunk => (dispatch: Dispatch<CreateCardTypes>) => {
   dispatch({ type: CREATE_CARD_START })
-  fetch(
+  fetchRetry(
     `https://api.trello.com/1/cards?idList=${listId}&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
     {
       method: 'post',

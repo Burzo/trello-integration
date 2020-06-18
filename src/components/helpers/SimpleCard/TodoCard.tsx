@@ -133,4 +133,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(null, mapDispatchToProps)(TodoCard)
+export default connect(() => ({}), mapDispatchToProps)(TodoCard)

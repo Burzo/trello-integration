@@ -47,7 +47,7 @@ const REK: FC<IProps> = ({ cards }) => {
 
   return (
     <div className="rek">
-      <div className="text-center mb-3">
+      <div className="text-center mb-1">
         <Typography display="inline" variant="h6">
           REK za&nbsp;
         </Typography>

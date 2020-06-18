@@ -79,81 +79,6 @@ export const getOutREK = (cards: Card[]): Card[] => {
   })
 }
 
-// export const filterOutExistingCards = (
-//   cards: Card[],
-//   newCards: Card[],
-// ): Card[] => {
-//   if (newCards.length === 0) {
-//     return cards
-//   }
-//   if (cards.length === 0) {
-//     return newCards
-//   }
-
-//   let result: Card[] = cards
-
-//   let exists = false
-//   newCards.map((newCard: Card) => {
-//     exists = true
-//     cards.map((card: Card) => {
-//       if (card.id === newCard.id) {
-//         if (newCard.closed) {
-//           console.warn(newCard.closed)
-//         }
-//         if (card.closed) {
-//           console.warn(card.closed)
-//         }
-//         if (_.isEqual(card, newCard)) {
-//           exists = false
-//         } else {
-//           exists = true
-//           result = result.filter((e: Card) => e.id !== card.id)
-//         }
-//       }
-//     })
-//     if (exists) {
-//       result.push(newCard)
-//     }
-//   })
-//   result.sort((a, b) => {
-//     return a.id.localeCompare(b.id)
-//   })
-//   return [...result]
-// }
-
-// export const filterOutExistingLists = (
-//   lists: List[],
-//   newLists: List[],
-// ): List[] => {
-//   if (newLists.length === 0) {
-//     return lists
-//   }
-//   if (lists.length === 0) {
-//     return newLists
-//   }
-
-//   let result: List[] = lists
-
-//   let exists = false
-//   newLists.map((newList: List) => {
-//     exists = true
-//     lists.map((list: List) => {
-//       if (list.id === newList.id) {
-//         if (_.isEqual(list, newList)) {
-//           exists = false
-//         } else {
-//           exists = true
-//           result = result.filter((e: List) => e.id !== list.id)
-//         }
-//       }
-//     })
-//     if (exists) {
-//       result.push(newList)
-//     }
-//   })
-//   return [...result]
-// }
-
 export const getTrelloToken = () => window.Trello.token()
 
 export function getBrowserLocales(options = {}) {
@@ -213,4 +138,40 @@ export const gatherUpData = (data: any[]): any[] => {
   })
 
   return result
+}
+
+// interface IFetchRetryOptions {
+//   method?: string
+//   body?: string
+//   headers?: { string: string }
+// }
+
+const RETRY_RATE = 10000
+
+export const fetchRetry = (url: string, options = {}, times: number = 5) => {
+  return new Promise<Response>(
+    (resolve, reject): Promise<any> => {
+      return fetch(url, options)
+        .then((res) => {
+          // Could also be res.status !== 200 in the future
+          if (res.status === 429) {
+            console.error(
+              `Reached te API rate limit. Will try again in ${
+                RETRY_RATE / 1000
+              } seconds. Retries left - ${times}`,
+            )
+            window.setTimeout(() => {
+              fetchRetry(url, options, times - 1)
+                .then((res) => resolve(res))
+                .catch((e) => reject(e))
+            }, RETRY_RATE)
+          } else {
+            resolve(res)
+          }
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    },
+  )
 }

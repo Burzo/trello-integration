@@ -48,7 +48,7 @@ const REKMissed: FC<IProps> = ({ cards }) => {
 
   return (
     <div className="rek-missed">
-      <div className="text-center mb-3">
+      <div className="text-center mb-1">
         <Typography display="inline" variant="h6">
           Zamujen REK
         </Typography>

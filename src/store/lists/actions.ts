@@ -12,6 +12,7 @@ import {
   handleTrelloTokenExpiry,
   manageLists,
   gatherUpData,
+  fetchRetry,
 } from '../../helpers'
 
 export const fetchListsForMultipleBoards = (
@@ -38,7 +39,7 @@ export const fetchListsForMultipleBoards = (
 
   Promise.all(
     batchedUrls.map((str: string) => {
-      return fetch(
+      return fetchRetry(
         `https://api.trello.com/1/batch?urls=${str}&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
       )
         .then((res: Response) => handleTrelloTokenExpiry(res))
@@ -56,7 +57,6 @@ export const fetchListsForMultipleBoards = (
     .then(() => {
       console.log('Lists loaded successfully.')
       allLists = manageLists(state().lists.lists, allLists)
-      console.log(allLists)
       dispatch({ type: FETCH_LISTS_SUCCESS, payload: allLists })
     })
     .catch((error) => console.log(error))

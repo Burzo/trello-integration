@@ -184,7 +184,7 @@ const PersonalTasks: FC<IProps> = ({
       <div>
         {cards.cards.length > 0 ? (
           cards.cards.map((card: Card) => (
-            <TodoCard key={card.id} card={card} />
+            <TodoCard className="mb-3" key={card.id} card={card} />
           ))
         ) : (
           <AllDone />
