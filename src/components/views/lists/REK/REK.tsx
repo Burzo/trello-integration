@@ -12,6 +12,7 @@ import SimpleCard from '../../../helpers/SimpleCard/SimpleCard'
 import moment from 'moment'
 import Pagination from '@material-ui/lab/Pagination'
 import AllDone from '../../../helpers/AllDone/AllDone'
+import { CardFilter } from '../../../helpers/Filter/CardFilter'
 
 const ITEMS_PER_PAGE: number = 16
 
@@ -66,10 +67,12 @@ const REK: FC<IProps> = ({ cards }) => {
           classes={{ ul: 'center' }}
         />
       )}
-      <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
-      <div className="cards-container">
-        {cards.cards.length > 0 ? (
-          cards.cards.map((card: Card, index) => {
+      <CardFilter cards={cards.cards}>
+        {(filteredCards) => {
+          if (filteredCards.length <= 0) {
+            return <AllDone />
+          }
+          return filteredCards.map((card: Card, index) => {
             let lowerLimit = page * ITEMS_PER_PAGE - ITEMS_PER_PAGE
             let higherLimit = page * ITEMS_PER_PAGE
             if (index >= lowerLimit && index < higherLimit) {
@@ -77,10 +80,8 @@ const REK: FC<IProps> = ({ cards }) => {
             }
             return null
           })
-        ) : (
-          <AllDone />
-        )}
-      </div>
+        }}
+      </CardFilter>
     </div>
   )
 }
