@@ -20,7 +20,7 @@ export const CardFilter: FunctionComponent<IProps> = ({
   useEffect(() => {
     handleFilterChange(filterInput)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cards, render])
+  }, [cards])
 
   const handleFilterChange = (e: string) => {
     setFilterInput(e)
