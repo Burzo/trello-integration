@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState, ReactNode, useEffect } from 'react'
 import { Card } from '../../../store/cards/types'
+import { sort } from './../../../helpers'
 import { FormControl, TextField, Divider } from '@material-ui/core'
 
 interface IProps {
@@ -46,7 +47,9 @@ export const CardFilter: FunctionComponent<IProps> = ({ cards, children }) => {
         </FormControl>
       </div>
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
-      <div className="cards-container">{children(filteredCards)}</div>
+      <div className="cards-container">
+        {children(sort(filteredCards) as Card[])}
+      </div>
     </React.Fragment>
   )
 }

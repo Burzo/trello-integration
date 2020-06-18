@@ -178,9 +178,12 @@ export function getBrowserLocales(options = {}) {
   })
 }
 
-const sort = (data: Card[] | List[]): Card[] | List[] => {
+export const sort = (data: Card[] | List[]): Card[] | List[] => {
   return data.sort((a: Card | List, b: Card | List) => {
-    return a.id.localeCompare(b.id)
+    const aa: string = a.idBoard.replace(' ', '').replace('.', '').toLowerCase()
+    const bb: string = b.idBoard.replace(' ', '').replace('.', '').toLowerCase()
+
+    return aa.localeCompare(bb)
   })
 }
 
@@ -188,14 +191,14 @@ export const manageCards = (cards: Card[], newCards: Card[]): Card[] => {
   if (newCards.length === 0) {
     return []
   }
-  return sort(newCards) as Card[]
+  return newCards as Card[]
 }
 
 export const manageLists = (lists: List[], newLists: List[]): List[] => {
   if (newLists.length === 0) {
     return []
   }
-  return sort(newLists) as List[]
+  return newLists as List[]
 }
 
 export const gatherUpData = (data: any[]): any[] => {

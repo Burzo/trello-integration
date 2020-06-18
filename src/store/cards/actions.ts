@@ -77,7 +77,6 @@ export const fetchCardsForMultipleBoards = (
     .then(() => {
       console.log('Cards loaded successfully.')
       allCards = manageCards(state().cards.cards, allCards)
-      console.log(allCards)
       dispatch({ type: FETCH_CARDS_SUCCESS, payload: allCards })
     })
     .catch((error) => console.log(error))
