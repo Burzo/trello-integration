@@ -50,17 +50,8 @@ const DDV: FC<IProps> = ({ cards }) => {
           &nbsp;(skupno {cards.cards.length})
         </Typography>
       </div>
-      {cards.cards.length > ITEMS_PER_PAGE && (
-        <Pagination
-          count={Math.floor(cards.cards.length / ITEMS_PER_PAGE) + 1}
-          page={page}
-          onChange={handleChange}
-          color="primary"
-          classes={{ ul: 'center' }}
-        />
-      )}
-      <CardFilter cards={cards.cards}>
-        {(filteredCards) => {
+      <CardFilter
+        render={(filteredCards) => {
           if (filteredCards.length <= 0) {
             return <AllDone />
           }
@@ -73,6 +64,19 @@ const DDV: FC<IProps> = ({ cards }) => {
             return null
           })
         }}
+        cards={cards.cards}
+      >
+        {(filteredCards) =>
+          filteredCards.length > ITEMS_PER_PAGE && (
+            <Pagination
+              count={Math.floor(cards.cards.length / ITEMS_PER_PAGE) + 1}
+              page={page}
+              onChange={handleChange}
+              color="primary"
+              classes={{ ul: 'center' }}
+            />
+          )
+        }
       </CardFilter>
     </div>
   )

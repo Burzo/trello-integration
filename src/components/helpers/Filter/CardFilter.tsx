@@ -5,16 +5,21 @@ import { FormControl, TextField, Divider } from '@material-ui/core'
 
 interface IProps {
   cards: Card[]
-  children: (filteredCards: Card[]) => ReactNode
+  render: (filteredCards: Card[]) => ReactNode
+  children?: (filteredCards: Card[]) => false | JSX.Element
 }
 
-export const CardFilter: FunctionComponent<IProps> = ({ cards, children }) => {
+export const CardFilter: FunctionComponent<IProps> = ({
+  cards,
+  render,
+  children,
+}) => {
   const [filteredCards, setFilteredCards] = useState<Card[]>([])
   const [filterInput, setFilterInput] = useState('')
 
   useEffect(() => {
     handleFilterChange(filterInput)
-  }, [cards, children])
+  }, [cards, render])
 
   const handleFilterChange = (e: string) => {
     setFilterInput(e)
@@ -35,6 +40,7 @@ export const CardFilter: FunctionComponent<IProps> = ({ cards, children }) => {
 
   return (
     <React.Fragment>
+      {children && children(filteredCards)}
       <div className="center">
         <FormControl style={{ width: '70%' }}>
           <TextField
@@ -48,7 +54,7 @@ export const CardFilter: FunctionComponent<IProps> = ({ cards, children }) => {
       </div>
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="cards-container">
-        {children(sort(filteredCards) as Card[])}
+        {render(sort(filteredCards) as Card[])}
       </div>
     </React.Fragment>
   )
