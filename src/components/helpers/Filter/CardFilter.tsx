@@ -7,12 +7,14 @@ interface IProps {
   cards: Card[]
   render: (filteredCards: Card[]) => ReactNode
   children?: (filteredCards: Card[]) => false | JSX.Element
+  className?: string
 }
 
 export const CardFilter: FunctionComponent<IProps> = ({
   cards,
   render,
   children,
+  className,
 }) => {
   const [filteredCards, setFilteredCards] = useState<Card[]>([])
   const [filterInput, setFilterInput] = useState('')
@@ -54,7 +56,13 @@ export const CardFilter: FunctionComponent<IProps> = ({
       </div>
       {children && children(filteredCards)}
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
-      <div className="cards-container">
+      <div
+        className={
+          className === 'danger'
+            ? 'cards-container one-line'
+            : 'cards-container'
+        }
+      >
         {render(sort(filteredCards) as Card[])}
       </div>
     </React.Fragment>

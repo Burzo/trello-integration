@@ -54,9 +54,11 @@ const REK: FC<IProps> = ({ cards }) => {
         <Typography display="inline" variant="h5">
           {moment().format('MMMM').toUpperCase()}
         </Typography>
-        <Typography display="inline" variant="body1">
-          &nbsp;(skupno {cards.cards.length})
-        </Typography>
+        {cards.cards.length !== 0 && (
+          <Typography display="inline" variant="body1">
+            &nbsp;(skupno {cards.cards.length})
+          </Typography>
+        )}
       </div>
       <CardFilter
         render={(filteredCards) => {

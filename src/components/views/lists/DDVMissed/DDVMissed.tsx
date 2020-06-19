@@ -15,7 +15,7 @@ import AllDone from '../../../helpers/AllDone/AllDone'
 import Pagination from '@material-ui/lab/Pagination'
 import { CardFilter } from '../../../helpers/Filter/CardFilter'
 
-const ITEMS_PER_PAGE: number = 15
+const ITEMS_PER_PAGE: number = 9
 
 interface IProps {
   cards: Cards
@@ -52,8 +52,14 @@ const DDVMissed: FC<IProps> = ({ cards }) => {
         <Typography display="inline" variant="h6">
           Zamujen DDV
         </Typography>
+        {cards.cards.length !== 0 && (
+          <Typography display="inline" variant="body1">
+            &nbsp;(skupno {cards.cards.length})
+          </Typography>
+        )}
       </div>
       <CardFilter
+        className="danger"
         render={(filteredCards) => {
           if (filteredCards.length <= 0) {
             return <AllDone />
@@ -62,7 +68,7 @@ const DDVMissed: FC<IProps> = ({ cards }) => {
             let lowerLimit = page * ITEMS_PER_PAGE - ITEMS_PER_PAGE
             let higherLimit = page * ITEMS_PER_PAGE
             if (index >= lowerLimit && index < higherLimit) {
-              return <SimpleCard key={card.id} card={card} />
+              return <SimpleCard className="danger" key={card.id} card={card} />
             }
             return null
           })
@@ -88,11 +94,16 @@ const DDVMissed: FC<IProps> = ({ cards }) => {
 const mapStateToProps = (store: RootState) => {
   const thisMonth = moment().month()
   const thisYear = moment().year()
+  const thisDay = moment().date()
   // Filter by completed and also check if it's this month
   const filteredOutdatedCards = store.cards.cards.filter((card: Card) => {
     if (card.dueComplete === false && card.due) {
       const t = moment(card.due)
-      if (t.month() < thisMonth && t.year() <= thisYear) {
+      if (
+        t.month() <= thisMonth &&
+        t.year() <= thisYear &&
+        t.date() < thisDay
+      ) {
         return true
       }
     }
