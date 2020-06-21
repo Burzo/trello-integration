@@ -4,7 +4,7 @@ import { Error } from '../../../helpers/Error/Error'
 import CompanyCard from '../../../helpers/SimpleCard/CompanyCard'
 import './style.scss'
 import { RootState } from '../../../../store'
-import { Card, Cards } from '../../../../store/cards/types'
+import { Card } from '../../../../store/cards/types'
 import {
   getOutPaycheck,
   remapListIdCards,
