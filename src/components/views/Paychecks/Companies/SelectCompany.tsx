@@ -73,17 +73,15 @@ const SelectCompany: FC<IProps> = ({ boards, company, setCompany }) => {
           }}
           boards={boards.boards}
         >
-          {(filteredBoards) =>
-            filteredBoards.length > ITEMS_PER_PAGE && (
-              <Pagination
-                count={Math.floor(boards.boards.length / ITEMS_PER_PAGE) + 1}
-                page={page}
-                onChange={handlePageChange}
-                color="primary"
-                classes={{ ul: 'center' }}
-              />
-            )
-          }
+          {(filteredBoards) => (
+            <Pagination
+              count={Math.floor(filteredBoards.length / ITEMS_PER_PAGE) + 1}
+              page={page}
+              onChange={handlePageChange}
+              color="primary"
+              classes={{ ul: 'center' }}
+            />
+          )}
         </Filter>
       </RadioGroup>
     </FormControl>

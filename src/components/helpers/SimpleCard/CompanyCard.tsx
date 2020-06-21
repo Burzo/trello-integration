@@ -85,7 +85,7 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
                     readOnly: !open,
                     disabled: !open,
                   }}
-                  defaultValue={card.desc}
+                  value={card.desc}
                 />
               </div>
             </ExpansionPanelSummary>

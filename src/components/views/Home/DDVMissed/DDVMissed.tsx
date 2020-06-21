@@ -61,17 +61,15 @@ const DDVMissed: FC<IProps> = ({ cards }) => {
         }}
         cards={cards.cards}
       >
-        {(filteredCards) =>
-          filteredCards.length > ITEMS_PER_PAGE && (
-            <Pagination
-              count={Math.floor(cards.cards.length / ITEMS_PER_PAGE) + 1}
-              page={page}
-              onChange={handleChange}
-              color="primary"
-              classes={{ ul: 'center' }}
-            />
-          )
-        }
+        {(filteredCards) => (
+          <Pagination
+            count={Math.floor(filteredCards.length / ITEMS_PER_PAGE) + 1}
+            page={page}
+            onChange={handleChange}
+            color="primary"
+            classes={{ ul: 'center' }}
+          />
+        )}
       </Filter>
     </div>
   )
