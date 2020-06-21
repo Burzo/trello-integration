@@ -79,6 +79,18 @@ export const getOutREK = (cards: Card[]): Card[] => {
   })
 }
 
+export const getOutPaycheck = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (
+      card.idList.toLowerCase() === 'place' ||
+      card.idList.toLowerCase() === 'plače'
+    ) {
+      return true
+    }
+    return false
+  })
+}
+
 export const getTrelloToken = () => window.Trello.token()
 
 export function getBrowserLocales(options = {}) {

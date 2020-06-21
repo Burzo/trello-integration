@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Home } from '../../views/Home'
-import { Paychecks } from '../../views/Paychecks'
+import Paychecks from '../../views/Paychecks'
 
 // Wrapped in use memo so that it doesn't rerender everytime side drawer is opened
 const Router = () => {
