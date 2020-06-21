@@ -43,3 +43,11 @@
     }
   }
 }
+
+.boards-container {
+  width: 100%;
+  min-width: 15rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}

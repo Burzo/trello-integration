@@ -5,9 +5,10 @@ import './style.scss'
 
 interface IProps {
   size?: string | null
+  children?: string | JSX.Element
 }
 
-export const Loading = ({ size }: IProps) => {
+export const Loading = ({ size, children }: IProps) => {
   let className = 'loading'
 
   if (size) {
@@ -17,6 +18,7 @@ export const Loading = ({ size }: IProps) => {
   return (
     <div className={className}>
       <LoadingSvg />
+      {children}
     </div>
   )
 }

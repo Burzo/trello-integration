@@ -21,7 +21,6 @@ locale && moment.locale(locale[0])
 /**
  * App takes care of the google login only
  */
-
 interface IProps {
   putGoogleUser: (user: GoogleUser) => void
 }

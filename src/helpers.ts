@@ -112,6 +112,15 @@ export const sort = (data: Card[] | List[]): Card[] | List[] => {
   })
 }
 
+export const sortBoards = (data: IBoard[]): IBoard[] => {
+  return data.sort((a: IBoard, b: IBoard) => {
+    const aa: string = a.name.replace(' ', '').replace('.', '').toLowerCase()
+    const bb: string = b.name.replace(' ', '').replace('.', '').toLowerCase()
+
+    return aa.localeCompare(bb)
+  })
+}
+
 export const manageCards = (cards: Card[], newCards: Card[]): Card[] => {
   if (newCards.length === 0) {
     return []

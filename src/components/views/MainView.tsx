@@ -21,11 +21,14 @@ import {
 } from '../../helpers'
 import { fetchListsForMultipleBoards } from '../../store/lists/actions'
 import { Grid } from '@material-ui/core'
-import DDV from './lists/DDV/DDV'
-import './home.scss'
-import REK from './lists/REK/REK'
-import DDVMissed from './lists/DDVMissed/DDVMissed'
-import REKMissed from './lists/REKMissed/REKMissed'
+import DDV from './Home/DDV/DDV'
+import './style.scss'
+import REK from './Home/REK/REK'
+import DDVMissed from './Home/DDVMissed/DDVMissed'
+import REKMissed from './Home/REKMissed/REKMissed'
+import { Home } from './Home'
+import { Header } from '../helpers/Header/Header'
+import Router from '../helpers/Router/Router'
 
 interface IProps {
   token: string
@@ -40,9 +43,8 @@ interface IProps {
 const FETCH_INTERVAL = 20000
 const BOARD_FETCH_INTERVAL = 100000
 
-const HomeView: FC<IProps> = ({
+const MainView: FC<IProps> = ({
   boards,
-  cards,
   token,
   fetchBoards,
   fetchCardsForMultipleBoards,
@@ -93,22 +95,15 @@ const HomeView: FC<IProps> = ({
   }
 
   return (
-    <div className="home">
-      <Grid className="layout" container spacing={3}>
-        <Grid className="layout-columns" item xs={3}>
-          <DDV />
-        </Grid>
-        <Grid className="layout-columns" item xs={3}>
-          <REK />
-        </Grid>
-        <Grid className="layout-columns" item xs={3}>
-          <DDVMissed />
-        </Grid>
-        <Grid className="layout-columns" item xs={3}>
-          <REKMissed />
-        </Grid>
-      </Grid>
-    </div>
+    <Header>
+      {(className) => {
+        return (
+          <div className={className}>
+            <Router />
+          </div>
+        )
+      }}
+    </Header>
   )
 }
 
@@ -147,4 +142,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeView)
+export default connect(mapStateToProps, mapDispatchToProps)(MainView)

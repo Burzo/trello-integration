@@ -35,6 +35,7 @@ import { List } from '../../../../store/lists/types'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import './style.scss'
+import { Error } from '../../../helpers/Error/Error'
 
 interface IProps {
   cards: Cards
@@ -79,13 +80,7 @@ const PersonalTasks: FC<IProps> = ({
   }
 
   if (cards.error) {
-    return (
-      <div className="personal-tasks">
-        <Typography className="personal-tasks__heading">
-          Error: {cards.error.message}
-        </Typography>
-      </div>
-    )
+    return <Error>{cards.error.message}</Error>
   }
 
   if (!doesBoardExist) {

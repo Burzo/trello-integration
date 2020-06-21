@@ -1,42 +1,42 @@
 import React, { FunctionComponent, useState, ReactNode, useEffect } from 'react'
-import { Card } from '../../../store/cards/types'
-import { sort } from '../../../helpers'
+import { sortBoards } from '../../../helpers'
 import { FormControl, TextField, Divider } from '@material-ui/core'
+import { IBoard } from '../../../store/boards/types'
 
 interface IProps {
-  cards: Card[]
-  render: (filteredCards: Card[]) => ReactNode
-  children?: (filteredCards: Card[]) => false | JSX.Element
+  boards: IBoard[]
+  render: (filteredBoards: IBoard[]) => ReactNode
+  children?: (filteredBoards: IBoard[]) => false | JSX.Element
   className?: string
 }
 
 export const Filter: FunctionComponent<IProps> = ({
-  cards,
+  boards,
   render,
   children,
   className,
 }) => {
-  const [filteredCards, setFilteredCards] = useState<Card[]>([])
+  const [filteredBoards, setFilteredBoards] = useState<IBoard[]>([])
   const [filterInput, setFilterInput] = useState('')
 
   useEffect(() => {
     handleFilterChange(filterInput)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cards])
+  }, [boards])
 
   const handleFilterChange = (e: string) => {
     setFilterInput(e)
     e = e.toLowerCase()
     if (e === '') {
-      setFilteredCards(cards)
+      setFilteredBoards(boards)
     } else {
-      const fcards = cards.filter((card: Card) => {
-        if (card.idBoard.toLowerCase().includes(e)) {
+      const fboards = boards.filter((board: IBoard) => {
+        if (board.name.toLowerCase().includes(e)) {
           return true
         }
         return false
       })
-      setFilteredCards(fcards)
+      setFilteredBoards(fboards)
     }
     return null
   }
@@ -54,16 +54,10 @@ export const Filter: FunctionComponent<IProps> = ({
           />
         </FormControl>
       </div>
-      {children && children(filteredCards)}
+      {children && children(filteredBoards)}
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
-      <div
-        className={
-          className === 'danger'
-            ? 'cards-container one-line'
-            : 'cards-container'
-        }
-      >
-        {render(sort(filteredCards) as Card[])}
+      <div className="boards-container">
+        {render(sortBoards(filteredBoards) as IBoard[])}
       </div>
     </React.Fragment>
   )
