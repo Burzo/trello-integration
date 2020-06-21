@@ -24,7 +24,12 @@ function Company({ company, cards = [] }: IProps) {
     })
   }
 
-  if (company && cards.length <= 0) {
+  if (
+    company &&
+    cards.filter(
+      (card: Card) => card.idBoard.toLowerCase() === company.toLowerCase(),
+    ).length <= 0
+  ) {
     return (
       <Error>
         {`Ne najdem plač za ${company}. Preveri Trello, če obstaja stolpec "Plače".`}
