@@ -3,14 +3,13 @@ import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel'
 import { IBoards, IBoard } from '../../../../store/boards/types'
 import { RootState } from '../../../../store'
 import { connect } from 'react-redux'
 import { Pagination } from '@material-ui/lab'
 import { Filter } from '../../../helpers/Filter/BoardFilter'
-import { Error } from '../../../helpers/Error/Error'
-import { Loading } from '../../../helpers/Loading/Loading'
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow'
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import { Typography } from '@material-ui/core'
 
 const ITEMS_PER_PAGE: number = 14
@@ -54,16 +53,18 @@ const SelectCompany: FC<IProps> = ({ boards, company, setCompany }) => {
               if (index >= lowerLimit && index < higherLimit) {
                 return (
                   <FormControlLabel
+                    style={{ minHeight: '2rem' }}
                     value={board.name}
                     control={
                       <Radio
                         style={{ fontSize: '1rem' }}
                         color="primary"
-                        icon={<Typography>{board.name}</Typography>}
-                        checkedIcon={<Typography>{board.name}</Typography>}
+                        size="small"
+                        icon={<FiberManualRecordIcon htmlColor="transparent" />}
+                        checkedIcon={<DoubleArrowIcon />}
                       />
                     }
-                    label={null}
+                    label={<Typography variant="h6">{board.name}</Typography>}
                   />
                 )
               }

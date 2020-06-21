@@ -20,13 +20,7 @@ import {
   remapListIdCards,
 } from '../../helpers'
 import { fetchListsForMultipleBoards } from '../../store/lists/actions'
-import { Grid } from '@material-ui/core'
-import DDV from './Home/DDV/DDV'
 import './style.scss'
-import REK from './Home/REK/REK'
-import DDVMissed from './Home/DDVMissed/DDVMissed'
-import REKMissed from './Home/REKMissed/REKMissed'
-import { Home } from './Home'
 import { Header } from '../helpers/Header/Header'
 import Router from '../helpers/Router/Router'
 

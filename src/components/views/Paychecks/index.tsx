@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core'
 import SelectCompany from './Companies/SelectCompany'
 import Company from './Companies/Company'
 import { RootState } from '../../../store'
-import moment from 'moment'
 import { Card, Cards } from '../../../store/cards/types'
 import {
   getOutPaycheck,
@@ -20,12 +19,6 @@ const Paychecks = ({ cards }: IProps) => {
   const [company, setCompany] = React.useState('')
 
   const isolateCompany = () => {
-    console.log(
-      cards.cards.filter((card: Card) => {
-        console.log(card.idBoard)
-        console.log(company)
-      }),
-    )
     return cards.cards.filter(
       (card: Card) => card.idBoard.toLowerCase() === company.toLowerCase(),
     )
