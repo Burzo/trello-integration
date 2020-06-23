@@ -34,7 +34,7 @@ interface IProps {
   updateCard: (token: string, card: Card, query: CardPayloadObject) => void
 }
 
-const FETCH_INTERVAL = 20000
+const FETCH_INTERVAL = 5000
 const BOARD_FETCH_INTERVAL = 100000
 
 const MainView: FC<IProps> = ({
@@ -47,20 +47,24 @@ const MainView: FC<IProps> = ({
 }) => {
   const [loaded, setLoaded] = useState(false)
 
-  let refreshInterval: any = useRef()
-  let boardFetchingInterval: any = useRef()
+  let refreshInterval: React.MutableRefObject<
+    number | null | undefined
+  > = useRef()
+  let boardFetchingInterval: React.MutableRefObject<
+    number | null | undefined
+  > = useRef()
 
   useEffect(() => {
     fetchBoards(token)
-    if (boardFetchingInterval.current) {
+    if (boardFetchingInterval.current !== null) {
       clearInterval(boardFetchingInterval.current)
     }
-    boardFetchingInterval.current = setInterval(() => {
+    boardFetchingInterval.current = window.setInterval(() => {
       fetchBoards(token)
     }, BOARD_FETCH_INTERVAL)
 
     return () => {
-      clearInterval(boardFetchingInterval.current)
+      clearInterval(boardFetchingInterval.current as number)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -69,16 +73,16 @@ const MainView: FC<IProps> = ({
     if (boards.boards.length > 0 && !loaded) {
       refreshEverything()
       setLoaded(true)
-      if (refreshInterval.current) {
+      if (refreshInterval.current !== null) {
         clearInterval(refreshInterval.current)
       }
-      refreshInterval.current = setInterval(() => {
+      refreshInterval.current = window.setInterval(() => {
         refreshEverything()
       }, FETCH_INTERVAL)
     }
 
     return () => {
-      clearInterval(refreshInterval.current)
+      clearInterval(refreshInterval.current as number)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [boards.boards.length])
