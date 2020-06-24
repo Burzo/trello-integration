@@ -25,7 +25,7 @@ const SmallCompanyCard = ({
 
   const isClicked = () => {
     if (board.name === company) {
-      return 'smallcompanycard selected'
+      return 'smallcompanycard selected MuiAppBar-colorPrimary'
     }
     return 'smallcompanycard'
   }

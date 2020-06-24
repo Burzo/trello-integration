@@ -75,10 +75,6 @@
   transition: padding 0.3s, margin 0.3s;
 
   &.selected {
-    background-color: black;
-    color: white;
-    // transform: translateX(30px);
-    padding-left: 1.5rem;
     margin-left: 2rem;
   }
 }
