@@ -80,11 +80,16 @@ const DDV: FC<IProps> = ({ cards }) => {
 const mapStateToProps = (store: RootState) => {
   const thisMonth = moment().month()
   const thisYear = moment().year()
+  const thisDay = moment().date()
   // Filter by completed and also check if it's this month
   const filteredOutdatedCards = store.cards.cards.filter((card: Card) => {
     if (card.dueComplete === false && card.due) {
       const t = moment(card.due)
-      if (t.month() === thisMonth && t.year() === thisYear) {
+      if (
+        t.month() === thisMonth &&
+        t.year() === thisYear &&
+        t.date() >= thisDay
+      ) {
         return true
       }
     }
