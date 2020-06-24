@@ -65,7 +65,11 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
         classNames="alert"
         unmountOnExit
       >
-        <Card key={card.id} elevation={3} className={'simplecard ' + className}>
+        <Card
+          key={card.id}
+          elevation={3}
+          className={'companycard ' + className}
+        >
           <ExpansionPanel>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
@@ -73,7 +77,9 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
               id="panel1a-header"
             >
               <div className="container">
-                <Typography variant="h5">{card.name}</Typography>
+                <Typography align="center" variant="h5">
+                  {card.name}
+                </Typography>
                 <Divider style={{ marginBottom: '1rem', marginTop: '1rem' }} />
                 <TextField
                   fullWidth
@@ -95,16 +101,10 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
                 <Typography>Do: {date}</Typography>
               </div>
               <Link href={card.url} target="_blank" rel="noreferrer">
-                <Typography
-                  className={
-                    className === 'danger' ? '' : 'simplecard-small-text-1'
-                  }
-                >
-                  Odpri v Trellu
-                </Typography>
+                <Typography>Odpri v Trellu</Typography>
               </Link>
               <div className="center">
-                <ButtonGroup className="simplecard-modal-form-btns">
+                <ButtonGroup className="companycard-modal-form-btns">
                   <Button
                     color="primary"
                     variant="contained"
@@ -122,9 +122,9 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
         </Card>
       </CSSTransition>
       <Modal
-        aria-labelledby="simplecard-modal-title"
-        aria-describedby="simplecard-modal-description"
-        className="simplecard-modal"
+        aria-labelledby="companycard-modal-title"
+        aria-describedby="companycard-modal-description"
+        className="companycard-modal"
         open={open}
         onClose={() => setOpen(false)}
         closeAfterTransition

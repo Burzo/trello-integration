@@ -78,3 +78,10 @@
     margin-left: 2rem;
   }
 }
+
+.companycard {
+  & .title {
+    text-align: center;
+  }
+  text-align: left;
+}
