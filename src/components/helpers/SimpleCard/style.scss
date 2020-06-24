@@ -66,3 +66,19 @@
 .danger {
   color: $color-error;
 }
+
+.smallcompanycard {
+  cursor: pointer;
+  margin: 0.2rem;
+  padding: 0.5rem;
+
+  transition: padding, margin 0.3s;
+
+  &.selected {
+    background-color: black;
+    color: white;
+    // transform: translateX(30px);
+    padding-left: 2rem;
+    margin-left: 2rem;
+  }
+}
