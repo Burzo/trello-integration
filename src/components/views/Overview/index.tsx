@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import SelectCompany from './SelectCompany'
-import Company from './Company'
+import SelectCompany from '../Paychecks/SelectCompany'
+import CompanyOverview from './CompanyOverview'
 import { putCurrentCompany } from '../../../store/company/actions'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../../store'
@@ -12,7 +12,7 @@ interface IProps {
   putCurrentCompany: (company: string) => void
 }
 
-const Paychecks = ({ putCurrentCompany }: IProps) => {
+const Overview = ({ putCurrentCompany }: IProps) => {
   const [company, setCompany] = React.useState('')
 
   const handleCompanyChange = (company: string) => {
@@ -27,7 +27,7 @@ const Paychecks = ({ putCurrentCompany }: IProps) => {
           <SelectCompany company={company} setCompany={handleCompanyChange} />
         </Grid>
         <Grid className="layout-columns" item xs={9}>
-          <Company company={company} />
+          <CompanyOverview company={company} />
         </Grid>
       </Grid>
     </div>
@@ -43,4 +43,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(() => ({}), mapDispatchToProps)(Paychecks)
+export default connect(() => ({}), mapDispatchToProps)(Overview)

@@ -1,18 +1,18 @@
 import React, { FC } from 'react'
 import FormControl from '@material-ui/core/FormControl'
-import { IBoards, IBoard } from '../../../../store/boards/types'
-import { RootState } from '../../../../store'
+import { IBoards, IBoard } from '../../../store/boards/types'
+import { RootState } from '../../../store'
 import { connect } from 'react-redux'
 import { Pagination } from '@material-ui/lab'
-import { Filter } from '../../../helpers/Filter/BoardFilter'
-import SmallCompanyCard from '../../../helpers/SimpleCard/SmallCompanyCard'
+import { Filter } from '../../helpers/Filter/BoardFilter'
+import SmallCompanyCard from '../../helpers/SimpleCard/SmallCompanyCard'
 
 const ITEMS_PER_PAGE: number = 18
 
 interface IProps {
   boards: IBoards
   company: string
-  setCompany: React.Dispatch<React.SetStateAction<string>>
+  setCompany: (company: string) => void
 }
 
 const SelectCompany: FC<IProps> = ({ boards, company, setCompany }) => {

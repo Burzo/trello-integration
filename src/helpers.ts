@@ -63,7 +63,7 @@ export const handleTrelloTokenExpiry = (res: Response) => {
 
 export const getOutDDV = (cards: Card[]): Card[] => {
   return cards.filter((card: Card) => {
-    if (card.idList.toLowerCase() === 'ddv') {
+    if (card.idList.toLowerCase().trim() === 'ddv') {
       return true
     }
     return false
@@ -72,7 +72,7 @@ export const getOutDDV = (cards: Card[]): Card[] => {
 
 export const getOutREK = (cards: Card[]): Card[] => {
   return cards.filter((card: Card) => {
-    if (card.idList.toLowerCase() === 'rek') {
+    if (card.idList.toLowerCase().trim() === 'rek') {
       return true
     }
     return false
@@ -82,9 +82,69 @@ export const getOutREK = (cards: Card[]): Card[] => {
 export const getOutPaycheck = (cards: Card[]): Card[] => {
   return cards.filter((card: Card) => {
     if (
-      card.idList.toLowerCase() === 'place' ||
-      card.idList.toLowerCase() === 'plače'
+      card.idList.toLowerCase().trim() === 'place' ||
+      card.idList.toLowerCase().trim() === 'plače'
     ) {
+      return true
+    }
+    return false
+  })
+}
+
+export const getOutCompanyOverview = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (
+      card.idList.toLowerCase().trim() === 'izdani računi (prihodki)' ||
+      card.idList.toLowerCase().trim() === 'prejeti računi (odhodki)' ||
+      card.idList.toLowerCase().trim() === 'banka' ||
+      card.idList.toLowerCase().trim() === 'ddv plače ostalo' ||
+      card.idList.toLowerCase().trim() === 'pregled bruto bilance'
+    ) {
+      return true
+    }
+    return false
+  })
+}
+
+export const getOutIzdani = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase().trim() === 'izdani računi (prihodki)') {
+      return true
+    }
+    return false
+  })
+}
+
+export const getOutPrejeti = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase().trim() === 'prejeti računi (odhodki)') {
+      return true
+    }
+    return false
+  })
+}
+
+export const getOutBank = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase().trim() === 'banka') {
+      return true
+    }
+    return false
+  })
+}
+
+export const getOutRest = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase().trim() === 'ddv plače ostalo') {
+      return true
+    }
+    return false
+  })
+}
+
+export const getOutBilance = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase().trim() === 'pregled bruto bilance') {
       return true
     }
     return false
@@ -110,15 +170,23 @@ export function getBrowserLocales(options = {}) {
     return undefined
   }
   return browserLocales.map((locale) => {
-    const trimmedLocale = locale.trim()
+    const trimmedLocale = locale
     return opt.languageCodeOnly ? trimmedLocale.split(/-|_/)[0] : trimmedLocale
   })
 }
 
 export const sort = (data: Card[] | List[]): Card[] | List[] => {
   return data.sort((a: Card | List, b: Card | List) => {
-    const aa: string = a.idBoard.replace(' ', '').replace('.', '').toLowerCase()
-    const bb: string = b.idBoard.replace(' ', '').replace('.', '').toLowerCase()
+    const aa: string = a.idBoard
+      .replace(' ', '')
+      .replace('.', '')
+      .toLowerCase()
+      .trim()
+    const bb: string = b.idBoard
+      .replace(' ', '')
+      .replace('.', '')
+      .toLowerCase()
+      .trim()
 
     return aa.localeCompare(bb)
   })
@@ -126,8 +194,16 @@ export const sort = (data: Card[] | List[]): Card[] | List[] => {
 
 export const sortBoards = (data: IBoard[]): IBoard[] => {
   return data.sort((a: IBoard, b: IBoard) => {
-    const aa: string = a.name.replace(' ', '').replace('.', '').toLowerCase()
-    const bb: string = b.name.replace(' ', '').replace('.', '').toLowerCase()
+    const aa: string = a.name
+      .replace(' ', '')
+      .replace('.', '')
+      .toLowerCase()
+      .trim()
+    const bb: string = b.name
+      .replace(' ', '')
+      .replace('.', '')
+      .toLowerCase()
+      .trim()
 
     return aa.localeCompare(bb)
   })

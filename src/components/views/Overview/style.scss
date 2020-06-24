@@ -1,0 +1,11 @@
+.overview {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > * {
+    width: 20%;
+    padding: 0.7rem;
+  }
+  & .companycard {
+  }
+}

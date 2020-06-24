@@ -26,12 +26,12 @@ export const Filter: FunctionComponent<IProps> = ({
 
   const handleFilterChange = (e: string) => {
     setFilterInput(e)
-    e = e.toLowerCase()
+    e = e.toLowerCase().trim()
     if (e === '') {
       setFilteredBoards(boards)
     } else {
       const fboards = boards.filter((board: IBoard) => {
-        if (board.name.toLowerCase().includes(e)) {
+        if (board.name.toLowerCase().trim().includes(e)) {
           return true
         }
         return false
