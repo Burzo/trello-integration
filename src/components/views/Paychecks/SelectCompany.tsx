@@ -15,7 +15,7 @@ interface IProps {
   setCompany: (company: string) => void
 }
 
-const SelectCompany: FC<IProps> = ({ boards, company, setCompany }) => {
+const SelectCompany: FC<IProps> = ({ boards, company = '', setCompany }) => {
   const [page, setPage] = React.useState(1)
 
   const handlePageChange = (
@@ -70,6 +70,7 @@ const SelectCompany: FC<IProps> = ({ boards, company, setCompany }) => {
 const mapStateToProps = (store: RootState) => {
   return {
     boards: store.boards,
+    company: store.company,
   }
 }
 

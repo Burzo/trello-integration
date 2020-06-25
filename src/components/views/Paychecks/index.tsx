@@ -13,10 +13,7 @@ interface IProps {
 }
 
 const Paychecks = ({ putCurrentCompany }: IProps) => {
-  const [company, setCompany] = React.useState('')
-
   const handleCompanyChange = (company: string) => {
-    setCompany(company)
     putCurrentCompany(company)
   }
 
@@ -24,10 +21,10 @@ const Paychecks = ({ putCurrentCompany }: IProps) => {
     <div className="home">
       <Grid className="layout" container spacing={3}>
         <Grid className="layout-columns" item xs={3}>
-          <SelectCompany company={company} setCompany={handleCompanyChange} />
+          <SelectCompany setCompany={handleCompanyChange} />
         </Grid>
         <Grid className="layout-columns" item xs={9}>
-          <Company company={company} />
+          <Company />
         </Grid>
       </Grid>
     </div>

@@ -88,6 +88,9 @@ const mapStateToProps = (store: RootState) => {
     )
   })
 
+  // calculate percentage here to display
+  //   const percentage =
+
   const allCards = getOutCompanyOverview(
     remapListIdCards(
       store.lists.lists,
@@ -109,6 +112,7 @@ const mapStateToProps = (store: RootState) => {
       rest,
       bilance,
     },
+    company: store.company,
   }
 }
 

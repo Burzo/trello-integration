@@ -64,6 +64,7 @@ const mapStateToProps = (store: RootState) => {
         remapBoardIdCards(store.boards.boards, filteredCards),
       ),
     ),
+    company: store.company,
   }
 }
 
