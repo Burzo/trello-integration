@@ -1,7 +1,6 @@
 import React from 'react'
 import { Typography, Divider } from '@material-ui/core'
 import { Error } from '../../helpers/Error/Error'
-import CompanyCard from '../../helpers/SimpleCard/CompanyCard'
 import './style.scss'
 import { RootState } from '../../../store'
 import { Card } from '../../../store/cards/types'
@@ -11,6 +10,7 @@ import {
   remapBoardIdCards,
 } from '../../../helpers'
 import { connect } from 'react-redux'
+import PaycheckCard from '../../helpers/SimpleCard/PaycheckCard'
 
 interface IProps {
   company: string
@@ -42,7 +42,7 @@ function Company({ company, cards = [] }: IProps) {
           if (
             card.idBoard.toLowerCase().trim() === company.toLowerCase().trim()
           ) {
-            return <CompanyCard key={card.id} card={card} />
+            return <PaycheckCard key={card.id} card={card} />
           }
           return null
         })}
