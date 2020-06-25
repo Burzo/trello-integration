@@ -75,7 +75,7 @@ const SmallCompanyCard = ({
               className={changeColor ? '' : 'smallcompanycard-text'}
               variant="h6"
             >
-              {board.name} ({percentage.toFixed(0)}% narejeno)
+              {board.name} {!changeColor && `(${percentage.toFixed(0)}%)`}
             </Typography>
           </div>
           {!changeColor && <Fill percentage={percentage} />}
