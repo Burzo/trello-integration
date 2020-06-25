@@ -12,10 +12,16 @@ const ITEMS_PER_PAGE: number = 18
 interface IProps {
   boards: IBoards
   company: string
+  changeSmallCompanyColor?: boolean
   setCompany: (company: string) => void
 }
 
-const SelectCompany: FC<IProps> = ({ boards, company = '', setCompany }) => {
+const SelectCompany: FC<IProps> = ({
+  boards,
+  changeSmallCompanyColor,
+  company = '',
+  setCompany,
+}) => {
   const [page, setPage] = React.useState(1)
 
   const handlePageChange = (
@@ -43,7 +49,7 @@ const SelectCompany: FC<IProps> = ({ boards, company = '', setCompany }) => {
               return (
                 <SmallCompanyCard
                   board={board}
-                  company={company}
+                  changeColor={changeSmallCompanyColor}
                   handleSelectChange={handleSelectChange}
                 />
               )

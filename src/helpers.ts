@@ -106,6 +106,15 @@ export const getOutCompanyOverview = (cards: Card[]): Card[] => {
   })
 }
 
+export const calculatePercantage = (cards: Card[]): number => {
+  const completedCards = cards.filter((card: Card) => card.dueComplete).length
+
+  if (completedCards === 0) {
+    return 0
+  }
+  return (completedCards / cards.length) * 100
+}
+
 export const getOutIzdani = (cards: Card[]): Card[] => {
   return cards.filter((card: Card) => {
     if (card.idList.toLowerCase().trim() === 'izdani računi (prihodki)') {

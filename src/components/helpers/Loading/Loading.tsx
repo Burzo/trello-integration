@@ -1,4 +1,5 @@
-import { ReactComponent as LoadingSvg } from './loading.svg'
+// import { ReactComponent as LoadingSvg } from './loading.svg'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import React from 'react'
 import './style.scss'
@@ -16,8 +17,9 @@ export const Loading = ({ size, children }: IProps) => {
   }
 
   return (
-    <div className={className}>
-      <LoadingSvg />
+    <div className={'center ' + className}>
+      {/* <LoadingSvg /> */}
+      <CircularProgress />
       {children}
     </div>
   )

@@ -2,6 +2,11 @@
   display: flex;
   flex-wrap: wrap;
 
+  &-title {
+    text-transform: uppercase;
+    font-size: 0.95rem;
+  }
+
   & > * {
     width: 20%;
     padding: 0.7rem;

@@ -26,7 +26,7 @@ function OverviewColumn({ company, column, cards = [] }: IProps) {
 
   return (
     <div className="text-center">
-      <Typography display="inline" variant="h6">
+      <Typography className="overview-title" display="inline" variant="h6">
         {column}
       </Typography>
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
