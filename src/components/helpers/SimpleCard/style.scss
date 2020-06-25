@@ -33,7 +33,8 @@
   }
 }
 
-.simplecard-modal {
+.simplecard-modal,
+.companycard-modal {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,4 +85,9 @@
     text-align: center;
   }
   text-align: left;
+
+  & .success {
+    color: white;
+    background-color: #4caf50;
+  }
 }

@@ -40,12 +40,19 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
   const [open, setOpen] = useState(false)
 
   const buttonPress = () => {
-    updateCard &&
-      updateCard(getTrelloToken(), card, {
-        dueComplete: true,
-        due: moment.utc().toString(),
-      })
-    setAnimate(false)
+    if (card.dueComplete) {
+      updateCard &&
+        updateCard(getTrelloToken(), card, {
+          dueComplete: false,
+          due: '',
+        })
+    } else {
+      updateCard &&
+        updateCard(getTrelloToken(), card, {
+          dueComplete: true,
+          due: moment.utc().toString(),
+        })
+    }
   }
 
   useEffect(() => {
@@ -56,6 +63,8 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
     ? new Date(card.due).toLocaleDateString()
     : 'No date available'
 
+  const isCompleted = card.dueComplete ? 'success' : ''
+
   // TODO remove the on hover show icon logic and add a button group or icons next to cards
   return (
     <div>
@@ -65,37 +74,31 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
         classNames="alert"
         unmountOnExit
       >
-        <Card
-          key={card.id}
-          elevation={3}
-          className={'companycard ' + className}
-        >
-          <ExpansionPanel>
+        <Card key={card.id} className={'companycard  ' + className}>
+          <ExpansionPanel className={isCompleted}>
             <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ExpandMoreIcon className={isCompleted} />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
               <div className="container">
-                <Typography align="center" variant="h5">
-                  {card.name}
-                </Typography>
-                <Divider style={{ marginBottom: '1rem', marginTop: '1rem' }} />
-                <TextField
-                  fullWidth
-                  multiline
-                  InputProps={{
-                    disableUnderline: !open,
-                  }}
-                  inputProps={{
-                    readOnly: !open,
-                    disabled: !open,
-                  }}
-                  value={card.desc}
-                />
+                <Typography align="center">{card.name}</Typography>
               </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
+              <TextField
+                fullWidth
+                multiline
+                InputProps={{
+                  disableUnderline: !open,
+                  classes: { multiline: isCompleted },
+                }}
+                inputProps={{
+                  readOnly: !open,
+                  disabled: !open,
+                }}
+                value={card.desc}
+              />
               <Divider style={{ marginBottom: '1rem' }} />
               <div>
                 <Typography>Do: {date}</Typography>
@@ -109,10 +112,15 @@ const CompanyCard = ({ updateCard, card, className = '' }: IProps) => {
                     color="primary"
                     variant="contained"
                     onClick={buttonPress}
+                    size="small"
                   >
-                    Narejeno
+                    {isCompleted ? 'Ni narejeno' : 'Narejeno'}
                   </Button>
-                  <Button variant="contained" onClick={() => setOpen(true)}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    onClick={() => setOpen(true)}
+                  >
                     Spremeni
                   </Button>
                 </ButtonGroup>

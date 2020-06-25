@@ -20,6 +20,10 @@ function OverviewColumn({ company, column, cards = [] }: IProps) {
     )
   }
 
+  if (cards.length <= 0) {
+    return null
+  }
+
   return (
     <div className="text-center">
       <Typography display="inline" variant="h6">
@@ -27,14 +31,9 @@ function OverviewColumn({ company, column, cards = [] }: IProps) {
       </Typography>
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="overview-column">
-        {cards.map((card: Card) => {
-          if (
-            card.idBoard.toLowerCase().trim() === company.toLowerCase().trim()
-          ) {
-            return <CompanyCard key={card.id} card={card} />
-          }
-          return null
-        })}
+        {cards.map((card: Card) => (
+          <CompanyCard key={card.id} card={card} />
+        ))}
       </div>
     </div>
   )

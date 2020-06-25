@@ -54,14 +54,6 @@ function CompanyOverview({ company, cards = emptyState }: IProps) {
       </Typography>
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="overview">
-        {/* {cards.map((card: Card) => {
-          if (
-            card.idBoard.toLowerCase().trim() === company.toLowerCase().trim()
-          ) {
-            return <CompanyCard key={card.id} card={card} />
-          }
-          return null
-        })} */}
         <OverviewColumn
           company={company}
           column="Izdani računi (prihodki)"
@@ -70,18 +62,18 @@ function CompanyOverview({ company, cards = emptyState }: IProps) {
         <OverviewColumn
           company={company}
           column="Prejeti računi (odhodki)"
-          cards={cards.izdani}
+          cards={cards.prejeti}
         />
-        <OverviewColumn company={company} column="Banka" cards={cards.izdani} />
+        <OverviewColumn company={company} column="Banka" cards={cards.bank} />
         <OverviewColumn
           company={company}
           column="DDV / Plače / Ostalo"
-          cards={cards.izdani}
+          cards={cards.rest}
         />
         <OverviewColumn
           company={company}
           column="Bilance"
-          cards={cards.izdani}
+          cards={cards.bilance}
         />
       </div>
     </div>
