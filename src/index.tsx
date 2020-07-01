@@ -6,9 +6,21 @@ import { Provider } from 'react-redux'
 import configureStore from './store/index'
 import 'fontsource-roboto'
 import { BrowserRouter } from 'react-router-dom'
-import { StylesProvider } from '@material-ui/core/styles'
+import {
+  StylesProvider,
+  ThemeProvider,
+  createMuiTheme,
+} from '@material-ui/core/styles'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.scss'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#003f64',
+    },
+  },
+})
 
 const store = configureStore()
 
@@ -19,11 +31,13 @@ const store = configureStore()
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <StylesProvider injectFirst>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      </StylesProvider>
+      <ThemeProvider theme={theme}>
+        <StylesProvider injectFirst>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </StylesProvider>
+      </ThemeProvider>
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'),
