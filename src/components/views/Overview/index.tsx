@@ -7,12 +7,15 @@ import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../../store'
 import { setCurrentCompany } from '../../../store/company/types'
 import { connect } from 'react-redux'
+import { filterOutEmptyOverviewkBoards } from '../../../helpers'
+import { IBoards } from '../../../store/boards/types'
 
 interface IProps {
   putCurrentCompany: (company: string) => void
+  boards: IBoards
 }
 
-const Overview = ({ putCurrentCompany }: IProps) => {
+const Overview = ({ putCurrentCompany, boards }: IProps) => {
   const handleCompanyChange = (company: string) => {
     putCurrentCompany(company)
   }
@@ -21,7 +24,11 @@ const Overview = ({ putCurrentCompany }: IProps) => {
     <div className="home">
       <Grid className="layout" container spacing={3}>
         <Grid className="layout-columns" item xs={3}>
-          <SelectCompany filter="overview" setCompany={handleCompanyChange} />
+          <SelectCompany
+            boards={boards.boards}
+            filter="overview"
+            setCompany={handleCompanyChange}
+          />
         </Grid>
         <Grid className="layout-columns" item xs={9}>
           <CompanyOverview />
@@ -29,6 +36,18 @@ const Overview = ({ putCurrentCompany }: IProps) => {
       </Grid>
     </div>
   )
+}
+
+const mapStateToProps = (store: RootState) => {
+  const filteredBoards = filterOutEmptyOverviewkBoards(
+    store.boards.boards,
+    store.lists.lists,
+  )
+
+  return {
+    boards: { ...store.boards, boards: filteredBoards },
+    company: store.company,
+  }
 }
 
 const mapDispatchToProps = (
@@ -40,4 +59,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(() => ({}), mapDispatchToProps)(Overview)
+export default connect(mapStateToProps, mapDispatchToProps)(Overview)

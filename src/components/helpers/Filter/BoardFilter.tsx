@@ -1,22 +1,22 @@
 import React, { FunctionComponent, useState, ReactNode, useEffect } from 'react'
-import { sortBoards, doesItHavePaycheck } from '../../../helpers'
+import { sortBoards } from '../../../helpers'
 import { FormControl, TextField, Divider } from '@material-ui/core'
 import { IBoard } from '../../../store/boards/types'
 import { IFilters } from '../../views/Paychecks/SelectCompany'
 import { connect } from 'react-redux'
 import { RootState } from '../../../store'
-import { Lists, List } from '../../../store/lists/types'
+import { Lists } from '../../../store/lists/types'
 
 interface IProps {
   boards: IBoard[]
   render: (filteredBoards: IBoard[]) => ReactNode
   children?: (filteredBoards: IBoard[]) => false | JSX.Element
   className?: string
-  lists: List[]
+  lists: Lists
   filter: IFilters
 }
 
-export const Filter: FunctionComponent<IProps> = ({
+const Filter: FunctionComponent<IProps> = ({
   boards,
   render,
   children,
@@ -37,30 +37,11 @@ export const Filter: FunctionComponent<IProps> = ({
     e = e.toLowerCase().trim()
     if (e === '') {
       // If board empty don't show it
-      setFilteredBoards(
-        boards.filter((board: IBoard) => {
-          switch (filter) {
-            case 'paycheck':
-              console.log(lists)
-              return doesItHavePaycheck(lists, board.name)
-            case 'overview':
-              return doesItHavePaycheck(lists, board.name)
-            default:
-              return true
-          }
-        }),
-      )
+      setFilteredBoards(boards)
     } else {
       const fboards = boards.filter((board: IBoard) => {
         if (board.name.toLowerCase().trim().includes(e)) {
-          switch (filter) {
-            case 'paycheck':
-              return doesItHavePaycheck(lists, board.name)
-            case 'overview':
-              return doesItHavePaycheck(lists, board.name)
-            default:
-              return true
-          }
+          return true
         }
         return false
       })
@@ -91,4 +72,10 @@ export const Filter: FunctionComponent<IProps> = ({
   )
 }
 
-export default Filter
+const mapStateToProps = (store: RootState) => {
+  return {
+    lists: store.lists,
+  }
+}
+
+export default connect(mapStateToProps)(Filter)

@@ -49,7 +49,7 @@ const useTrelloClient: (
     window.Trello.authorize({
       name: 'Trello API integration',
       scope: { read: true, write: true, account: true },
-      expiration: '1hour',
+      expiration: '30days',
       success: () => {
         setToken(window.Trello.token())
       },

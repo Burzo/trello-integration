@@ -107,7 +107,6 @@ export const getOutCompanyOverview = (cards: Card[]): Card[] => {
 }
 
 export const doesItHavePaycheck = (lists: List[], boardName: string) => {
-  console.log(lists)
   return (
     lists.filter((list: List) => {
       if (list.idBoard === boardName) {
@@ -242,6 +241,43 @@ export const manageLists = (lists: List[], newLists: List[]): List[] => {
     return []
   }
   return newLists as List[]
+}
+
+export const filterOutEmptyPayCheckBoards = (
+  boards: IBoard[],
+  lists: List[],
+) => {
+  return boards.filter((board: IBoard) => {
+    const isEmpty =
+      lists.filter((list: List) => {
+        return (
+          list.idBoard === board.name &&
+          (list.name.toLowerCase().trim() === 'place' ||
+            list.name.toLowerCase().trim() === 'plače')
+        )
+      }).length <= 0
+    return !isEmpty
+  })
+}
+
+export const filterOutEmptyOverviewkBoards = (
+  boards: IBoard[],
+  lists: List[],
+) => {
+  return boards.filter((board: IBoard) => {
+    const isEmpty =
+      lists.filter((list: List) => {
+        return (
+          list.idBoard === board.name &&
+          (list.name.toLowerCase().trim() === 'izdani računi (prihodki)' ||
+            list.name.toLowerCase().trim() === 'prejeti računi (odhodki)' ||
+            list.name.toLowerCase().trim() === 'banka' ||
+            list.name.toLowerCase().trim() === 'ddv plače ostalo' ||
+            list.name.toLowerCase().trim() === 'pregled bruto bilance')
+        )
+      }).length <= 0
+    return !isEmpty
+  })
 }
 
 export const gatherUpData = (data: any[]): any[] => {

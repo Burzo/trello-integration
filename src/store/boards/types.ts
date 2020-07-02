@@ -1,6 +1,12 @@
+import { Card } from '../cards/types'
+import { List } from '../lists/types'
+
 export const FETCH_BOARDS_START = 'FETCH_BOARDS_START'
 export const FETCH_BOARDS_SUCCESS = 'FETCH_BOARDS_SUCCESS'
 export const FETCH_BOARDS_ERROR = 'FETCH_BOARDS_ERROR'
+
+export const ADD_CARDS_TO_BOARD = 'ADD_CARDS_TO_BOARD'
+export const ADD_LISTS_TO_BOARD = 'ADD_LISTS_TO_BOARD'
 
 export interface IPrefs {
   permissionLevel: string
@@ -78,6 +84,8 @@ export interface IBoard {
   templateGallery: string | null
   premiumFeatures: any[]
   memberships: IMember[]
+  cards: Card[]
+  lists: List[]
 }
 
 export interface IBoards {
@@ -100,7 +108,19 @@ export interface fetchBoardsError {
   payload: Error
 }
 
+export interface addCardsToBoards {
+  type: typeof ADD_CARDS_TO_BOARD
+  payload: Card[]
+}
+
+export interface addListsToBoards {
+  type: typeof ADD_LISTS_TO_BOARD
+  payload: List[]
+}
+
 export type AllBoardsTypes =
   | fetchBoardsError
   | fetchBoardsStart
   | fetchBoardsSuccess
+  | addCardsToBoards
+  | addListsToBoards

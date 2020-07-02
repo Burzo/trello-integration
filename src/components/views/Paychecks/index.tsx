@@ -7,12 +7,15 @@ import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../../store'
 import { setCurrentCompany } from '../../../store/company/types'
 import { connect } from 'react-redux'
+import { filterOutEmptyPayCheckBoards } from '../../../helpers'
+import { IBoards } from '../../../store/boards/types'
 
 interface IProps {
   putCurrentCompany: (company: string) => void
+  boards: IBoards
 }
 
-const Paychecks = ({ putCurrentCompany }: IProps) => {
+const Paychecks = ({ putCurrentCompany, boards }: IProps) => {
   const handleCompanyChange = (company: string) => {
     putCurrentCompany(company)
   }
@@ -22,6 +25,7 @@ const Paychecks = ({ putCurrentCompany }: IProps) => {
       <Grid className="layout" container spacing={3}>
         <Grid className="layout-columns" item xs={3}>
           <SelectCompany
+            boards={boards.boards}
             filter="paycheck"
             changeSmallCompanyColor
             setCompany={handleCompanyChange}
@@ -35,6 +39,18 @@ const Paychecks = ({ putCurrentCompany }: IProps) => {
   )
 }
 
+const mapStateToProps = (store: RootState) => {
+  const filteredBoards = filterOutEmptyPayCheckBoards(
+    store.boards.boards,
+    store.lists.lists,
+  )
+
+  return {
+    boards: { ...store.boards, boards: filteredBoards },
+    company: store.company,
+  }
+}
+
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootState, any, setCurrentCompany>,
 ) => {
@@ -44,4 +60,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(() => ({}), mapDispatchToProps)(Paychecks)
+export default connect(mapStateToProps, mapDispatchToProps)(Paychecks)

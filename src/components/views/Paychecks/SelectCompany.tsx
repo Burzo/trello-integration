@@ -1,24 +1,22 @@
 import React, { FC } from 'react'
 import FormControl from '@material-ui/core/FormControl'
-import { IBoards, IBoard } from '../../../store/boards/types'
+import { IBoard } from '../../../store/boards/types'
 import { RootState } from '../../../store'
 import { connect } from 'react-redux'
 import { Pagination } from '@material-ui/lab'
-import { Filter } from '../../helpers/Filter/BoardFilter'
+import Filter from '../../helpers/Filter/BoardFilter'
 import SmallCompanyCard from '../../helpers/SimpleCard/SmallCompanyCard'
 import { Card } from '../../../store/cards/types'
-import { Lists, List } from '../../../store/lists/types'
 
 const ITEMS_PER_PAGE: number = 18
 
 export type IFilters = 'paycheck' | 'overview'
 
 interface IProps {
-  boards: IBoards
+  boards: IBoard[]
   company: string
   changeSmallCompanyColor?: boolean
   cards?: Card[]
-  lists?: List[]
   filter: IFilters
   setCompany: (company: string) => void
 }
@@ -29,7 +27,6 @@ const SelectCompany: FC<IProps> = ({
   company = '',
   setCompany,
   filter,
-  lists = [],
   cards = [],
 }) => {
   const [page, setPage] = React.useState(1)
@@ -48,7 +45,6 @@ const SelectCompany: FC<IProps> = ({
   return (
     <FormControl style={{ width: '100%' }} component="fieldset">
       <Filter
-        lists={lists}
         filter={filter}
         render={(filteredBoards) => {
           if (filteredBoards.length <= 0) {
@@ -69,7 +65,7 @@ const SelectCompany: FC<IProps> = ({
             return null
           })
         }}
-        boards={boards.boards}
+        boards={boards}
       >
         {(filteredBoards) => (
           <Pagination
@@ -87,8 +83,6 @@ const SelectCompany: FC<IProps> = ({
 
 const mapStateToProps = (store: RootState) => {
   return {
-    lists: store.lists.lists,
-    boards: store.boards,
     company: store.company,
   }
 }
