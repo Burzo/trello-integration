@@ -21,7 +21,7 @@ const Overview = ({ putCurrentCompany }: IProps) => {
     <div className="home">
       <Grid className="layout" container spacing={3}>
         <Grid className="layout-columns" item xs={3}>
-          <SelectCompany setCompany={handleCompanyChange} />
+          <SelectCompany filter="overview" setCompany={handleCompanyChange} />
         </Grid>
         <Grid className="layout-columns" item xs={9}>
           <CompanyOverview />

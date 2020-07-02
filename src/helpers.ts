@@ -106,6 +106,18 @@ export const getOutCompanyOverview = (cards: Card[]): Card[] => {
   })
 }
 
+export const doesItHavePaycheck = (lists: List[], boardName: string) => {
+  console.log(lists)
+  return (
+    lists.filter((list: List) => {
+      if (list.idBoard === boardName) {
+        return true
+      }
+      return false
+    }).length > 0
+  )
+}
+
 export const calculatePercantage = (cards: Card[]): number => {
   const completedCards = cards.filter((card: Card) => card.dueComplete).length
 

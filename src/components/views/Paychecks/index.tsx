@@ -22,6 +22,7 @@ const Paychecks = ({ putCurrentCompany }: IProps) => {
       <Grid className="layout" container spacing={3}>
         <Grid className="layout-columns" item xs={3}>
           <SelectCompany
+            filter="paycheck"
             changeSmallCompanyColor
             setCompany={handleCompanyChange}
           />
