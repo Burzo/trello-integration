@@ -91,6 +91,15 @@ export const getOutPaycheck = (cards: Card[]): Card[] => {
   })
 }
 
+export const getOutBasicInfo = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase().trim() === 'osnovni podatki') {
+      return true
+    }
+    return false
+  })
+}
+
 export const getOutCompanyOverview = (cards: Card[]): Card[] => {
   return cards.filter((card: Card) => {
     if (

@@ -69,6 +69,9 @@ export const Header = ({ children }: IProps) => {
           <Button onClick={() => history.push('/overview')} color="inherit">
             Pregled
           </Button>
+          <Button onClick={() => history.push('/basic-info')} color="inherit">
+            Osnovni podatki
+          </Button>
           <span style={{ marginLeft: 'auto' }}>
             <GoogleLogout
               clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"

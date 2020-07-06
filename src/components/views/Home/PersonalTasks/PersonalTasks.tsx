@@ -119,7 +119,6 @@ const PersonalTasks: FC<IProps> = ({
           {googleMail}
         </Typography>
       </div>
-      {/* buttonPressed('5ee90051632da66cd61bba60', { name: 'WDSAWAdawda' }) */}
       <FormControl>
         <Button
           variant="contained"
