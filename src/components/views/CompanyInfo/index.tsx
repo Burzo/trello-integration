@@ -27,7 +27,6 @@ const Overview = ({ putCurrentCompany, boards }: IProps) => {
           <SelectCompany
             boards={boards.boards}
             filter="paycheck"
-            changeSmallCompanyColor
             setCompany={handleCompanyChange}
           />
         </Grid>

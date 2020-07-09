@@ -7,19 +7,22 @@ import { RootState } from '../../../store'
 import {
   remapBoardIdCards,
   remapListIdCards,
-  getOutCompanyOverview,
   calculatePercantage,
+  getOutCompanyOverviewAndBilance,
+  calculateBilancePercantage,
 } from '../../../helpers'
 import { connect } from 'react-redux'
 import { Card as MyCard } from '../../../store/cards/types'
+import { IFilters } from '../../views/Paychecks/SelectCompany'
+import moment from 'moment'
 
 interface IProps {
   board: IBoard
   cards: MyCard[]
   className?: string
   company: string
-  changeColor?: boolean
   handleSelectChange: (board: IBoard) => void
+  filter: IFilters
 }
 
 const SmallCompanyCard = ({
@@ -28,7 +31,7 @@ const SmallCompanyCard = ({
   cards,
   company,
   className = '',
-  changeColor,
+  filter,
 }: IProps) => {
   const [animate, setAnimate] = useState(false)
 
@@ -38,23 +41,54 @@ const SmallCompanyCard = ({
 
   const isClicked = () => {
     if (board.name === company) {
-      if (changeColor) {
-        return 'smallcompanycard selected MuiAppBar-colorPrimary'
+      switch (filter) {
+        case 'paycheck':
+          return 'smallcompanycard selected MuiAppBar-colorPrimary'
+        case 'bilance':
+          return 'smallcompanycard selected'
+        default:
+          return 'smallcompanycard selected'
       }
-      return 'smallcompanycard selected'
     }
     return 'smallcompanycard'
   }
 
-  const filterOutMyCards = (): MyCard[] => {
-    return cards.filter((card: MyCard) => {
-      return (
-        card.idBoard.toLowerCase().trim() === board.name.toLowerCase().trim()
-      )
-    })
+  const getFontClassName = () => {
+    switch (filter) {
+      case 'overview':
+        return 'smallcompanycard-text'
+      case 'bilance':
+        return 'smallcompanycard-text'
+      default:
+        return ''
+    }
   }
 
-  const percentage: number = calculatePercantage(filterOutMyCards())
+  const filterOutMyCards = (): MyCard[] => {
+    switch (filter) {
+      case 'overview':
+        return cards.filter((card: MyCard) => {
+          return (
+            card.idBoard.toLowerCase().trim() ===
+              board.name.toLowerCase().trim() &&
+            card.idList.toLowerCase().trim() !== `bilance ${moment().year()}`
+          )
+        })
+      default:
+        return cards.filter((card: MyCard) => {
+          return (
+            card.idBoard.toLowerCase().trim() ===
+              board.name.toLowerCase().trim() &&
+            card.idList.toLowerCase().trim() === `bilance ${moment().year()}`
+          )
+        })
+    }
+  }
+
+  const percentage: number =
+    filter === 'overview'
+      ? calculatePercantage(filterOutMyCards())
+      : calculateBilancePercantage(filterOutMyCards())
 
   return (
     <div>
@@ -65,20 +99,22 @@ const SmallCompanyCard = ({
         unmountOnExit
       >
         <Card
-          style={changeColor ? undefined : { backgroundColor: 'transparent' }}
+          style={
+            filter === 'paycheck'
+              ? undefined
+              : { backgroundColor: 'transparent' }
+          }
           onClick={() => handleSelectChange(board)}
           key={board.id}
           className={isClicked()}
         >
           <div className="container">
-            <Typography
-              className={changeColor ? '' : 'smallcompanycard-text'}
-              variant="h6"
-            >
-              {board.name} {!changeColor && `(${percentage.toFixed(0)}%)`}
+            <Typography className={getFontClassName()} variant="h6">
+              {board.name}&nbsp;
+              {filter === 'overview' && `(${percentage.toFixed(0)}%)`}
             </Typography>
           </div>
-          {!changeColor && <Fill percentage={percentage} />}
+          {filter !== 'paycheck' && <Fill percentage={percentage} />}
         </Card>
       </CSSTransition>
     </div>
@@ -86,7 +122,7 @@ const SmallCompanyCard = ({
 }
 
 const mapStateToProps = (store: RootState) => {
-  const allCards = getOutCompanyOverview(
+  const allCards = getOutCompanyOverviewAndBilance(
     remapListIdCards(
       store.lists.lists,
       remapBoardIdCards(store.boards.boards, store.cards.cards),
@@ -126,7 +162,7 @@ const Fill = ({ percentage }: FillProps) => {
     left: '0',
     height: '100%',
     width: `${percentage}%`,
-    backgroundColor: '#4caf50',
+    backgroundColor: percentage > 100 ? '#003f64' : '#4caf50',
     transition: 'all 1s',
     zIndex: -100,
   }

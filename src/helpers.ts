@@ -2,6 +2,7 @@
 import { IBoard } from './store/boards/types'
 import { Card } from './store/cards/types'
 import { List } from './store/lists/types'
+import moment from 'moment-timezone'
 
 declare global {
   interface Window {
@@ -115,6 +116,22 @@ export const getOutCompanyOverview = (cards: Card[]): Card[] => {
   })
 }
 
+export const getOutCompanyOverviewAndBilance = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (
+      card.idList.toLowerCase().trim() === 'izdani računi (prihodki)' ||
+      card.idList.toLowerCase().trim() === 'prejeti računi (odhodki)' ||
+      card.idList.toLowerCase().trim() === 'banka' ||
+      card.idList.toLowerCase().trim() === 'ddv plače ostalo' ||
+      card.idList.toLowerCase().trim() === 'pregled bruto bilance' ||
+      card.idList.toLowerCase().trim() === `bilance ${moment().year()}`
+    ) {
+      return true
+    }
+    return false
+  })
+}
+
 export const doesItHavePaycheck = (lists: List[], boardName: string) => {
   return (
     lists.filter((list: List) => {
@@ -133,6 +150,32 @@ export const calculatePercantage = (cards: Card[]): number => {
     return 0
   }
   return (completedCards / cards.length) * 100
+}
+
+export const calculateBilancePercantage = (cards: Card[]): number => {
+  let completedCards = cards.filter((card: Card) => card.dueComplete)
+
+  let result = 0
+
+  completedCards.map((card: Card) => {
+    if (card.name.toLowerCase().trim() === 'ajpes') {
+      result += 50
+    }
+    if (card.name.toLowerCase().trim() === 'furs') {
+      result += 50
+    }
+
+    // If it's above 100% it changes color
+    if (result === 100) {
+      completedCards = completedCards.filter(
+        (card: Card) => card.name.toLowerCase().trim() === 'plačilni nalogi',
+      )
+      if (completedCards.length > 0) {
+        result += 50
+      }
+    }
+  })
+  return result
 }
 
 export const getOutIzdani = (cards: Card[]): Card[] => {
@@ -174,6 +217,15 @@ export const getOutRest = (cards: Card[]): Card[] => {
 export const getOutBilance = (cards: Card[]): Card[] => {
   return cards.filter((card: Card) => {
     if (card.idList.toLowerCase().trim() === 'pregled bruto bilance') {
+      return true
+    }
+    return false
+  })
+}
+
+export const getOutOnlyBilance = (cards: Card[]): Card[] => {
+  return cards.filter((card: Card) => {
+    if (card.idList.toLowerCase().trim() === `bilance ${moment().year()}`) {
       return true
     }
     return false

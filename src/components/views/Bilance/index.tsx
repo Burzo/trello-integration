@@ -1,13 +1,12 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import SelectCompany from './SelectCompany'
-import Company from './Company'
+import SelectCompany from '../Paychecks/SelectCompany'
+import CompanyView from './CompanyView'
 import { putCurrentCompany } from '../../../store/company/actions'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../../store'
 import { setCurrentCompany } from '../../../store/company/types'
 import { connect } from 'react-redux'
-import { filterOutEmptyPayCheckBoards } from '../../../helpers'
 import { IBoards } from '../../../store/boards/types'
 
 interface IProps {
@@ -15,7 +14,7 @@ interface IProps {
   boards: IBoards
 }
 
-const Paychecks = ({ putCurrentCompany, boards }: IProps) => {
+const Bilance = ({ putCurrentCompany, boards }: IProps) => {
   const handleCompanyChange = (company: string) => {
     putCurrentCompany(company)
   }
@@ -26,12 +25,12 @@ const Paychecks = ({ putCurrentCompany, boards }: IProps) => {
         <Grid className="layout-columns" item xs={3}>
           <SelectCompany
             boards={boards.boards}
-            filter="paycheck"
+            filter="bilance"
             setCompany={handleCompanyChange}
           />
         </Grid>
         <Grid className="layout-columns" item xs={9}>
-          <Company />
+          <CompanyView />
         </Grid>
       </Grid>
     </div>
@@ -39,13 +38,8 @@ const Paychecks = ({ putCurrentCompany, boards }: IProps) => {
 }
 
 const mapStateToProps = (store: RootState) => {
-  const filteredBoards = filterOutEmptyPayCheckBoards(
-    store.boards.boards,
-    store.lists.lists,
-  )
-
   return {
-    boards: { ...store.boards, boards: filteredBoards },
+    boards: store.boards,
     company: store.company,
   }
 }
@@ -59,4 +53,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Paychecks)
+export default connect(mapStateToProps, mapDispatchToProps)(Bilance)

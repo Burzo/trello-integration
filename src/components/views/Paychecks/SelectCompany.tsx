@@ -10,12 +10,11 @@ import { Card } from '../../../store/cards/types'
 
 const ITEMS_PER_PAGE: number = 18
 
-export type IFilters = 'paycheck' | 'overview'
+export type IFilters = 'paycheck' | 'overview' | 'bilance'
 
 interface IProps {
   boards: IBoard[]
   company: string
-  changeSmallCompanyColor?: boolean
   cards?: Card[]
   filter: IFilters
   setCompany: (company: string) => void
@@ -23,7 +22,6 @@ interface IProps {
 
 const SelectCompany: FC<IProps> = ({
   boards,
-  changeSmallCompanyColor,
   company = '',
   setCompany,
   filter,
@@ -57,7 +55,7 @@ const SelectCompany: FC<IProps> = ({
               return (
                 <SmallCompanyCard
                   board={board}
-                  changeColor={changeSmallCompanyColor}
+                  filter={filter}
                   handleSelectChange={handleSelectChange}
                 />
               )
