@@ -27,7 +27,7 @@ export const fetchListsForMultipleBoards = (
   const batchedUrls: string[] = []
 
   boards.map((board: IBoard, index) => {
-    if (index % 10 === 0) {
+    if (index % 10 === 0 || boards.length === index + 1) {
       url += `/boards/${board.id}/lists`
       batchedUrls.push(url)
       url = ''

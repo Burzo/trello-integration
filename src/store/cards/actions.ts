@@ -48,7 +48,7 @@ export const fetchCardsForMultipleBoards = (
   const batchedUrls: string[] = []
 
   boards.map((board: IBoard, index) => {
-    if (index % 10 === 0) {
+    if (index % 10 === 0 || boards.length === index + 1) {
       url += `/boards/${board.id}/cards`
       batchedUrls.push(url)
       url = ''
