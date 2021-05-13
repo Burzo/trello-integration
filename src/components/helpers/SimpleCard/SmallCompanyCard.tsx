@@ -10,17 +10,18 @@ import {
   calculatePercantage,
   getOutCompanyOverviewAndBilance,
   calculateBilancePercantage,
+  getOutListString,
 } from '../../../helpers'
 import { connect } from 'react-redux'
 import { Card as MyCard } from '../../../store/cards/types'
 import { IFilters } from '../../views/Paychecks/SelectCompany'
 import moment from 'moment'
+import { IAllDataCompany } from '../../../store/allData/types'
 
 interface IProps {
   board: IBoard
-  cards: MyCard[]
   className?: string
-  company: string
+  companies: IAllDataCompany[]
   handleSelectChange: (board: IBoard) => void
   filter: IFilters
 }
@@ -28,8 +29,7 @@ interface IProps {
 const SmallCompanyCard = ({
   handleSelectChange,
   board,
-  cards,
-  company,
+  companies,
   className = '',
   filter,
 }: IProps) => {
@@ -39,8 +39,16 @@ const SmallCompanyCard = ({
     setAnimate(true)
   }, [])
 
+  const index = companies.findIndex((company) => company.name === board.name)
+
+  if (index < 0) return null
+
+  const company = companies[index]
+
+  const cards = getOutCompanyOverviewAndBilance(company)
+
   const isClicked = () => {
-    if (board.name === company) {
+    if (board.name === company.name) {
       switch (filter) {
         case 'paycheck':
           return 'smallcompanycard selected MuiAppBar-colorPrimary'
@@ -64,31 +72,10 @@ const SmallCompanyCard = ({
     }
   }
 
-  const filterOutMyCards = (): MyCard[] => {
-    switch (filter) {
-      case 'overview':
-        return cards.filter((card: MyCard) => {
-          return (
-            card.idBoard.toLowerCase().trim() ===
-              board.name.toLowerCase().trim() &&
-            card.idList.toLowerCase().trim() !== `bilance ${moment().year()}`
-          )
-        })
-      default:
-        return cards.filter((card: MyCard) => {
-          return (
-            card.idBoard.toLowerCase().trim() ===
-              board.name.toLowerCase().trim() &&
-            card.idList.toLowerCase().trim() === `bilance ${moment().year()}`
-          )
-        })
-    }
-  }
-
   const percentage: number =
     filter === 'overview'
-      ? calculatePercantage(filterOutMyCards())
-      : calculateBilancePercantage(filterOutMyCards())
+      ? calculatePercantage(cards)
+      : calculateBilancePercantage(cards)
 
   return (
     <div>
@@ -122,16 +109,8 @@ const SmallCompanyCard = ({
 }
 
 const mapStateToProps = (store: RootState) => {
-  const allCards = getOutCompanyOverviewAndBilance(
-    remapListIdCards(
-      store.lists.lists,
-      remapBoardIdCards(store.boards.boards, store.cards.cards),
-    ),
-  )
-
   return {
-    cards: allCards,
-    company: store.company,
+    companies: store.allData.companies,
   }
 }
 

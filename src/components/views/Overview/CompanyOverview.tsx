@@ -8,14 +8,11 @@ import {
   remapListIdCards,
   remapBoardIdCards,
   getOutCompanyOverview,
-  getOutIzdani,
-  getOutPrejeti,
-  getOutBank,
-  getOutRest,
-  getOutBilance,
+  getOutListString,
 } from '../../../helpers'
 import { connect } from 'react-redux'
 import OverviewColumn from './OverviewColumn'
+import { IAllDataCompany } from '../../../store/allData/types'
 
 interface CompanyOverview {
   izdani: Card[]
@@ -34,12 +31,12 @@ const emptyState: CompanyOverview = {
 }
 
 interface IProps {
-  company: string
+  company?: IAllDataCompany
   cards?: CompanyOverview
 }
 
 function CompanyOverview({ company, cards = emptyState }: IProps) {
-  if (company !== '' && cards === emptyState) {
+  if (!company || cards === emptyState) {
     return (
       <Error>
         {`Ne najdem podatkov za ${company}. Preveri Trello, če obstajajo stolpci IZDANI RAČUNI (PRIHODKI), PREJETI RAČUNI (ODHODKI), BANKA, DDV PLAČE OSTALO, PREGLED BRUTO BILANCE.`}
@@ -50,28 +47,32 @@ function CompanyOverview({ company, cards = emptyState }: IProps) {
   return (
     <div className="text-center">
       <Typography display="inline" variant="h6">
-        {company}
+        {company.name}
       </Typography>
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="overview">
         <OverviewColumn
-          company={company}
+          company={company.name}
           column="Izdani računi (prihodki)"
           cards={cards.izdani}
         />
         <OverviewColumn
-          company={company}
+          company={company.name}
           column="Prejeti računi (odhodki)"
           cards={cards.prejeti}
         />
-        <OverviewColumn company={company} column="Banka" cards={cards.bank} />
         <OverviewColumn
-          company={company}
+          company={company.name}
+          column="Banka"
+          cards={cards.bank}
+        />
+        <OverviewColumn
+          company={company.name}
           column="DDV / Plače / Ostalo"
           cards={cards.rest}
         />
         <OverviewColumn
-          company={company}
+          company={company.name}
           column="Bilance"
           cards={cards.bilance}
         />
@@ -81,25 +82,17 @@ function CompanyOverview({ company, cards = emptyState }: IProps) {
 }
 
 const mapStateToProps = (store: RootState) => {
-  // If company doesn't exist, don't return any cards
-  const filteredCards = store.cards.cards.filter((card: Card) => {
+  const company = store.allData.companies.filter((company) => {
     return (
-      card.idBoard.toLowerCase().trim() === store.company.toLowerCase().trim()
+      company.name.toLowerCase().trim() === store.company.toLowerCase().trim()
     )
-  })
+  })[0]
 
-  const allCards = getOutCompanyOverview(
-    remapListIdCards(
-      store.lists.lists,
-      remapBoardIdCards(store.boards.boards, filteredCards),
-    ),
-  )
-
-  const izdani = getOutIzdani(allCards)
-  const prejeti = getOutPrejeti(allCards)
-  const bank = getOutBank(allCards)
-  const rest = getOutRest(allCards)
-  const bilance = getOutBilance(allCards)
+  const izdani = getOutListString(company, 'izdani računi (prihodki)')
+  const prejeti = getOutListString(company, 'prejeti računi (odhodki)')
+  const bank = getOutListString(company, 'banka')
+  const rest = getOutListString(company, 'ddv plače ostalo')
+  const bilance = getOutListString(company, 'pregled bruto bilance')
 
   return {
     cards: {
@@ -109,7 +102,7 @@ const mapStateToProps = (store: RootState) => {
       rest,
       bilance,
     },
-    company: store.company,
+    company: company,
   }
 }
 

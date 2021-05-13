@@ -3,6 +3,7 @@ import { IBoard } from './store/boards/types'
 import { Card } from './store/cards/types'
 import { List } from './store/lists/types'
 import moment from 'moment-timezone'
+import { FilledList, IAllData, IAllDataCompany } from './store/allData/types'
 
 declare global {
   interface Window {
@@ -116,20 +117,28 @@ export const getOutCompanyOverview = (cards: Card[]): Card[] => {
   })
 }
 
-export const getOutCompanyOverviewAndBilance = (cards: Card[]): Card[] => {
-  return cards.filter((card: Card) => {
+export const getOutCompanyOverviewAndBilance = (
+  company: IAllDataCompany,
+): Card[] => {
+  if (!company) {
+    return []
+  }
+  const cards: Card[] = []
+
+  company.lists.map((list) => {
     if (
-      card.idList.toLowerCase().trim() === 'izdani računi (prihodki)' ||
-      card.idList.toLowerCase().trim() === 'prejeti računi (odhodki)' ||
-      card.idList.toLowerCase().trim() === 'banka' ||
-      card.idList.toLowerCase().trim() === 'ddv plače ostalo' ||
-      card.idList.toLowerCase().trim() === 'pregled bruto bilance' ||
-      card.idList.toLowerCase().trim() === `bilance ${moment().year()}`
+      list.name.toLowerCase().trim() === 'izdani računi (prihodki)' ||
+      list.name.toLowerCase().trim() === 'prejeti računi (odhodki)' ||
+      list.name.toLowerCase().trim() === 'banka' ||
+      list.name.toLowerCase().trim() === 'ddv plače ostalo' ||
+      list.name.toLowerCase().trim() === 'pregled bruto bilance' ||
+      list.name.toLowerCase().trim() === `bilance ${moment().year()}`
     ) {
-      return true
+      list.cards.forEach((card) => cards.push(card))
     }
-    return false
   })
+
+  return cards
 }
 
 export const doesItHavePaycheck = (lists: List[], boardName: string) => {
@@ -178,49 +187,24 @@ export const calculateBilancePercantage = (cards: Card[]): number => {
   return result
 }
 
-export const getOutIzdani = (cards: Card[]): Card[] => {
-  return cards.filter((card: Card) => {
-    if (card.idList.toLowerCase().trim() === 'izdani računi (prihodki)') {
-      return true
+export const getOutListString = (
+  company: IAllDataCompany,
+  str: string,
+  except: boolean = false,
+): Card[] => {
+  if (!company) {
+    return []
+  }
+  const index = company.lists.findIndex((list) => {
+    if (except) {
+      return list.name.toLowerCase().trim() !== str
     }
-    return false
+    return list.name.toLowerCase().trim() === str
   })
-}
-
-export const getOutPrejeti = (cards: Card[]): Card[] => {
-  return cards.filter((card: Card) => {
-    if (card.idList.toLowerCase().trim() === 'prejeti računi (odhodki)') {
-      return true
-    }
-    return false
-  })
-}
-
-export const getOutBank = (cards: Card[]): Card[] => {
-  return cards.filter((card: Card) => {
-    if (card.idList.toLowerCase().trim() === 'banka') {
-      return true
-    }
-    return false
-  })
-}
-
-export const getOutRest = (cards: Card[]): Card[] => {
-  return cards.filter((card: Card) => {
-    if (card.idList.toLowerCase().trim() === 'ddv plače ostalo') {
-      return true
-    }
-    return false
-  })
-}
-
-export const getOutBilance = (cards: Card[]): Card[] => {
-  return cards.filter((card: Card) => {
-    if (card.idList.toLowerCase().trim() === 'pregled bruto bilance') {
-      return true
-    }
-    return false
-  })
+  if (index < 0) {
+    return []
+  }
+  return company.lists[index].cards
 }
 
 export const getOutOnlyBilance = (cards: Card[]): Card[] => {
@@ -229,6 +213,27 @@ export const getOutOnlyBilance = (cards: Card[]): Card[] => {
       return true
     }
     return false
+  })
+}
+
+export const mapBoardCardList = (
+  companies: IBoard[],
+  allCards: Card[],
+): IAllDataCompany[] => {
+  return companies.map((company) => {
+    for (let i = 0; i < company.lists.length; i++) {
+      const e = company.lists[i] as FilledList
+      e.cards = e.cards || []
+      allCards.map((card) => {
+        if (card.idList === e.id) {
+          e.cards.push(card)
+        }
+      })
+    }
+    return {
+      name: company.name,
+      lists: company.lists as FilledList[],
+    }
   })
 }
 
@@ -364,29 +369,27 @@ export const gatherUpData = (data: any[]): any[] => {
 const RETRY_RATE = 10000
 
 export const fetchRetry = (url: string, options = {}, times: number = 5) => {
-  return new Promise<Response>(
-    (resolve, reject): Promise<any> => {
-      return fetch(url, options)
-        .then((res) => {
-          // Could also be res.status !== 200 in the future
-          if (res.status === 429) {
-            console.error(
-              `Reached te API rate limit. Will try again in ${
-                RETRY_RATE / 1000
-              } seconds. Retries left - ${times}`,
-            )
-            window.setTimeout(() => {
-              fetchRetry(url, options, times - 1)
-                .then((res) => resolve(res))
-                .catch((e) => reject(e))
-            }, RETRY_RATE)
-          } else {
-            resolve(res)
-          }
-        })
-        .catch((e) => {
-          reject(e)
-        })
-    },
-  )
+  return new Promise<Response>((resolve, reject): Promise<any> => {
+    return fetch(url, options)
+      .then((res) => {
+        // Could also be res.status !== 200 in the future
+        if (res.status === 429) {
+          console.error(
+            `Reached te API rate limit. Will try again in ${
+              RETRY_RATE / 1000
+            } seconds. Retries left - ${times}`,
+          )
+          window.setTimeout(() => {
+            fetchRetry(url, options, times - 1)
+              .then((res) => resolve(res))
+              .catch((e) => reject(e))
+          }, RETRY_RATE)
+        } else {
+          resolve(res)
+        }
+      })
+      .catch((e) => {
+        reject(e)
+      })
+  })
 }

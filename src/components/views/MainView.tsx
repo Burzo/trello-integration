@@ -23,12 +23,14 @@ import { fetchListsForMultipleBoards } from '../../store/lists/actions'
 import './style.scss'
 import { Header } from '../helpers/Header/Header'
 import Router from '../helpers/Router/Router'
+import { fetchAll } from '../../store/allData/actions'
 
 interface IProps {
   token: string
   boards: IBoards
   cards: Cards
   fetchBoards: (token: string) => void
+  fetchAll: (token: string) => void
   fetchCardsForMultipleBoards: (token: string, boards: IBoard[]) => void
   fetchListsForMultipleBoards: (token: string, boards: IBoard[]) => void
   updateCard: (token: string, card: Card, query: CardPayloadObject) => void
@@ -43,16 +45,15 @@ const MainView: FC<IProps> = ({
   fetchBoards,
   fetchCardsForMultipleBoards,
   fetchListsForMultipleBoards,
+  fetchAll,
   updateCard,
 }) => {
   const [loaded, setLoaded] = useState(false)
 
-  let refreshInterval: React.MutableRefObject<
-    number | null | undefined
-  > = useRef()
-  let boardFetchingInterval: React.MutableRefObject<
-    number | null | undefined
-  > = useRef()
+  let refreshInterval: React.MutableRefObject<number | null | undefined> =
+    useRef()
+  let boardFetchingInterval: React.MutableRefObject<number | null | undefined> =
+    useRef()
 
   useEffect(() => {
     fetchBoards(token)
@@ -90,6 +91,7 @@ const MainView: FC<IProps> = ({
   const refreshEverything = () => {
     fetchCardsForMultipleBoards(token, boards.boards)
     fetchListsForMultipleBoards(token, boards.boards)
+    fetchAll(token)
   }
 
   return (
@@ -130,6 +132,7 @@ const mapDispatchToProps = (
 ) => {
   return {
     fetchBoards: (token: string) => dispatch(fetchBoards(token)),
+    fetchAll: (token: string) => dispatch(fetchAll(token)),
     fetchCardsForMultipleBoards: (token: string, boards: IBoard[]) =>
       dispatch(fetchCardsForMultipleBoards(token, boards)),
     fetchListsForMultipleBoards: (token: string, boards: IBoard[]) => {

@@ -5,6 +5,7 @@ import { cardsReducer } from './cards/reducers'
 import { listsReducer } from './lists/reducers'
 import { googleUserReducer } from './google/reducers'
 import { companyReducer } from './company/reducers'
+import { allDataReducer } from './allData/reducers'
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   lists: listsReducer,
   googleUser: googleUserReducer,
   company: companyReducer,
+  allData: allDataReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

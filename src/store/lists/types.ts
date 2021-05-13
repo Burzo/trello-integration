@@ -5,11 +5,11 @@ export const FETCH_LISTS_ERROR = 'FETCH_LISTS_ERROR'
 export interface List {
   id: string
   name: string
-  closed: boolean
-  pos: number
-  softLimit: null | string
   idBoard: string
-  subscribed: boolean
+  closed?: boolean
+  pos?: number
+  softLimit?: null | string
+  subscribed?: boolean
 }
 
 export interface Lists {
