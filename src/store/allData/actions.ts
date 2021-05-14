@@ -13,8 +13,19 @@ import {
   manageCards,
   mapBoardCardList,
 } from '../../helpers'
-import { Card } from '../cards/types'
+import {
+  Card,
+  FETCH_CARDS_ERROR,
+  FETCH_CARDS_START,
+  FETCH_CARDS_SUCCESS,
+} from '../cards/types'
 import { IBoard } from '../boards/types'
+import {
+  FETCH_LISTS_ERROR,
+  FETCH_LISTS_START,
+  FETCH_LISTS_SUCCESS,
+  List,
+} from '../lists/types'
 
 export const fetchAll =
   (token: string): AppThunk =>
@@ -24,13 +35,13 @@ export const fetchAll =
       `https://api.trello.com/1/members/me/boards/?fields=name&lists=all&list_fields=name&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
     )
       .then((res: Response) => handleTrelloTokenExpiry(res))
-      .then((companies) => {
+      .then((companies: IBoard[]) => {
         let allCards: Card[] = []
         let url = ''
         const batchedUrls: string[] = []
 
         companies.map((board: IBoard, index: number) => {
-          if (index % 10 === 0 || companies.length === index + 1) {
+          if (index % 5 === 0 || companies.length === index + 1) {
             url += `/boards/${board.id}/cards`
             batchedUrls.push(url)
             url = ''
@@ -39,6 +50,9 @@ export const fetchAll =
           }
           return null
         })
+
+        dispatch({ type: FETCH_LISTS_START })
+        dispatch({ type: FETCH_CARDS_START })
 
         Promise.all(
           batchedUrls.map((str: string) => {
@@ -58,7 +72,22 @@ export const fetchAll =
             type: FETCH_ALL_DATA_SUCCESS,
             payload: mapBoardCardList(companies, allCards),
           })
+          dispatch({ type: FETCH_CARDS_SUCCESS, payload: allCards })
+
+          const allLists = companies.reduce<List[]>(
+            (acc, value) => [
+              ...acc,
+              ...value.lists.map((list) => ({ ...list, idBoard: value.name })),
+            ],
+            [],
+          )
+
+          dispatch({ type: FETCH_LISTS_SUCCESS, payload: allLists })
         })
       })
-      .catch((e: Error) => dispatch({ type: FETCH_ALL_DATA_ERROR, payload: e }))
+      .catch((e: Error) => {
+        dispatch({ type: FETCH_ALL_DATA_ERROR, payload: e })
+        dispatch({ type: FETCH_LISTS_ERROR, payload: e })
+        dispatch({ type: FETCH_CARDS_ERROR, payload: e })
+      })
   }

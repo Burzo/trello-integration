@@ -1,5 +1,15 @@
-import { Card } from '../cards/types'
-import { List } from '../lists/types'
+import {
+  Card,
+  fetchCardsError,
+  fetchCardsStart,
+  fetchCardsSuccess,
+} from '../cards/types'
+import {
+  fetchListsError,
+  fetchListsStart,
+  fetchListsSuccess,
+  List,
+} from '../lists/types'
 
 export const FETCH_ALL_DATA_START = 'FETCH_ALL_DATA_START'
 export const FETCH_ALL_DATA_SUCCESS = 'FETCH_ALL_DATA_SUCCESS'
@@ -100,3 +110,9 @@ export type AllBoardsTypes =
   | fetchBoardsSuccess
   | addCardsToBoards
   | addListsToBoards
+  | fetchCardsSuccess
+  | fetchListsSuccess
+  | fetchCardsError
+  | fetchListsError
+  | fetchCardsStart
+  | fetchListsStart

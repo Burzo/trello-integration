@@ -4,11 +4,7 @@ import { Error } from '../../helpers/Error/Error'
 import './style.scss'
 import { RootState } from '../../../store'
 import { Card } from '../../../store/cards/types'
-import {
-  remapListIdCards,
-  remapBoardIdCards,
-  getOutOnlyBilance,
-} from '../../../helpers'
+import { getOutListString } from '../../../helpers'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import CompanyCard from '../../helpers/SimpleCard/CompanyCard'
@@ -19,7 +15,7 @@ interface IProps {
 }
 
 function CompanyView({ company, cards = [] }: IProps) {
-  if (company !== '' && cards.length <= 0) {
+  if (!company || !cards || cards.length < 1) {
     return (
       <Error>
         {`Ne najdem informacij o podjetju ${company}. Preveri Trello, če obstaja stolpec "Bilance ${moment().year()}".`}
@@ -35,12 +31,7 @@ function CompanyView({ company, cards = [] }: IProps) {
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="companies">
         {cards.map((card: Card) => {
-          if (
-            card.idBoard.toLowerCase().trim() === company.toLowerCase().trim()
-          ) {
-            return <CompanyCard key={card.id} card={card} />
-          }
-          return null
+          return <CompanyCard key={card.id} card={card} />
         })}
       </div>
     </div>
@@ -48,22 +39,18 @@ function CompanyView({ company, cards = [] }: IProps) {
 }
 
 const mapStateToProps = (store: RootState) => {
-  // If company doesn't exist, don't return any cards
-  const filteredCards = store.cards.cards.filter((card: Card) => {
+  const company = store.allData.companies.filter((company) => {
     return (
-      card.idBoard.toLowerCase().trim() === store.company.toLowerCase().trim()
+      company.name.toLowerCase().trim() === store.company.toLowerCase().trim()
     )
-  })
+  })[0]
 
-  const cards = getOutOnlyBilance(
-    remapListIdCards(
-      store.lists.lists,
-      remapBoardIdCards(store.boards.boards, filteredCards),
-    ),
-  )
+  console.log(company)
+
+  const bilance = getOutListString(company, `bilance ${moment().year()}`)
 
   return {
-    cards: cards,
+    cards: bilance,
     company: store.company,
   }
 }
