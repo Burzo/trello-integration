@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React from 'react'
 import { connect } from 'react-redux'
 import { RootState } from '../../../store'
@@ -45,15 +46,26 @@ const Tasks = ({ company, initialLoad }: IProps) => {
 
   return (
     <div className="tasks">
-      {list.cards.map((card) => {
-        return (
-          <Zadolzitve
-            key={card.id}
-            card={card}
-            color={card.labels.length > 0 ? card.labels[0].color : ''}
-          />
-        )
-      })}
+      {list.cards
+        .sort((a, b) => {
+          if (!a.due || !b.due) {
+            return 1
+          }
+
+          return moment(a.due).valueOf() - moment(b.due).valueOf()
+        })
+        .map((card) => {
+          if (card.dueComplete) {
+            return null
+          }
+          return (
+            <Zadolzitve
+              key={card.id}
+              card={card}
+              color={card.labels.length > 0 ? card.labels[0].color : ''}
+            />
+          )
+        })}
     </div>
   )
 }
