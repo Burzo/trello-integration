@@ -6,6 +6,8 @@ import { IAllDataCompany } from '../../../store/allData/types'
 import { Error } from '../../helpers/Error/Error'
 import { Loading } from '../../helpers/Loading/Loading'
 import Zadolzitve from '../../helpers/SimpleCard/Zadolzitve'
+import AddCompanyInfo from '../CompanyInfo/AddCompanyInfo'
+import AddTask from './AddTask'
 import './style.scss'
 
 interface IProps {
@@ -66,6 +68,7 @@ const Tasks = ({ company, initialLoad }: IProps) => {
             />
           )
         })}
+      <AddTask listId={list.id} />
     </div>
   )
 }

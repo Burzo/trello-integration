@@ -55,7 +55,7 @@ const Zadolzitve = ({ updateCard, card, className = '', color }: IProps) => {
 
   let date = card.due
     ? new Date(card.due).toLocaleDateString()
-    : 'No date available'
+    : 'Datum ni nastavljen'
 
   // TODO remove the on hover show icon logic and add a button group or icons next to cards
   return (
@@ -78,17 +78,19 @@ const Zadolzitve = ({ updateCard, card, className = '', color }: IProps) => {
               id="panel1a-header"
             >
               <div className="container">
-                {/* style={{ backgroundColor: color ? color : '' }} */}
                 <Typography align="center" variant="h5">
                   {card.name}
                 </Typography>
+                <div>
+                  <Typography>Do: {date}</Typography>
+                </div>
                 <Divider
                   style={{
                     marginBottom: '1rem',
                     marginTop: '1rem',
                     backgroundColor: color ? color : '',
                     height: 10,
-                    borderRadius: 10,
+                    borderRadius: 5,
                   }}
                 />
                 <TextField
@@ -107,9 +109,6 @@ const Zadolzitve = ({ updateCard, card, className = '', color }: IProps) => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails style={{ flexDirection: 'column' }}>
               <Divider style={{ marginBottom: '1rem' }} />
-              <div>
-                <Typography>Do: {date}</Typography>
-              </div>
               <Link href={card.url} target="_blank" rel="noreferrer">
                 <Typography>Odpri v Trellu</Typography>
               </Link>

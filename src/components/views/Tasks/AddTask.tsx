@@ -18,16 +18,39 @@ import { addACard } from '../../../store/cards/actions'
 import { getTrelloToken } from '../../../helpers'
 import { RootState } from '../../../store'
 import { CreateCardTypes, CardPayloadObject } from '../../../store/cards/types'
-import { List } from '../../../store/lists/types'
-import { Error } from '../../helpers/Error/Error'
-import moment, { Moment } from 'moment'
+import { Moment } from 'moment'
+
+type LabelColors =
+  | 'blue'
+  | 'green'
+  | 'orange'
+  | 'purple'
+  | 'red'
+  | 'yellow'
+  | 'sky'
+  | 'lime'
+  | 'pink'
+  | 'black'
+
+export const Labels: LabelColors[] = [
+  'blue',
+  'green',
+  'orange',
+  'purple',
+  'red',
+  'yellow',
+  'sky',
+  'lime',
+  'pink',
+  'black',
+]
 
 interface IProps {
   addACard?: (token: string, list: string, card: CardPayloadObject) => void
-  myList?: List[]
+  listId: string
 }
 
-const AddCompanyInfo: FC<IProps> = ({ addACard, myList = [] }) => {
+const AddTask: FC<IProps> = ({ addACard, listId }) => {
   const [toggleForm, setToggleForm] = useState(false)
 
   const [name, setName] = useState('')
@@ -37,7 +60,7 @@ const AddCompanyInfo: FC<IProps> = ({ addACard, myList = [] }) => {
   const buttonPressed = () => {
     if (due)
       addACard &&
-        addACard(getTrelloToken(), thisList.id, {
+        addACard(getTrelloToken(), listId, {
           name,
           desc,
           due: due ? due.utc().toString() : null,
@@ -54,26 +77,6 @@ const AddCompanyInfo: FC<IProps> = ({ addACard, myList = [] }) => {
     setDesc('')
     setDue(null)
   }
-
-  if (myList.length > 1) {
-    return (
-      <Error>
-        It seems there is more then one List named "Osnovni podatki". Please
-        check Trello and clear the differences.
-      </Error>
-    )
-  }
-
-  if (myList.length < 1) {
-    return (
-      <Error>
-        No list named "Osnovni podatki" found. Please, create it and refresh the
-        page.
-      </Error>
-    )
-  }
-
-  const thisList: List = myList[0]
 
   return (
     <div
@@ -145,18 +148,6 @@ const AddCompanyInfo: FC<IProps> = ({ addACard, myList = [] }) => {
   )
 }
 
-const mapStateToProps = (store: RootState) => {
-  const myList = store.lists.lists.filter(
-    (list: List) =>
-      list.name.toLowerCase().trim() === 'osnovni podatki' &&
-      list.idBoard === store.company,
-  )
-
-  return {
-    myList,
-  }
-}
-
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootState, any, CreateCardTypes>,
 ) => {
@@ -166,4 +157,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddCompanyInfo)
+export default connect(() => ({}), mapDispatchToProps)(AddTask)

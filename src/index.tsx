@@ -6,6 +6,8 @@ import { Provider } from 'react-redux'
 import configureStore from './store/index'
 import 'fontsource-roboto'
 import { BrowserRouter } from 'react-router-dom'
+import MomentUtils from '@date-io/moment'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import {
   StylesProvider,
   ThemeProvider,
@@ -33,9 +35,11 @@ ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <StylesProvider injectFirst>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          </MuiPickersUtilsProvider>
         </StylesProvider>
       </ThemeProvider>
     </Provider>
