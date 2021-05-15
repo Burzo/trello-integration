@@ -5,23 +5,19 @@ import { Card, Typography } from '@material-ui/core'
 import { IBoard } from '../../../store/boards/types'
 import { RootState } from '../../../store'
 import {
-  remapBoardIdCards,
-  remapListIdCards,
   calculatePercantage,
   getOutCompanyOverviewAndBilance,
   calculateBilancePercantage,
-  getOutListString,
 } from '../../../helpers'
 import { connect } from 'react-redux'
-import { Card as MyCard } from '../../../store/cards/types'
 import { IFilters } from '../../views/Paychecks/SelectCompany'
-import moment from 'moment'
 import { IAllDataCompany } from '../../../store/allData/types'
 
 interface IProps {
   board: IBoard
   className?: string
   companies: IAllDataCompany[]
+  selectedCompany?: string
   handleSelectChange: (board: IBoard) => void
   filter: IFilters
 }
@@ -30,6 +26,7 @@ const SmallCompanyCard = ({
   handleSelectChange,
   board,
   companies,
+  selectedCompany,
   className = '',
   filter,
 }: IProps) => {
@@ -48,7 +45,7 @@ const SmallCompanyCard = ({
   const cards = getOutCompanyOverviewAndBilance(company)
 
   const isClicked = () => {
-    if (board.name === company.name) {
+    if (selectedCompany === company.name) {
       switch (filter) {
         case 'paycheck':
           return 'smallcompanycard selected MuiAppBar-colorPrimary'
@@ -111,6 +108,7 @@ const SmallCompanyCard = ({
 const mapStateToProps = (store: RootState) => {
   return {
     companies: store.allData.companies,
+    selectedCompany: store.company,
   }
 }
 

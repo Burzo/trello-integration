@@ -44,10 +44,8 @@ const mapStateToProps = (store: RootState) => {
       company.name.toLowerCase().trim() === store.company.toLowerCase().trim()
     )
   })[0]
-
-  console.log(company)
-
   const bilance = getOutListString(company, `bilance ${moment().year()}`)
+  console.log(bilance)
 
   return {
     cards: bilance,

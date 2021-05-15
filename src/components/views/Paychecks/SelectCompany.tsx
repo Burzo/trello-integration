@@ -1,12 +1,9 @@
 import React, { FC } from 'react'
 import FormControl from '@material-ui/core/FormControl'
 import { IBoard } from '../../../store/boards/types'
-import { RootState } from '../../../store'
-import { connect } from 'react-redux'
 import { Pagination } from '@material-ui/lab'
 import Filter from '../../helpers/Filter/BoardFilter'
 import SmallCompanyCard from '../../helpers/SimpleCard/SmallCompanyCard'
-import { Card } from '../../../store/cards/types'
 
 const ITEMS_PER_PAGE: number = 18
 
@@ -14,19 +11,11 @@ export type IFilters = 'paycheck' | 'overview' | 'bilance'
 
 interface IProps {
   boards: IBoard[]
-  company: string
-  cards?: Card[]
   filter: IFilters
   setCompany: (company: string) => void
 }
 
-const SelectCompany: FC<IProps> = ({
-  boards,
-  company = '',
-  setCompany,
-  filter,
-  cards = [],
-}) => {
+const SelectCompany: FC<IProps> = ({ boards, setCompany, filter }) => {
   const [page, setPage] = React.useState(1)
 
   const handlePageChange = (
@@ -79,10 +68,4 @@ const SelectCompany: FC<IProps> = ({
   )
 }
 
-const mapStateToProps = (store: RootState) => {
-  return {
-    company: store.company,
-  }
-}
-
-export default connect(mapStateToProps)(SelectCompany)
+export default SelectCompany

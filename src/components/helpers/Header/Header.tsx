@@ -7,20 +7,24 @@ import {
   AppBar,
   Toolbar,
   Typography,
+  LinearProgress,
   Button,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { GoogleLogout } from 'react-google-login'
 import { MyDrawer } from '../MyDrawer/MyDrawer'
 import PersonalTasks from '../../views/Home/PersonalTasks/PersonalTasks'
+import { connect } from 'react-redux'
+import { RootState } from '../../../store'
 
 const DRAWER_WIDTH = 260
 
 interface IProps {
   children: (className: string) => false | JSX.Element
+  loading?: boolean
 }
 
-export const Header = ({ children }: IProps) => {
+const Header = ({ children, loading }: IProps) => {
   let history = useHistory()
 
   const [openDrawer, setOpenDrawer] = useState(false)
@@ -44,7 +48,7 @@ export const Header = ({ children }: IProps) => {
       <AppBar
         className={getClassName()}
         position="static"
-        style={{ width: 'auto' }}
+        style={{ width: 'auto', position: 'relative' }}
       >
         <Toolbar>
           {!openDrawer && (
@@ -95,6 +99,11 @@ export const Header = ({ children }: IProps) => {
             )}
           </span>
         </Toolbar>
+        {loading && (
+          <LinearProgress
+            style={{ position: 'absolute', bottom: 0, width: '100%' }}
+          />
+        )}
         <MyDrawer
           open={openDrawer}
           onClick={setOpenDrawer}
@@ -114,3 +123,9 @@ export const Header = ({ children }: IProps) => {
     </React.Fragment>
   )
 }
+
+const mapStateToProps = (store: RootState) => ({
+  loading: store.allData.loading,
+})
+
+export default connect(mapStateToProps, () => {})(Header)

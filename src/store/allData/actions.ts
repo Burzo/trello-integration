@@ -10,7 +10,6 @@ import {
   handleTrelloTokenExpiry,
   fetchRetry,
   gatherUpData,
-  manageCards,
   mapBoardCardList,
 } from '../../helpers'
 import {
@@ -19,7 +18,12 @@ import {
   FETCH_CARDS_START,
   FETCH_CARDS_SUCCESS,
 } from '../cards/types'
-import { IBoard } from '../boards/types'
+import {
+  FETCH_BOARDS_ERROR,
+  FETCH_BOARDS_START,
+  FETCH_BOARDS_SUCCESS,
+  IBoard,
+} from '../boards/types'
 import {
   FETCH_LISTS_ERROR,
   FETCH_LISTS_START,
@@ -31,6 +35,7 @@ export const fetchAll =
   (token: string): AppThunk =>
   (dispatch: Dispatch<AllBoardsTypes>, state) => {
     dispatch({ type: FETCH_ALL_DATA_START })
+    dispatch({ type: FETCH_BOARDS_START })
     fetchRetry(
       `https://api.trello.com/1/members/me/boards/?fields=name&lists=all&list_fields=name&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
     )
@@ -48,9 +53,10 @@ export const fetchAll =
           } else {
             url += `/boards/${board.id}/cards,`
           }
-          return null
+          return board
         })
 
+        dispatch({ type: FETCH_BOARDS_SUCCESS, payload: companies })
         dispatch({ type: FETCH_LISTS_START })
         dispatch({ type: FETCH_CARDS_START })
 
@@ -89,5 +95,6 @@ export const fetchAll =
         dispatch({ type: FETCH_ALL_DATA_ERROR, payload: e })
         dispatch({ type: FETCH_LISTS_ERROR, payload: e })
         dispatch({ type: FETCH_CARDS_ERROR, payload: e })
+        dispatch({ type: FETCH_BOARDS_ERROR, payload: e })
       })
   }

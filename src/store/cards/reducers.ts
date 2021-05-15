@@ -57,12 +57,14 @@ export const cardsReducer = (
     case UPDATE_CARD_SUCCESS:
       return {
         ...state,
-        cards: state.cards.map((card: Card) => {
-          if (action.payload.id === card.id) {
-            card = action.payload
-          }
-          return card
-        }),
+        cards: [
+          ...state.cards.map((card: Card) => {
+            if (action.payload.id === card.id) {
+              card = action.payload
+            }
+            return card
+          }),
+        ],
       }
     case UPDATE_CARD_ERROR:
       return {

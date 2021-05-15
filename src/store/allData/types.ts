@@ -1,8 +1,15 @@
 import {
+  fetchBoardsError,
+  fetchBoardsStart,
+  fetchBoardsSuccess,
+} from '../boards/types'
+import {
   Card,
+  createCardsSuccess,
   fetchCardsError,
   fetchCardsStart,
   fetchCardsSuccess,
+  updateCardSuccess,
 } from '../cards/types'
 import {
   fetchListsError,
@@ -80,16 +87,16 @@ export interface IAllData {
   error: Error | null
 }
 
-export interface fetchBoardsStart {
+export interface fetchAllStart {
   type: typeof FETCH_ALL_DATA_START
 }
 
-export interface fetchBoardsSuccess {
+export interface fetchAllSuccess {
   type: typeof FETCH_ALL_DATA_SUCCESS
   payload: IAllDataCompany[]
 }
 
-export interface fetchBoardsError {
+export interface fetchAllError {
   type: typeof FETCH_ALL_DATA_ERROR
   payload: Error
 }
@@ -105,6 +112,9 @@ export interface addListsToBoards {
 }
 
 export type AllBoardsTypes =
+  | fetchAllError
+  | fetchAllStart
+  | fetchAllSuccess
   | fetchBoardsError
   | fetchBoardsStart
   | fetchBoardsSuccess
@@ -116,3 +126,5 @@ export type AllBoardsTypes =
   | fetchListsError
   | fetchCardsStart
   | fetchListsStart
+  | updateCardSuccess
+  | createCardsSuccess
