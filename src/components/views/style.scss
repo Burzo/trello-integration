@@ -38,6 +38,17 @@
   .item {
     width: 25%;
 
+    .container {
+      display: flex;
+
+      .smallcompanycard-text {
+        max-width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
     &-layout {
       display: flex;
       flex-wrap: wrap;

@@ -95,6 +95,8 @@ const SmallCompanyCard = ({
           <div className="container">
             <Typography className={getFontClassName()} variant="h6">
               {board.name}&nbsp;
+            </Typography>
+            <Typography className={getFontClassName()} variant="h6">
               {filter === 'overview' && `(${percentage.toFixed(0)}%)`}
             </Typography>
           </div>
