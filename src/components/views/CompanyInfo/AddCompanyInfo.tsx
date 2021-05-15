@@ -35,13 +35,12 @@ const AddCompanyInfo: FC<IProps> = ({ addACard, myList = [] }) => {
   const [due, setDue] = useState<Moment | null | undefined>(null)
 
   const buttonPressed = () => {
-    if (due)
-      addACard &&
-        addACard(getTrelloToken(), thisList.id, {
-          name,
-          desc,
-          due: due ? due.utc().toString() : null,
-        })
+    addACard &&
+      addACard(getTrelloToken(), thisList.id, {
+        name,
+        desc,
+        due: due ? due.utc().toString() : null,
+      })
     emptyState()
   }
 
