@@ -1,0 +1,14 @@
+.tasks {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > * {
+    width: 25%;
+    padding: 0.5rem;
+  }
+
+  .companycard {
+    .MuiPaper-root {
+    }
+  }
+}

@@ -8,10 +8,12 @@ import {
   IAllData,
   IAllDataCompany,
   FilledList,
+  INITIAL_LOAD,
 } from './types'
 
 export const initialState: IAllData = {
   companies: [],
+  initialLoad: false,
   loading: true,
   error: null,
 }
@@ -30,6 +32,7 @@ export const allDataReducer = (
     case FETCH_ALL_DATA_SUCCESS:
       return {
         ...state,
+        initialLoad: true,
         loading: false,
         companies: [...action.payload],
       }
@@ -76,6 +79,11 @@ export const allDataReducer = (
             }),
           }
         }),
+      }
+    case INITIAL_LOAD:
+      return {
+        ...state,
+        initialLoad: true,
       }
     default:
       return state

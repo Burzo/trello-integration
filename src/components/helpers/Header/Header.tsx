@@ -67,8 +67,8 @@ const Header = ({ children, loading }: IProps) => {
           <Button onClick={() => history.push('/')} color="inherit">
             Domov
           </Button>
-          <Button onClick={() => history.push('/tasks')} color="inherit">
-            Zadolžitve
+          <Button onClick={() => history.push('/obrazci')} color="inherit">
+            Obrazci
           </Button>
           <Button onClick={() => history.push('/place')} color="inherit">
             Plače
@@ -131,4 +131,4 @@ const mapStateToProps = (store: RootState) => ({
   loading: store.allData.loading,
 })
 
-export default connect(mapStateToProps, () => {})(Header)
+export default connect(mapStateToProps, () => ({}))(Header)

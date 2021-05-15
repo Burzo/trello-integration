@@ -25,6 +25,8 @@ export const FETCH_ALL_DATA_ERROR = 'FETCH_ALL_DATA_ERROR'
 export const ADD_CARDS_TO_BOARD = 'ADD_CARDS_TO_BOARD'
 export const ADD_LISTS_TO_BOARD = 'ADD_LISTS_TO_BOARD'
 
+export const INITIAL_LOAD = 'INITIAL_LOAD'
+
 export interface IPrefs {
   permissionLevel: string
   hideVotes: boolean
@@ -84,7 +86,12 @@ export interface FilledList extends List {
 export interface IAllData {
   companies: IAllDataCompany[]
   loading: boolean
+  initialLoad: boolean
   error: Error | null
+}
+
+export interface initialLoad {
+  type: typeof INITIAL_LOAD
 }
 
 export interface fetchAllStart {
@@ -128,3 +135,4 @@ export type AllBoardsTypes =
   | fetchListsStart
   | updateCardSuccess
   | createCardsSuccess
+  | initialLoad

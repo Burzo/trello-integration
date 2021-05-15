@@ -3,6 +3,7 @@ import {
   FETCH_ALL_DATA_START,
   FETCH_ALL_DATA_SUCCESS,
   FETCH_ALL_DATA_ERROR,
+  INITIAL_LOAD,
 } from './types'
 import { Dispatch } from 'react'
 import { AppThunk } from '..'
@@ -36,6 +37,7 @@ export const fetchAll =
   (dispatch: Dispatch<AllBoardsTypes>, state) => {
     dispatch({ type: FETCH_ALL_DATA_START })
     dispatch({ type: FETCH_BOARDS_START })
+
     fetchRetry(
       `https://api.trello.com/1/members/me/boards/?fields=name&lists=all&list_fields=name&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
     )
@@ -96,5 +98,8 @@ export const fetchAll =
         dispatch({ type: FETCH_LISTS_ERROR, payload: e })
         dispatch({ type: FETCH_CARDS_ERROR, payload: e })
         dispatch({ type: FETCH_BOARDS_ERROR, payload: e })
+        if (!state().allData.initialLoad) {
+          dispatch({ type: INITIAL_LOAD })
+        }
       })
   }
