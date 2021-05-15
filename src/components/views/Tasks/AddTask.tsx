@@ -7,6 +7,7 @@ import {
   TextField,
   ButtonGroup,
   InputAdornment,
+  Select,
 } from '@material-ui/core'
 import { DatePicker } from '@material-ui/pickers'
 import EventIcon from '@material-ui/icons/Event'
@@ -19,51 +20,31 @@ import { getTrelloToken } from '../../../helpers'
 import { RootState } from '../../../store'
 import { CreateCardTypes, CardPayloadObject } from '../../../store/cards/types'
 import { Moment } from 'moment'
-
-type LabelColors =
-  | 'blue'
-  | 'green'
-  | 'orange'
-  | 'purple'
-  | 'red'
-  | 'yellow'
-  | 'sky'
-  | 'lime'
-  | 'pink'
-  | 'black'
-
-export const Labels: LabelColors[] = [
-  'blue',
-  'green',
-  'orange',
-  'purple',
-  'red',
-  'yellow',
-  'sky',
-  'lime',
-  'pink',
-  'black',
-]
+import MenuItem from '@material-ui/core/MenuItem';
+import { Labels } from './Labels'
 
 interface IProps {
   addACard?: (token: string, list: string, card: CardPayloadObject) => void
-  listId: string
+  idList: string
+  idBoard: string
 }
 
-const AddTask: FC<IProps> = ({ addACard, listId }) => {
+const AddTask: FC<IProps> = ({ addACard, idList, idBoard }) => {
   const [toggleForm, setToggleForm] = useState(false)
 
   const [name, setName] = useState('')
   const [desc, setDesc] = useState('')
+  const [label, setLabel] = useState('')
   const [due, setDue] = useState<Moment | null | undefined>(null)
 
   const buttonPressed = () => {
     if (due)
       addACard &&
-        addACard(getTrelloToken(), listId, {
+        addACard(getTrelloToken(), idList, {
           name,
           desc,
           due: due ? due.utc().toString() : null,
+          labels: [{name: 'Label', idBoard: idBoard, color: label}]
         })
     emptyState()
   }
@@ -72,10 +53,15 @@ const AddTask: FC<IProps> = ({ addACard, listId }) => {
     setDue(date)
   }
 
+  const handleLabelChange = (event: React.ChangeEvent<{value: unknown}>) => {
+    setLabel(event.target.value as string);
+  };
+
   const emptyState = () => {
     setName('')
     setDesc('')
     setDue(null)
+    setLabel('')
   }
 
   return (
@@ -135,6 +121,8 @@ const AddTask: FC<IProps> = ({ addACard, listId }) => {
               }}
               onChange={handleDateChange}
             />
+
+        <Labels label={label} handleLabelChange={handleLabelChange} idBoard={idBoard} />
           </FormControl>
           <ButtonGroup className="simplecard-modal-form-btns">
             <Button color="primary" onClick={buttonPressed} variant="contained">
@@ -152,8 +140,8 @@ const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootState, any, CreateCardTypes>,
 ) => {
   return {
-    addACard: (token: string, listId: string, card: CardPayloadObject) =>
-      dispatch(addACard(token, listId, card)),
+    addACard: (token: string, idList: string, card: CardPayloadObject) =>
+      dispatch(addACard(token, idList, card)),
   }
 }
 

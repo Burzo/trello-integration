@@ -231,6 +231,7 @@ export const mapBoardCardList = (
       })
     }
     return {
+      id: company.id,
       name: company.name,
       lists: company.lists as FilledList[],
     }

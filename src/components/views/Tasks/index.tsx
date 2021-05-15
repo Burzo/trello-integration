@@ -60,6 +60,7 @@ const Tasks = ({ company, initialLoad }: IProps) => {
           if (card.dueComplete) {
             return null
           }
+
           return (
             <Zadolzitve
               key={card.id}
@@ -68,7 +69,7 @@ const Tasks = ({ company, initialLoad }: IProps) => {
             />
           )
         })}
-      <AddTask listId={list.id} />
+      <AddTask idBoard={company.id} idList={list.id} />
     </div>
   )
 }

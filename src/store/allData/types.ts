@@ -75,6 +75,7 @@ export interface IMember {
 }
 
 export interface IAllDataCompany {
+  id: string
   name: string
   lists: FilledList[]
 }
