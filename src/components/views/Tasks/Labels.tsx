@@ -4,7 +4,7 @@ import {
   handleTrelloTokenExpiry,
   fetchRetry,
 } from '../../../helpers'
-import { Select, MenuItem } from '@material-ui/core'
+import { Select, MenuItem, InputLabel } from '@material-ui/core'
 
 export interface ILabel {
   color: string
@@ -56,27 +56,30 @@ export const Labels = ({ idBoard, label, handleLabelChange }: IProps) => {
   }
 
   return (
-    <Select
-      labelId="demo-simple-select-label"
-      id="demo-simple-select"
-      value={label}
-      style={{
-        backgroundColor: getSelectedLabel(label),
-        marginBottom: '.5rem',
-      }}
-      onChange={handleLabelChange}
-    >
-      {labels.map((label) => {
-        return (
-          <MenuItem
-            value={label.id}
-            className="label"
-            style={{ backgroundColor: label.color }}
-          >
-            &nbsp;
-          </MenuItem>
-        )
-      })}
-    </Select>
+    <>
+      <InputLabel id="select-label">Izberi barvo</InputLabel>
+      <Select
+        labelId="select-label"
+        id="select"
+        value={label}
+        style={{
+          backgroundColor: getSelectedLabel(label),
+          marginBottom: '.5rem',
+        }}
+        onChange={handleLabelChange}
+      >
+        {labels.map((label) => {
+          return (
+            <MenuItem
+              value={label.id}
+              className="label"
+              style={{ backgroundColor: label.color }}
+            >
+              &nbsp;
+            </MenuItem>
+          )
+        })}
+      </Select>
+    </>
   )
 }
