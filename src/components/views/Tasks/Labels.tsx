@@ -42,6 +42,7 @@ export const Labels = ({ idBoard, label, handleLabelChange }: IProps) => {
       .then((data: any) => {
         setLabels(data)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getSelectedLabel = (id: string) => {

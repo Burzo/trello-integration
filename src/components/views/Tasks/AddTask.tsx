@@ -7,7 +7,6 @@ import {
   TextField,
   ButtonGroup,
   InputAdornment,
-  Select,
 } from '@material-ui/core'
 import { DatePicker } from '@material-ui/pickers'
 import EventIcon from '@material-ui/icons/Event'
@@ -20,7 +19,6 @@ import { getTrelloToken } from '../../../helpers'
 import { RootState } from '../../../store'
 import { CreateCardTypes, CardPayloadObject } from '../../../store/cards/types'
 import { Moment } from 'moment'
-import MenuItem from '@material-ui/core/MenuItem'
 import { Labels } from './Labels'
 
 interface IProps {

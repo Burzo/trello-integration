@@ -3,7 +3,7 @@ import { IBoard } from './store/boards/types'
 import { Card } from './store/cards/types'
 import { List } from './store/lists/types'
 import moment from 'moment-timezone'
-import { FilledList, IAllData, IAllDataCompany } from './store/allData/types'
+import { FilledList, IAllDataCompany } from './store/allData/types'
 
 declare global {
   interface Window {

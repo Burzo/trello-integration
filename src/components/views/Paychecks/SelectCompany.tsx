@@ -48,7 +48,7 @@ const SelectCompany: FC<IProps> = ({
           }
           return (
             <div className={outerClassName}>
-              {filteredBoards.map((board: IBoard, index) => {
+              {filteredBoards.map((board: IBoard) => {
                 return (
                   <SmallCompanyCard
                     className={className}
@@ -57,7 +57,6 @@ const SelectCompany: FC<IProps> = ({
                     handleSelectChange={handleSelectChange}
                   />
                 )
-                return null
               })}
             </div>
           )

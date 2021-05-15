@@ -1,5 +1,4 @@
 import { Card, CREATE_CARD_SUCCESS, UPDATE_CARD_SUCCESS } from '../cards/types'
-import { List } from '../lists/types'
 import {
   AllBoardsTypes,
   FETCH_ALL_DATA_START,

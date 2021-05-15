@@ -20,7 +20,7 @@ import { RootState } from '../../../store'
 import { CreateCardTypes, CardPayloadObject } from '../../../store/cards/types'
 import { List } from '../../../store/lists/types'
 import { Error } from '../../helpers/Error/Error'
-import moment, { Moment } from 'moment'
+import { Moment } from 'moment'
 
 interface IProps {
   addACard?: (token: string, list: string, card: CardPayloadObject) => void
