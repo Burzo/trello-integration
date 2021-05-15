@@ -67,6 +67,9 @@ const Header = ({ children, loading }: IProps) => {
           <Button onClick={() => history.push('/')} color="inherit">
             Domov
           </Button>
+          <Button onClick={() => history.push('/tasks')} color="inherit">
+            Zadolžitve
+          </Button>
           <Button onClick={() => history.push('/place')} color="inherit">
             Plače
           </Button>
