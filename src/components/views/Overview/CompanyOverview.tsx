@@ -4,12 +4,7 @@ import { Error } from '../../helpers/Error/Error'
 import './style.scss'
 import { RootState } from '../../../store'
 import { Card } from '../../../store/cards/types'
-import {
-  remapListIdCards,
-  remapBoardIdCards,
-  getOutCompanyOverview,
-  getOutListString,
-} from '../../../helpers'
+import { getOutListString } from '../../../helpers'
 import { connect } from 'react-redux'
 import OverviewColumn from './OverviewColumn'
 import { IAllDataCompany } from '../../../store/allData/types'

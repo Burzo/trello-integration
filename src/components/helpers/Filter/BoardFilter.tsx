@@ -9,7 +9,7 @@ import { Lists } from '../../../store/lists/types'
 
 interface IProps {
   boards: IBoard[]
-  render: (filteredBoards: IBoard[]) => ReactNode
+  render?: (filteredBoards: IBoard[]) => ReactNode
   children?: (filteredBoards: IBoard[]) => false | JSX.Element
   className?: string
   lists: Lists
@@ -66,7 +66,7 @@ const Filter: FunctionComponent<IProps> = ({
       {children && children(filteredBoards)}
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="boards-container">
-        {render(sortBoards(filteredBoards) as IBoard[])}
+        {render && render(sortBoards(filteredBoards) as IBoard[])}
       </div>
     </React.Fragment>
   )

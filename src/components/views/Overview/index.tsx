@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Modal } from '@material-ui/core'
 import SelectCompany from '../Paychecks/SelectCompany'
 import CompanyOverview from './CompanyOverview'
 import { putCurrentCompany } from '../../../store/company/actions'
@@ -16,24 +16,43 @@ interface IProps {
 }
 
 const Overview = ({ putCurrentCompany, boards }: IProps) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   const handleCompanyChange = (company: string) => {
     putCurrentCompany(company)
+    handleOpen()
   }
 
   return (
     <div className="home">
-      <Grid className="layout" container spacing={3}>
-        <Grid className="layout-columns" item xs={3}>
-          <SelectCompany
-            boards={boards.boards}
-            filter="overview"
-            setCompany={handleCompanyChange}
-          />
-        </Grid>
-        <Grid className="layout-columns" item xs={9}>
-          <CompanyOverview />
-        </Grid>
-      </Grid>
+      <div className="layout">
+        <SelectCompany
+          outerClassName="item-layout"
+          className="item"
+          noFilter
+          boards={boards.boards}
+          filter="overview"
+          setCompany={handleCompanyChange}
+        />
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <Grid className="layout-columns modal-body" item xs={9}>
+            <CompanyOverview />
+          </Grid>
+        </Modal>
+      </div>
     </div>
   )
 }

@@ -24,6 +24,25 @@
       flex-basis: 100% !important;
     }
   }
+
+  &-columns {
+    &.modal-body {
+      background-color: white;
+      position: 'absolute';
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .item {
+    width: 25%;
+
+    &-layout {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
 }
 
 .cards-container {

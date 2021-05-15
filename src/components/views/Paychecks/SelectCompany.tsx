@@ -12,10 +12,20 @@ export type IFilters = 'paycheck' | 'overview' | 'bilance'
 interface IProps {
   boards: IBoard[]
   filter: IFilters
+  noFilter?: boolean
+  outerClassName?: string
+  className?: string
   setCompany: (company: string) => void
 }
 
-const SelectCompany: FC<IProps> = ({ boards, setCompany, filter }) => {
+const SelectCompany: FC<IProps> = ({
+  boards,
+  setCompany,
+  filter,
+  noFilter,
+  outerClassName,
+  className,
+}) => {
   const [page, setPage] = React.useState(1)
 
   const handlePageChange = (
@@ -29,8 +39,39 @@ const SelectCompany: FC<IProps> = ({ boards, setCompany, filter }) => {
     setCompany(board.name)
   }
 
+  if (noFilter) {
+    return (
+      <Filter filter={filter} boards={boards}>
+        {(filteredBoards) => {
+          if (filteredBoards.length <= 0) {
+            return <div>Ne najdem podjetij.</div>
+          }
+          return (
+            <div className={outerClassName}>
+              {filteredBoards.map((board: IBoard, index) => {
+                return (
+                  <SmallCompanyCard
+                    className={className}
+                    board={board}
+                    filter={filter}
+                    handleSelectChange={handleSelectChange}
+                  />
+                )
+                return null
+              })}
+            </div>
+          )
+        }}
+      </Filter>
+    )
+  }
+
   return (
-    <FormControl style={{ width: '100%' }} component="fieldset">
+    <FormControl
+      style={{ width: '100%' }}
+      component="fieldset"
+      className={outerClassName}
+    >
       <Filter
         filter={filter}
         render={(filteredBoards) => {

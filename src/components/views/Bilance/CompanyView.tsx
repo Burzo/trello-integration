@@ -45,7 +45,6 @@ const mapStateToProps = (store: RootState) => {
     )
   })[0]
   const bilance = getOutListString(company, `bilance ${moment().year()}`)
-  console.log(bilance)
 
   return {
     cards: bilance,

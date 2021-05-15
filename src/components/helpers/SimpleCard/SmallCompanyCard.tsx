@@ -75,7 +75,7 @@ const SmallCompanyCard = ({
       : calculateBilancePercantage(cards)
 
   return (
-    <div>
+    <div className={className}>
       <CSSTransition
         in={animate}
         timeout={300}
