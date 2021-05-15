@@ -20,7 +20,7 @@ import { getTrelloToken } from '../../../helpers'
 import { RootState } from '../../../store'
 import { CreateCardTypes, CardPayloadObject } from '../../../store/cards/types'
 import { Moment } from 'moment'
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from '@material-ui/core/MenuItem'
 import { Labels } from './Labels'
 
 interface IProps {
@@ -44,7 +44,7 @@ const AddTask: FC<IProps> = ({ addACard, idList, idBoard }) => {
           name,
           desc,
           due: due ? due.utc().toString() : null,
-          labels: [{name: 'Label', idBoard: idBoard, color: label}]
+          idLabels: [label],
         })
     emptyState()
   }
@@ -53,9 +53,9 @@ const AddTask: FC<IProps> = ({ addACard, idList, idBoard }) => {
     setDue(date)
   }
 
-  const handleLabelChange = (event: React.ChangeEvent<{value: unknown}>) => {
-    setLabel(event.target.value as string);
-  };
+  const handleLabelChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setLabel(event.target.value as string)
+  }
 
   const emptyState = () => {
     setName('')
@@ -94,6 +94,8 @@ const AddTask: FC<IProps> = ({ addACard, idList, idBoard }) => {
               id="name"
               label="Ime kartice"
             />
+          </FormControl>
+          <FormControl fullWidth>
             <TextField
               className="mb-2"
               fullWidth
@@ -104,6 +106,8 @@ const AddTask: FC<IProps> = ({ addACard, idList, idBoard }) => {
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
             />
+          </FormControl>
+          <FormControl fullWidth>
             <DatePicker
               disableToolbar
               variant="inline"
@@ -121,8 +125,13 @@ const AddTask: FC<IProps> = ({ addACard, idList, idBoard }) => {
               }}
               onChange={handleDateChange}
             />
-
-        <Labels label={label} handleLabelChange={handleLabelChange} idBoard={idBoard} />
+          </FormControl>
+          <FormControl fullWidth>
+            <Labels
+              label={label}
+              handleLabelChange={handleLabelChange}
+              idBoard={idBoard}
+            />
           </FormControl>
           <ButtonGroup className="simplecard-modal-form-btns">
             <Button color="primary" onClick={buttonPressed} variant="contained">
