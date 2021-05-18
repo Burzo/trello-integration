@@ -74,6 +74,8 @@ const SmallCompanyCard = ({
       ? calculatePercantage(cards)
       : calculateBilancePercantage(cards)
 
+  if (cards.length <= 0) return null
+
   return (
     <div className={className}>
       <CSSTransition
