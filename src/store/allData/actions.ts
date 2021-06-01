@@ -39,7 +39,7 @@ export const fetchAll =
     dispatch({ type: FETCH_BOARDS_START })
 
     fetchRetry(
-      `https://api.trello.com/1/members/me/boards/?fields=name&lists=all&list_fields=name&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
+      `https://api.trello.com/1/members/me/boards/?fields=name&lists=open&list_fields=name&key=${process.env.REACT_APP_TRELLO_API_KEY}&token=${token}`,
     )
       .then((res: Response) => handleTrelloTokenExpiry(res))
       .then((companies: IBoard[]) => {
