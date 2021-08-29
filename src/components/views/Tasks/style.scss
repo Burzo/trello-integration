@@ -1,10 +1,21 @@
+@import './../../../sass/variables';
+@import './../../../sass/mixins';
+
 .tasks {
   display: flex;
   flex-wrap: wrap;
 
+  @include respond(phone) {
+    flex-direction: column;
+  }
+
   & > * {
     width: 25%;
     padding: 0.5rem;
+
+    @include respond(phone-lg) {
+      width: 100%;
+    }
   }
 
   .companycard {

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { IconButton, Drawer, Divider } from '@material-ui/core'
+import { IconButton, Divider, SwipeableDrawer } from '@material-ui/core'
 
 interface IProps {
   onClick: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,12 +18,13 @@ export const MyDrawer: FunctionComponent<IProps> = ({
   open,
 }) => {
   return (
-    <Drawer
+    <SwipeableDrawer
       style={{ width }}
       PaperProps={{ style: { width } }}
-      variant="persistent"
       anchor={side}
       open={open}
+      onClose={() => onClick(false)}
+      onOpen={() => onClick(true)}
     >
       <div className={side === 'left' ? 'left' : ''}>
         <IconButton onClick={() => onClick(false)}>
@@ -32,6 +33,6 @@ export const MyDrawer: FunctionComponent<IProps> = ({
       </div>
       <Divider style={{ marginBottom: '1rem' }} />
       {children}
-    </Drawer>
+    </SwipeableDrawer>
   )
 }

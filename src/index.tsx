@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import * as serviceWorker from './serviceWorker'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
@@ -12,17 +14,19 @@ import {
   StylesProvider,
   ThemeProvider,
   createMuiTheme,
+  responsiveFontSizes,
 } from '@material-ui/core/styles'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.scss'
 
-const theme = createMuiTheme({
+let theme = createMuiTheme({
   palette: {
     primary: {
       main: '#003f64',
     },
   },
 })
+theme = responsiveFontSizes(theme)
 
 const store = configureStore()
 
@@ -46,3 +50,5 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root'),
 )
+
+serviceWorker.register()

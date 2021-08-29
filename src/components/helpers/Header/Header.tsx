@@ -30,17 +30,25 @@ const Header = ({ children, loading }: IProps) => {
   const [openDrawer, setOpenDrawer] = useState(false)
   const [openSecondDrawer, setOpenSecondDrawer] = useState(false)
 
+  const reRouteAndCloseDrawers = (path: string) => {
+    setOpenDrawer(false)
+    setOpenSecondDrawer(false)
+    history.push(path)
+  }
+
   const getClassName = () => {
-    if (openDrawer && openSecondDrawer) {
-      return 'animate animate-left animate-right'
-    }
-    if (openDrawer) {
-      return 'animate animate-left'
-    }
-    if (openSecondDrawer) {
-      return 'animate animate-right'
-    }
-    return 'animate'
+    // If you want to animate the conent when the drawer opens, uncomment
+    // if (openDrawer && openSecondDrawer) {
+    //   return 'animate animate-left animate-right'
+    // }
+    // if (openDrawer) {
+    //   return 'animate animate-left'
+    // }
+    // if (openSecondDrawer) {
+    //   return 'animate animate-right'
+    // }
+    // return 'animate'
+    return ''
   }
 
   return (
@@ -64,24 +72,6 @@ const Header = ({ children, loading }: IProps) => {
           <Typography style={{ marginRight: '2rem' }} variant="h5">
             DEL d.o.o.&nbsp;
           </Typography>
-          <Button onClick={() => history.push('/')} color="inherit">
-            Domov
-          </Button>
-          <Button onClick={() => history.push('/obrazci')} color="inherit">
-            Obrazci
-          </Button>
-          <Button onClick={() => history.push('/place')} color="inherit">
-            Plače
-          </Button>
-          <Button onClick={() => history.push('/overview')} color="inherit">
-            Pregled
-          </Button>
-          <Button onClick={() => history.push('/basic-info')} color="inherit">
-            Osnovni podatki
-          </Button>
-          <Button onClick={() => history.push('/bilance')} color="inherit">
-            Bilance
-          </Button>
           <span style={{ marginLeft: 'auto' }}>
             <GoogleLogout
               clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
@@ -112,7 +102,41 @@ const Header = ({ children, loading }: IProps) => {
           onClick={setOpenDrawer}
           side="left"
           width={DRAWER_WIDTH}
-        ></MyDrawer>
+        >
+          <Button onClick={() => reRouteAndCloseDrawers('/')} color="inherit">
+            Domov
+          </Button>
+          <Button
+            onClick={() => reRouteAndCloseDrawers('/obrazci')}
+            color="inherit"
+          >
+            Obrazci
+          </Button>
+          <Button
+            onClick={() => reRouteAndCloseDrawers('/place')}
+            color="inherit"
+          >
+            Plače
+          </Button>
+          <Button
+            onClick={() => reRouteAndCloseDrawers('/overview')}
+            color="inherit"
+          >
+            Pregled
+          </Button>
+          <Button
+            onClick={() => reRouteAndCloseDrawers('/basic-info')}
+            color="inherit"
+          >
+            Osnovni podatki
+          </Button>
+          <Button
+            onClick={() => reRouteAndCloseDrawers('/bilance')}
+            color="inherit"
+          >
+            Bilance
+          </Button>
+        </MyDrawer>
         <MyDrawer
           open={openSecondDrawer}
           onClick={setOpenSecondDrawer}

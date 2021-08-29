@@ -16,3 +16,12 @@
     max-width: 100%;
   }
 }
+
+.item-layout {
+  @include respond(phone-lg) {
+    flex-direction: column;
+    & > .item {
+      width: 100%;
+    }
+  }
+}

@@ -51,6 +51,10 @@
 
     min-width: 40rem;
 
+    @include respond(phone-lg) {
+      min-width: 10rem;
+    }
+
     background-color: white;
     padding: 1rem;
 

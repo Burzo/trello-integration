@@ -8,27 +8,42 @@
 }
 
 .layout {
-  @include respond(phone-lg) {
+  @include respond(tab-land) {
     flex-wrap: wrap;
 
     &-columns {
       max-width: 50% !important;
       flex-basis: 50% !important;
+      height: 100%;
+
+      & .overview {
+        & > * {
+          width: 50%;
+        }
+      }
     }
   }
 
   @include respond(phone) {
-    flex-direction: column;
     &-columns {
       max-width: 100% !important;
       flex-basis: 100% !important;
+      height: 100%;
+
+      & .overview {
+        & > * {
+          width: 100%;
+        }
+      }
     }
   }
 
   &-columns {
+    overflow-y: auto;
+    width: 100%;
     &.modal-body {
       background-color: white;
-      position: 'absolute';
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
