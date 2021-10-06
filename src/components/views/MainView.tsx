@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from '../../store'
 import { AllBoardsTypes } from '../../store/boards/types'
-import { Card, Cards, UpdateCardTypes } from '../../store/cards/types'
+import { UpdateCardTypes } from '../../store/cards/types'
 import './style.scss'
 import Header from '../helpers/Header/Header'
 import Router from '../helpers/Router/Router'
@@ -11,7 +11,6 @@ import { fetchAll } from '../../store/allData/actions'
 
 interface IProps {
   token: string
-  cards: Cards
   fetchAll: (token: string) => void
 }
 
@@ -27,7 +26,7 @@ const MainView: FC<IProps> = ({ token, fetchAll }) => {
       clearInterval(fetchingInterval.current)
     }
     fetchingInterval.current = window.setInterval(() => {
-      fetchAll(token)
+      // fetchAll(token)
     }, FETCH_INTERVAL)
 
     return () => {
@@ -49,20 +48,6 @@ const MainView: FC<IProps> = ({ token, fetchAll }) => {
   )
 }
 
-const mapStateToProps = (store: RootState) => {
-  const filteredOutdatedCards = store.cards.cards.filter(
-    (card: Card) => card.dueComplete === false,
-  )
-  return {
-    boards: store.boards,
-    cards: {
-      ...store.cards,
-      cards: filteredOutdatedCards,
-    },
-    lists: store.lists,
-  }
-}
-
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootState, any, AllBoardsTypes | UpdateCardTypes>,
 ) => {
@@ -71,4 +56,4 @@ const mapDispatchToProps = (
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainView)
+export default connect(() => ({}), mapDispatchToProps)(MainView)

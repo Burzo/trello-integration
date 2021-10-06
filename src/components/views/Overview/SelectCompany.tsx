@@ -3,7 +3,7 @@ import FormControl from '@material-ui/core/FormControl'
 import { IBoard } from '../../../store/boards/types'
 import { Pagination } from '@material-ui/lab'
 import Filter from '../../helpers/Filter/BoardFilter'
-import SmallCompanyCardPaycheck from '../../helpers/SimpleCard/SmallCompanyCardPaycheck.'
+import SmallCompanyCard from '../../helpers/SimpleCard/SmallCompanyCard'
 
 const ITEMS_PER_PAGE: number = 18
 
@@ -50,7 +50,7 @@ const SelectCompany: FC<IProps> = ({
             <div className={outerClassName}>
               {filteredBoards.map((board: IBoard) => {
                 return (
-                  <SmallCompanyCardPaycheck
+                  <SmallCompanyCard
                     className={className}
                     board={board}
                     filter={filter}
@@ -82,7 +82,7 @@ const SelectCompany: FC<IProps> = ({
             let higherLimit = page * ITEMS_PER_PAGE
             if (index >= lowerLimit && index < higherLimit) {
               return (
-                <SmallCompanyCardPaycheck
+                <SmallCompanyCard
                   board={board}
                   filter={filter}
                   handleSelectChange={handleSelectChange}

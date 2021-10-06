@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Modal } from '@material-ui/core'
-import SelectCompany from '../Paychecks/SelectCompany'
+import SelectCompany from './SelectCompany'
 import CompanyOverview from './CompanyOverview'
 import { putCurrentCompany } from '../../../store/company/actions'
 import { ThunkDispatch } from 'redux-thunk'

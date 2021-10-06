@@ -81,16 +81,37 @@ export const getOutREK = (cards: Card[]): Card[] => {
   })
 }
 
-export const getOutPaycheck = (cards: Card[]): Card[] => {
-  return cards.filter((card: Card) => {
+export const getOutPaycheck = (company: IAllDataCompany): Card[] => {
+  if (!company) {
+    return []
+  }
+  const cards: Card[] = []
+
+  company.lists.map((list) => {
     if (
-      card.idList.toLowerCase().trim() === 'place' ||
-      card.idList.toLowerCase().trim() === 'plače'
+      list.name.toLowerCase().trim() === 'place' ||
+      list.name.toLowerCase().trim() === 'plače'
     ) {
-      return true
+      list.cards.forEach((card) => cards.push(card))
     }
-    return false
   })
+
+  return cards
+}
+
+export const getOutOverview = (company: IAllDataCompany): Card[] => {
+  if (!company) {
+    return []
+  }
+  const cards: Card[] = []
+
+  company.lists.map((list) => {
+    if (list.name.toLowerCase().trim() === 'osnovni podatki') {
+      list.cards.forEach((card) => cards.push(card))
+    }
+  })
+
+  return cards
 }
 
 export const getOutBasicInfo = (cards: Card[]): Card[] => {
@@ -191,6 +212,7 @@ export const getOutListString = (
   company: IAllDataCompany,
   str: string,
   except: boolean = false,
+  overdue: boolean = false,
 ): Card[] => {
   if (!company) {
     return []
@@ -203,6 +225,13 @@ export const getOutListString = (
   })
   if (index < 0) {
     return []
+  }
+  if (overdue) {
+    return company.lists[index].cards.filter((card: Card) => {
+      console.log(card.dueComplete)
+      console.log(card.due)
+      return !card.dueComplete
+    })
   }
   return company.lists[index].cards
 }
@@ -351,6 +380,9 @@ export const gatherUpData = (data: any[]): any[] => {
   let result: any[] = []
 
   data.map((e: any) => {
+    if (!e['200']) {
+      console.log('PROBLEM, DID NOT GET 200 AS A RESPONSE')
+    }
     if (Array.isArray(e['200'])) {
       result = [...result, ...e['200']]
     } else {

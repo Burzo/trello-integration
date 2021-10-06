@@ -3,11 +3,7 @@ import { Typography, Divider } from '@material-ui/core'
 import { Error } from '../../helpers/Error/Error'
 import { RootState } from '../../../store'
 import { Card } from '../../../store/cards/types'
-import {
-  remapListIdCards,
-  remapBoardIdCards,
-  getOutBasicInfo,
-} from '../../../helpers'
+import { getOutListString } from '../../../helpers'
 import { connect } from 'react-redux'
 import PaycheckCard from '../../helpers/SimpleCard/PaycheckCard'
 import AddCompanyInfo from './AddCompanyInfo'
@@ -33,14 +29,9 @@ function CompanyInfo({ company, cards = [] }: IProps) {
       </Typography>
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="companies">
-        {cards.map((card: Card) => {
-          if (
-            card.idBoard.toLowerCase().trim() === company.toLowerCase().trim()
-          ) {
-            return <PaycheckCard key={card.id} card={card} />
-          }
-          return null
-        })}
+        {cards.map((card: Card) => (
+          <PaycheckCard key={card.id} card={card} />
+        ))}
         {company === '' ? null : <AddCompanyInfo />}
       </div>
     </div>
@@ -48,18 +39,16 @@ function CompanyInfo({ company, cards = [] }: IProps) {
 }
 
 const mapStateToProps = (store: RootState) => {
-  const filteredCards = store.cards.cards.filter(
-    (card: Card) =>
-      card.dueComplete === false &&
-      card.idBoard.toLowerCase().trim() === store.company.toLowerCase().trim(),
-  )
+  const company = store.allData.companies.filter((company) => {
+    return (
+      company.name.toLowerCase().trim() === store.company.toLowerCase().trim()
+    )
+  })[0]
+
+  const cards = getOutListString(company, 'osnovni podatki', false, true)
+
   return {
-    cards: getOutBasicInfo(
-      remapListIdCards(
-        store.lists.lists,
-        remapBoardIdCards(store.boards.boards, filteredCards),
-      ),
-    ),
+    cards,
     company: store.company,
   }
 }

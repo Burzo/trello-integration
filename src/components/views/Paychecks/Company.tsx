@@ -4,11 +4,7 @@ import { Error } from '../../helpers/Error/Error'
 import './style.scss'
 import { RootState } from '../../../store'
 import { Card } from '../../../store/cards/types'
-import {
-  getOutPaycheck,
-  remapListIdCards,
-  remapBoardIdCards,
-} from '../../../helpers'
+import { getOutListString } from '../../../helpers'
 import { connect } from 'react-redux'
 import PaycheckCard from '../../helpers/SimpleCard/PaycheckCard'
 
@@ -18,7 +14,8 @@ interface IProps {
 }
 
 function Company({ company, cards = [] }: IProps) {
-  if (cards.length <= 0 && company !== '') {
+  if (!company) return null
+  if (cards.length === 0) {
     return (
       <Error>
         {`Ne najdem plač za ${company}. Preveri Trello, če obstaja stolpec "Plače".`}
@@ -38,32 +35,25 @@ function Company({ company, cards = [] }: IProps) {
       )}
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="companies">
-        {cards.map((card: Card) => {
-          if (
-            card.idBoard.toLowerCase().trim() === company.toLowerCase().trim()
-          ) {
-            return <PaycheckCard key={card.id} card={card} />
-          }
-          return null
-        })}
+        {cards.map((card: Card) => (
+          <PaycheckCard key={card.id} card={card} />
+        ))}
       </div>
     </div>
   )
 }
 
 const mapStateToProps = (store: RootState) => {
-  const filteredCards = store.cards.cards.filter(
-    (card: Card) =>
-      card.dueComplete === false &&
-      card.idBoard.toLowerCase().trim() === store.company.toLowerCase().trim(),
-  )
+  const company = store.allData.companies.filter((company) => {
+    return (
+      company.name.toLowerCase().trim() === store.company.toLowerCase().trim()
+    )
+  })[0]
+
+  const cards = getOutListString(company, 'plače', false, true)
+
   return {
-    cards: getOutPaycheck(
-      remapListIdCards(
-        store.lists.lists,
-        remapBoardIdCards(store.boards.boards, filteredCards),
-      ),
-    ),
+    cards,
     company: store.company,
   }
 }
