@@ -228,8 +228,6 @@ export const getOutListString = (
   }
   if (overdue) {
     return company.lists[index].cards.filter((card: Card) => {
-      console.log(card.dueComplete)
-      console.log(card.due)
       return !card.dueComplete
     })
   }

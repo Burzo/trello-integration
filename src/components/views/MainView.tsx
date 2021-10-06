@@ -26,7 +26,7 @@ const MainView: FC<IProps> = ({ token, fetchAll }) => {
       clearInterval(fetchingInterval.current)
     }
     fetchingInterval.current = window.setInterval(() => {
-      // fetchAll(token)
+      fetchAll(token)
     }, FETCH_INTERVAL)
 
     return () => {

@@ -36,7 +36,7 @@ function Company({ company, cards = [] }: IProps) {
       <Divider style={{ marginBottom: '1rem', marginTop: '0.5rem' }} />
       <div className="companies">
         {cards.map((card: Card) => (
-          <PaycheckCard key={card.id} card={card} />
+          <PaycheckCard key={card.id} card={card} btnText="Odstrani" />
         ))}
       </div>
     </div>

@@ -32,10 +32,16 @@ import moment from 'moment-timezone'
 interface IProps {
   card: MyCard
   className?: string
+  btnText?: string
   updateCard?: (token: string, card: MyCard, query: CardPayloadObject) => void
 }
 
-const PaycheckCard = ({ updateCard, card, className = '' }: IProps) => {
+const PaycheckCard = ({
+  updateCard,
+  card,
+  className = '',
+  btnText,
+}: IProps) => {
   const [animate, setAnimate] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -110,7 +116,7 @@ const PaycheckCard = ({ updateCard, card, className = '' }: IProps) => {
                     variant="contained"
                     onClick={buttonPress}
                   >
-                    Narejeno
+                    {btnText ? btnText : 'Narejeno'}
                   </Button>
                   <Button variant="contained" onClick={() => setOpen(true)}>
                     Spremeni
