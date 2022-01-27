@@ -5,7 +5,6 @@ import { Card, Typography } from '@material-ui/core'
 import { IBoard } from '../../../store/boards/types'
 import { RootState } from '../../../store'
 import {
-  calculateBilancePercantage,
   getOutCompanyBilance,
   NEW_calculateBilancePercantage,
 } from '../../../helpers'
@@ -133,6 +132,7 @@ const Fill = ({ percentage, green }: FillProps) => {
     if (percentage === 100 && !green) {
       setProblem(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [percentage, green])
 
   return (
