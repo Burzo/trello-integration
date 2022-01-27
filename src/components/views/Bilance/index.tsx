@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid, Modal } from '@material-ui/core'
-import SelectCompany from '../Paychecks/SelectCompany'
 import CompanyView from './CompanyView'
 import { putCurrentCompany } from '../../../store/company/actions'
 import { ThunkDispatch } from 'redux-thunk'
@@ -8,6 +7,7 @@ import { RootState } from '../../../store'
 import { setCurrentCompany } from '../../../store/company/types'
 import { connect } from 'react-redux'
 import { IBoards } from '../../../store/boards/types'
+import SelectCompany from './SelectCompany'
 
 interface IProps {
   putCurrentCompany: (company: string) => void
@@ -36,7 +36,6 @@ const Bilance = ({ putCurrentCompany, boards }: IProps) => {
         <SelectCompany
           outerClassName="item-layout"
           className="item"
-          noFilter
           boards={boards.boards}
           filter="bilance"
           setCompany={handleCompanyChange}

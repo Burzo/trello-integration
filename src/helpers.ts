@@ -162,6 +162,21 @@ export const getOutCompanyOverviewAndBilance = (
   return cards
 }
 
+export const getOutCompanyBilance = (company: IAllDataCompany): Card[] => {
+  if (!company) {
+    return []
+  }
+  const cards: Card[] = []
+
+  company.lists.map((list) => {
+    if (list.name.toLowerCase().trim() === `bilance ${moment().year()}`) {
+      list.cards.forEach((card) => cards.push(card))
+    }
+  })
+
+  return cards
+}
+
 export const doesItHavePaycheck = (lists: List[], boardName: string) => {
   return (
     lists.filter((list: List) => {
@@ -180,6 +195,32 @@ export const calculatePercantage = (cards: Card[]): number => {
     return 0
   }
   return (completedCards / cards.length) * 100
+}
+
+export const NEW_calculateBilancePercantage = (
+  cards: Card[],
+): { percentage: number; green: boolean } => {
+  let completedCards = cards.filter((card: Card) => card.dueComplete)
+
+  let percentage = 0
+  let green = false
+
+  completedCards.map((card: Card) => {
+    if (card.name.toLowerCase().trim() === 'ajpes') {
+      percentage += 50
+    }
+    if (card.name.toLowerCase().trim() === 'furs') {
+      percentage += 50
+    }
+
+    completedCards = completedCards.filter(
+      (card: Card) => card.name.toLowerCase().trim() === 'bilanca',
+    )
+    if (completedCards.length > 0) {
+      green = true
+    }
+  })
+  return { percentage, green }
 }
 
 export const calculateBilancePercantage = (cards: Card[]): number => {
@@ -232,15 +273,6 @@ export const getOutListString = (
     })
   }
   return company.lists[index].cards
-}
-
-export const getOutOnlyBilance = (cards: Card[]): Card[] => {
-  return cards.filter((card: Card) => {
-    if (card.idList.toLowerCase().trim() === `bilance ${moment().year()}`) {
-      return true
-    }
-    return false
-  })
 }
 
 export const mapBoardCardList = (
