@@ -48,6 +48,8 @@ const SmallCompanyCardBilance = ({
 
   const { percentage, green } = NEW_calculateBilancePercantage(cards)
 
+  if (cards.length < 3) return null
+
   return (
     <div className={className}>
       <CSSTransition
