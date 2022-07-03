@@ -1,8 +1,5 @@
-import React, { useState } from 'react'
-import { GoogleLogin } from 'react-google-login'
-import { Typography } from '@material-ui/core'
+import React from 'react'
 import TrelloIntegration from './components/'
-import { Loading } from './components/helpers/Loading/Loading'
 import { getBrowserLocales } from './helpers'
 import moment from 'moment-timezone'
 import 'moment/locale/sl'
@@ -12,48 +9,11 @@ import { RootState } from './store'
 import { setGoogleUser, GoogleUser } from './store/google/types'
 import { putGoogleUser } from './store/google/actions'
 
-const PRODUCTION = process.env.NODE_ENV === 'production'
-
 // Set language locale
 let locale = getBrowserLocales({ languageCodeOnly: true })
 locale && moment.locale(locale[0])
 
-/**
- * App takes care of the google login only
- */
-interface IProps {
-  putGoogleUser: (user: GoogleUser) => void
-}
-
-function App({ putGoogleUser }: IProps) {
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(false)
-
-  const responseGoogle = (response: any) => {
-    if (response.error) {
-      setError(
-        `Something went wrong, the response was: ${response.error}. Please, try again.`,
-      )
-    } else {
-      putGoogleUser(response.profileObj)
-      setLoggedIn(true)
-    }
-    setLoading(false)
-  }
-
-  const startLoadingGoogle = () => {
-    setLoading(true)
-  }
-
-  if (loading) {
-    return (
-      <div className="container-fluid fixed-middle">
-        <Loading />
-      </div>
-    )
-  }
-
+function App() {
   // if (PRODUCTION && !loggedIn) {
   //   return (
   //     <div className="container-fluid">
