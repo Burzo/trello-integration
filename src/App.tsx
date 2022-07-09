@@ -11,6 +11,7 @@ import { ThunkDispatch } from 'redux-thunk'
 import { RootState } from './store'
 import { setGoogleUser, GoogleUser } from './store/google/types'
 import { putGoogleUser } from './store/google/actions'
+import { AbsoluteVoucher } from './components/views/Voucher/AbsoluteVoucher'
 
 const PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -80,8 +81,11 @@ function App({ putGoogleUser }: IProps) {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+    >
       <TrelloIntegration />
+      <AbsoluteVoucher />
     </div>
   )
 }
