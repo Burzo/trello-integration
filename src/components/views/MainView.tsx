@@ -8,6 +8,7 @@ import './style.scss'
 import Header from '../helpers/Header/Header'
 import Router from '../helpers/Router/Router'
 import { fetchAll } from '../../store/allData/actions'
+import { AbsoluteVoucher } from './Voucher/AbsoluteVoucher'
 
 interface IProps {
   token: string
@@ -36,15 +37,17 @@ const MainView: FC<IProps> = ({ token, fetchAll }) => {
   }, [])
 
   return (
-    <Header>
-      {(className) => {
-        return (
-          <div className={className}>
-            <Router />
-          </div>
-        )
-      }}
-    </Header>
+    <>
+      <Header>
+        {(className) => {
+          return (
+            <div className={className}>
+              <Router />
+            </div>
+          )
+        }}
+      </Header>
+    </>
   )
 }
 
