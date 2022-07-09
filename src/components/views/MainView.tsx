@@ -8,7 +8,6 @@ import './style.scss'
 import Header from '../helpers/Header/Header'
 import Router from '../helpers/Router/Router'
 import { fetchAll } from '../../store/allData/actions'
-import { AbsoluteVoucher } from './Voucher/AbsoluteVoucher'
 
 interface IProps {
   token: string
