@@ -11,11 +11,11 @@ import {
   Button,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import { GoogleLogout } from 'react-google-login'
 import { MyDrawer } from '../MyDrawer/MyDrawer'
 import PersonalTasks from '../../views/Home/PersonalTasks/PersonalTasks'
 import { connect } from 'react-redux'
 import { RootState } from '../../../store'
+import { googleLogout } from '@react-oauth/google'
 
 const DRAWER_WIDTH = 260
 
@@ -73,12 +73,17 @@ const Header = ({ children, loading }: IProps) => {
             DEL d.o.o.&nbsp;
           </Typography>
           <span style={{ marginLeft: 'auto' }}>
-            <GoogleLogout
-              clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
-              onLogoutSuccess={() => window.location.reload()}
+            <Button
+              style={{
+                color: 'white',
+              }}
+              onClick={() => {
+                googleLogout()
+                window.location.reload()
+              }}
             >
               Logout
-            </GoogleLogout>
+            </Button>
             {!openSecondDrawer && (
               <IconButton
                 onClick={(e) => setOpenSecondDrawer(true)}

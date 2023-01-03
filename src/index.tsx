@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as serviceWorker from './serviceWorker'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
@@ -13,13 +14,13 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import {
   StylesProvider,
   ThemeProvider,
-  createMuiTheme,
+  createTheme,
   responsiveFontSizes,
 } from '@material-ui/core/styles'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.scss'
 
-let theme = createMuiTheme({
+let theme = createTheme({
   palette: {
     primary: {
       main: '#003f64',
@@ -35,19 +36,22 @@ const store = configureStore()
 // })
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <StylesProvider injectFirst>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <React.StrictMode>
-              <App />
-            </React.StrictMode>
-          </MuiPickersUtilsProvider>
-        </StylesProvider>
-      </ThemeProvider>
-    </Provider>
-  </BrowserRouter>,
+  <GoogleOAuthProvider clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com">
+    {/* <GoogleOAuthProvider clientId="791694631450-rkpf09upmj6l6epo6uovc84jlgmcjqs9.apps.googleusercontent.com"> */}
+    <BrowserRouter>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <StylesProvider injectFirst>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <React.StrictMode>
+                <App />
+              </React.StrictMode>
+            </MuiPickersUtilsProvider>
+          </StylesProvider>
+        </ThemeProvider>
+      </Provider>
+    </BrowserRouter>
+  </GoogleOAuthProvider>,
   document.getElementById('root'),
 )
 

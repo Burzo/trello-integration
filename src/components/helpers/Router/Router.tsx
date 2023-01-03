@@ -7,7 +7,6 @@ import CompanyInfo from '../../views/CompanyInfo'
 import Bilance from '../../views/Bilance'
 import Tasks from '../../views/Tasks'
 import { Voucher } from '../../views/Voucher'
-import { AbsoluteVoucher } from '../../views/Voucher/AbsoluteVoucher'
 
 // Wrapped in use memo so that it doesn't rerender everytime side drawer is opened
 const Router = () => {

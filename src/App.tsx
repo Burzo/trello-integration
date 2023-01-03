@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GoogleLogin } from 'react-google-login'
+import { GoogleLogin } from '@react-oauth/google'
 import { Typography } from '@material-ui/core'
 import TrelloIntegration from './components/'
 import { Loading } from './components/helpers/Loading/Loading'
@@ -12,6 +12,7 @@ import { RootState } from './store'
 import { setGoogleUser, GoogleUser } from './store/google/types'
 import { putGoogleUser } from './store/google/actions'
 import { AbsoluteVoucher } from './components/views/Voucher/AbsoluteVoucher'
+import jwt_decode from 'jwt-decode'
 
 const PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -31,20 +32,23 @@ function App({ putGoogleUser }: IProps) {
   const [loading, setLoading] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
 
-  const responseGoogle = (response: any) => {
-    if (response.error) {
+  const responseGoogle = (response?: any) => {
+    const profile: any = jwt_decode(response.credential)
+
+    if (response.error || !profile) {
       setError(
         `Something went wrong, the response was: ${response.error}. Please, try again.`,
       )
     } else {
-      putGoogleUser(response.profileObj)
+      putGoogleUser(profile)
       setLoggedIn(true)
     }
     setLoading(false)
   }
 
-  const startLoadingGoogle = () => {
-    setLoading(true)
+  const responseGoogleError = (response?: any) => {
+    setError(`Something went wrong. Please, try again.`)
+    setLoading(false)
   }
 
   if (loading) {
@@ -62,12 +66,10 @@ function App({ putGoogleUser }: IProps) {
           <h2 className="mb-3">Trello API integration</h2>
           <div className="mb-3">
             <GoogleLogin
-              clientId="30269258381-dj8lnlf7ouintma2bpgo58nm97fsas00.apps.googleusercontent.com"
               onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              onRequest={startLoadingGoogle}
-              isSignedIn={true}
-              cookiePolicy={'single_host_origin'}
+              onError={responseGoogleError}
+              auto_select
+              useOneTap
             />
           </div>
           <div>

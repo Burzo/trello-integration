@@ -48,8 +48,10 @@ const useTrelloClient: (
   const GetToken = () => {
     window.Trello.authorize({
       name: 'Trello API integration',
+      persist: true,
+      type: 'popup',
       scope: { read: true, write: true, account: true },
-      expiration: '30days',
+      expiration: 'never',
       success: () => {
         setToken(window.Trello.token())
       },
